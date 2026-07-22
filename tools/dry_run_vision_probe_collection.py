@@ -15,6 +15,7 @@ import pickle
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Callable
 
 import numpy as np
@@ -87,12 +88,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output_dir", default="vision_probe_dry_run")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--min_mask_pixels", type=int, default=10)
+    parser.add_argument(
+        "--allow_identity_scaler_debug",
+        action="store_true",
+        help="Allow IdentityScaler only for a one-step debug run when no real scaler can be restored.",
+    )
     return parser.parse_args()
 
 
 def repo_imports() -> dict[str, Any]:
     from configs.config import create_libero_pro_eval_config, create_libero_train_config
-    from configs.factory import create_model
+    from configs.factory import create_model, create_trainer
 
     try:
         from libero.libero import benchmark
@@ -105,6 +111,7 @@ def repo_imports() -> dict[str, Any]:
         "create_libero_train_config": create_libero_train_config,
         "create_libero_pro_eval_config": create_libero_pro_eval_config,
         "create_model": create_model,
+        "create_trainer": create_trainer,
         "benchmark": benchmark,
         "SegmentationRenderEnv": SegmentationRenderEnv,
     }
@@ -146,13 +153,62 @@ def load_checkpoint(model: torch.nn.Module, checkpoint_path: str) -> dict[str, A
     }
 
 
-def load_model(cfg: Any, imports: dict[str, Any], checkpoint_path: str) -> tuple[torch.nn.Module, dict[str, Any]]:
+def checkpoint_dir_from_path(checkpoint_path: str, resolved_checkpoint_path: str | None = None) -> Path:
+    path = Path(resolved_checkpoint_path or checkpoint_path)
+    if path.is_file():
+        return path.parent
+    return path
+
+
+def restore_real_scaler(
+    model: torch.nn.Module,
+    cfg: Any,
+    imports: dict[str, Any],
+    checkpoint_path: str,
+    checkpoint_info: dict[str, Any],
+    args: argparse.Namespace,
+) -> dict[str, Any]:
+    checkpoint_dir = checkpoint_dir_from_path(checkpoint_path, checkpoint_info.get("path"))
+    scaler_path = checkpoint_dir / "model_scaler.pkl"
+    if scaler_path.is_file():
+        model.load_model_scaler(str(checkpoint_dir), "model_scaler.pkl")
+        return {"source": "checkpoint_model_scaler", "path": str(scaler_path)}
+
+    try:
+        trainer = imports["create_trainer"](cfg)
+        model.set_scaler(trainer.scaler)
+        return {"source": "create_trainer(cfg).scaler", "path": None}
+    except Exception as exc:
+        if args.allow_identity_scaler_debug and args.max_steps == 1:
+            model.set_scaler(IdentityScaler())
+            return {
+                "source": "identity_debug",
+                "path": None,
+                "warning": (
+                    "IdentityScaler is enabled only because --allow_identity_scaler_debug "
+                    "was passed with --max_steps=1."
+                ),
+                "real_scaler_error": str(exc),
+            }
+        raise RuntimeError(
+            "Could not restore a real action scaler. Expected model_scaler.pkl next to the "
+            "checkpoint or a dataset path that lets create_trainer(cfg).scaler be built. "
+            "IdentityScaler is only allowed with --allow_identity_scaler_debug --max_steps 1."
+        ) from exc
+
+
+def load_model(
+    cfg: Any,
+    imports: dict[str, Any],
+    checkpoint_path: str,
+    args: argparse.Namespace,
+) -> tuple[torch.nn.Module, dict[str, Any], dict[str, Any]]:
     model = imports["create_model"](cfg)
     checkpoint_info = load_checkpoint(model, checkpoint_path)
-    model.set_scaler(IdentityScaler())
+    scaler_info = restore_real_scaler(model, cfg, imports, checkpoint_path, checkpoint_info, args)
     model.to(cfg.device)
     model.eval()
-    return model, checkpoint_info
+    return model, checkpoint_info, scaler_info
 
 
 def benchmark_context(imports: dict[str, Any], benchmark_name: str, task_id: int) -> dict[str, Any]:
@@ -215,13 +271,21 @@ def select_single_movable_source(env: Any) -> str:
     return unique_candidates[0]
 
 
-def load_task_embedding(benchmark_name: str, task_file_name: str, device: str) -> torch.Tensor:
+def format_task_embedding(value: Any, device: str) -> torch.Tensor:
+    if not isinstance(value, torch.Tensor):
+        value = torch.tensor(value, dtype=torch.float32)
+    value = value.float().to(device)
+    if value.ndim == 1:
+        value = value.unsqueeze(0)
+    if value.ndim != 2 or value.shape[0] != 1:
+        raise ValueError(f"Expected one task embedding with shape [1, D], got {tuple(value.shape)}")
+    return value
+
+
+def load_vanilla_task_embedding(benchmark_name: str, task_file_name: str, device: str) -> torch.Tensor:
     emb_path = REPO_ROOT / "SUREFlow" / "language_embeddings" / f"{benchmark_name}.pkl"
     if not emb_path.is_file():
-        raise FileNotFoundError(
-            f"Task embedding file not found: {emb_path}. "
-            "For LIBERO-PRO eval suites, generate or provide matching task embeddings first."
-        )
+        raise FileNotFoundError(f"Task embedding file not found: {emb_path}")
     with emb_path.open("rb") as f:
         task_embs = pickle.load(f)
     if task_file_name not in task_embs:
@@ -229,10 +293,51 @@ def load_task_embedding(benchmark_name: str, task_file_name: str, device: str) -
             f"Task {task_file_name!r} not found in {emb_path}. "
             f"Example keys: {list(task_embs.keys())[:5]}"
         )
-    value = task_embs[task_file_name]
-    if not isinstance(value, torch.Tensor):
-        value = torch.tensor(value, dtype=torch.float32)
-    return value.float().to(device).unsqueeze(0)
+    return format_task_embedding(task_embs[task_file_name], device)
+
+
+def load_pro_task_embedding(cfg: Any, task_file_name: str, device: str) -> torch.Tensor:
+    from libero.lifelong.utils import get_task_embs
+
+    description = task_file_name.replace("_", " ")
+    pro_cfg = SimpleNamespace()
+    pro_cfg.data = SimpleNamespace()
+    pro_cfg.data.max_word_len = getattr(cfg, "task_embedding_max_length", 77)
+    pro_cfg.policy = SimpleNamespace()
+    pro_cfg.policy.language_encoder = SimpleNamespace()
+    pro_cfg.policy.language_encoder.network_kwargs = SimpleNamespace()
+    pro_cfg.policy.language_encoder.network_kwargs.input_size = None
+    pro_cfg.task_embedding_format = getattr(cfg, "task_embedding_format", "clip")
+    pro_cfg.task_embedding_model = getattr(cfg, "task_embedding_model", "openai/clip-vit-base-patch32")
+    pro_cfg.task_embedding_device = getattr(cfg, "task_embedding_device", str(device))
+    pro_cfg.task_embedding_max_length = getattr(cfg, "task_embedding_max_length", 77)
+
+    task_embs = get_task_embs(pro_cfg, [description])
+    if isinstance(task_embs, dict):
+        value = task_embs.get(description)
+        if value is None:
+            value = next(iter(task_embs.values()))
+    else:
+        value = task_embs[0]
+    return format_task_embedding(value, device)
+
+
+def load_task_embedding(
+    cfg: Any,
+    train_suite: str,
+    eval_suite: str | None,
+    task_file_name: str,
+    device: str,
+) -> tuple[torch.Tensor, dict[str, Any]]:
+    if eval_suite is None:
+        embedding = load_vanilla_task_embedding(train_suite, task_file_name, device)
+        return embedding, {"source": "pickle", "benchmark": train_suite}
+    embedding = load_pro_task_embedding(cfg, task_file_name, device)
+    return embedding, {
+        "source": "runtime_get_task_embs",
+        "description": task_file_name.replace("_", " "),
+        "eval_suite": eval_suite,
+    }
 
 
 def print_obs_overview(obs: dict[str, Any]) -> list[dict[str, Any]]:
@@ -413,15 +518,20 @@ def get_hook_module(model: torch.nn.Module, model_key: str, stage: str) -> torch
     return module
 
 
-def register_feature_hooks(model: torch.nn.Module) -> tuple[dict[str, dict[str, torch.Tensor]], list[Any], list[str]]:
+def register_feature_hooks(
+    model: torch.nn.Module,
+) -> tuple[dict[str, dict[str, torch.Tensor]], list[Any], list[str], dict[str, bool]]:
     cache: dict[str, dict[str, torch.Tensor]] = {
         camera: {} for camera in CAMERA_KEY_MAP
     }
     handles = []
     module_paths = []
+    capture_state = {"enabled": False}
 
     def make_hook(camera: str, stage: str) -> Callable[[Any, tuple[Any, ...], torch.Tensor], None]:
         def hook(_module: Any, _inputs: tuple[Any, ...], output: torch.Tensor) -> None:
+            if not capture_state["enabled"]:
+                return
             cache[camera][stage] = output.detach().cpu().clone()
 
         return hook
@@ -433,7 +543,7 @@ def register_feature_hooks(model: torch.nn.Module) -> tuple[dict[str, dict[str, 
             attr, index, _ = STAGE_SPECS[stage]
             suffix = f"{attr}[{index}]" if index is not None else attr
             module_paths.append(f"img_encoder.key_model_map[{mapping['model_key']!r}].{suffix}")
-    return cache, handles, module_paths
+    return cache, handles, module_paths, capture_state
 
 
 def validate_feature_cache(cache: dict[str, dict[str, torch.Tensor]]) -> dict[str, dict[str, dict[str, Any]]]:
@@ -442,15 +552,43 @@ def validate_feature_cache(cache: dict[str, dict[str, torch.Tensor]]) -> dict[st
         stats[camera] = {}
         for stage, (_attr, _index, expected_shape) in STAGE_SPECS.items():
             if stage not in cache[camera]:
-                raise RuntimeError(f"Missing hook output for {camera}/{stage}")
+                raise RuntimeError(
+                    f"Missing hook output for {camera}/{stage}. "
+                    "Expected explicit_encoder_forward to run with capture_enabled=True. "
+                    "Check image keys, model camera config, hook module path, and batch/sequence dimensions."
+                )
             tensor = cache[camera][stage]
             if tuple(tensor.shape) != expected_shape:
                 raise RuntimeError(
                     f"Unexpected shape for {camera}/{stage}: got {tuple(tensor.shape)}, "
-                    f"expected {expected_shape}"
+                    f"expected {expected_shape}. Check ResNet stage config, batch size, and observation sequence length."
                 )
             stats[camera][stage] = feature_stats(tensor)
     return stats
+
+
+def clear_feature_cache(cache: dict[str, dict[str, torch.Tensor]]) -> None:
+    for camera in cache:
+        cache[camera].clear()
+
+
+def collect_explicit_encoder_features(
+    model: torch.nn.Module,
+    obs: dict[str, Any],
+    task_emb: torch.Tensor,
+    device: str,
+    cache: dict[str, dict[str, torch.Tensor]],
+    capture_state: dict[str, bool],
+) -> dict[str, dict[str, dict[str, Any]]]:
+    clear_feature_cache(cache)
+    probe_obs_dict = make_obs_dict(obs, task_emb, device)
+    capture_state["enabled"] = True
+    try:
+        with torch.no_grad():
+            model._input_embeddings(probe_obs_dict)
+    finally:
+        capture_state["enabled"] = False
+    return validate_feature_cache(cache)
 
 
 def save_overlay(
@@ -495,19 +633,28 @@ def run_dry_run(args: argparse.Namespace) -> dict[str, Any]:
     benchmark_name = f"{args.train_suite}_{args.eval_suite}" if args.eval_suite else args.train_suite
     cfg = make_config(imports, args.train_suite, args.eval_suite, args.device)
 
-    model, checkpoint_info = load_model(cfg, imports, args.checkpoint_path)
+    model, checkpoint_info, scaler_info = load_model(cfg, imports, args.checkpoint_path, args)
     checks.set("model loaded", True)
+    checks.set("scaler attached", True)
 
     context = benchmark_context(imports, benchmark_name, args.task_id)
-    task_emb = load_task_embedding(args.train_suite, context["file_name"], args.device)
+    task_emb, task_embedding_info = load_task_embedding(
+        cfg,
+        args.train_suite,
+        args.eval_suite,
+        context["file_name"],
+        args.device,
+    )
 
     env = make_env(imports, context["task_bddl_file"])
     checks.set("segmentation environment created", True)
 
     hooks_removed = False
-    cache, handles, hook_paths = register_feature_hooks(model)
+    cache, handles, hook_paths, capture_state = register_feature_hooks(model)
     summary: dict[str, Any] = {
         "checkpoint": checkpoint_info,
+        "scaler": scaler_info,
+        "task_embedding": task_embedding_info,
         "benchmark": benchmark_name,
         "task_id": args.task_id,
         "task": context["file_name"],
@@ -518,10 +665,11 @@ def run_dry_run(args: argparse.Namespace) -> dict[str, Any]:
     }
 
     try:
-        env.seed(cfg.seed)
+        model.reset()
+        simulation_cfg = getattr(cfg, "simulation", None)
+        seed = getattr(simulation_cfg, "seed", getattr(cfg, "seed", None))
+        env.seed(seed)
         obs = env.reset()
-        obs_overview = print_obs_overview(obs)
-        summary["initial_observation_overview"] = obs_overview
 
         init_states = context["init_states"]
         if args.initial_state_id >= len(init_states):
@@ -530,8 +678,23 @@ def run_dry_run(args: argparse.Namespace) -> dict[str, Any]:
                 f"available={len(init_states)}"
             )
         obs = env.set_init_state(init_state=init_states[args.initial_state_id])
+
+        dummy = np.zeros(7, dtype=np.float32)
+        dummy[-1] = -1.0
+        for _dummy_step in range(5):
+            obs, _reward, done, _info = env.step(dummy)
+            if done:
+                raise RuntimeError("Environment terminated during the 5 stabilization dummy steps.")
+
         obs_overview = print_obs_overview(obs)
-        summary["post_init_observation_overview"] = obs_overview
+        summary["stabilized_observation_overview"] = obs_overview
+        summary["episode_initialization"] = {
+            "seed": seed,
+            "init_state_id": args.initial_state_id,
+            "dummy_steps": 5,
+            "dummy_action": dummy.tolist(),
+            "first_saved_observation": "after_dummy_steps",
+        }
 
         target_object = select_single_movable_source(env)
         checks.set("target object selected", True)
@@ -553,9 +716,6 @@ def run_dry_run(args: argparse.Namespace) -> dict[str, Any]:
         summary["segmentation_keys"] = segmentation_keys
 
         for step in range(args.max_steps):
-            for camera in cache:
-                cache[camera].clear()
-
             state_before = sim_state_vector(env)
             target_world_pos = get_target_world_pos(env, target_object)
             checks.set("target world position obtained", True)
@@ -573,12 +733,29 @@ def run_dry_run(args: argparse.Namespace) -> dict[str, Any]:
 
             checks.set("RGB/segmentation shapes matched", True)
 
-            obs_dict = make_obs_dict(obs, task_emb, args.device)
-            with torch.no_grad():
-                action = model.predict(obs_dict)
-            feature_summary = validate_feature_cache(cache)
+            feature_summary = collect_explicit_encoder_features(
+                model,
+                obs,
+                task_emb,
+                args.device,
+                cache,
+                capture_state,
+            )
             for stage in STAGE_SPECS:
                 checks.set(f"{stage} hook shape valid", True)
+
+            state_after_feature = sim_state_vector(env)
+            feature_sync_ok = np.allclose(state_before, state_after_feature)
+            checks.set(
+                "explicit feature forward does not change sim state",
+                feature_sync_ok,
+                "explicit_encoder_forward changed sim state",
+            )
+
+            policy_refresh_step = int(getattr(model, "rollout_step_counter", 0)) == 0
+            action_obs_dict = make_obs_dict(obs, task_emb, args.device)
+            with torch.no_grad():
+                action = model.predict(action_obs_dict)
 
             state_after_predict = sim_state_vector(env)
             sync_ok = np.allclose(state_before, state_after_predict)
@@ -595,6 +772,9 @@ def run_dry_run(args: argparse.Namespace) -> dict[str, Any]:
                 },
                 "labels": labels,
                 "feature_summary": feature_summary,
+                "feature_source": "explicit_encoder_forward",
+                "policy_refresh_step": policy_refresh_step,
+                "policy_consumed_current_observation": policy_refresh_step,
                 "action_shape": list(action_np.shape),
             }
             summary["steps"].append(step_record)
