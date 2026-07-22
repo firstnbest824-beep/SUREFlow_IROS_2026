@@ -146,10 +146,36 @@ def load_checkpoint(model: torch.nn.Module, checkpoint_path: str) -> dict[str, A
         raise FileNotFoundError(f"Checkpoint file not found: {checkpoint_path}")
     state_dict = torch.load(path, map_location="cpu", weights_only=True)
     missing, unexpected = model.load_state_dict(state_dict, strict=False)
-    return {
+    missing_keys = list(missing)
+    unexpected_keys = list(unexpected)
+    img_encoder_missing = [key for key in missing_keys if "img_encoder" in key]
+    img_encoder_unexpected = [key for key in unexpected_keys if "img_encoder" in key]
+    checkpoint_info = {
         "path": str(path),
-        "missing_keys": list(missing),
-        "unexpected_keys": list(unexpected),
+        "missing_keys": missing_keys,
+        "unexpected_keys": unexpected_keys,
+        "missing_key_count": len(missing_keys),
+        "unexpected_key_count": len(unexpected_keys),
+        "img_encoder_missing_keys": img_encoder_missing,
+        "img_encoder_unexpected_keys": img_encoder_unexpected,
+        "img_encoder_missing_key_count": len(img_encoder_missing),
+        "img_encoder_unexpected_key_count": len(img_encoder_unexpected),
+        "checkpoint_vision_encoder_valid": not img_encoder_missing and not img_encoder_unexpected,
+    }
+    if img_encoder_missing or img_encoder_unexpected:
+        raise RuntimeError(
+            "Checkpoint has img_encoder key mismatches; refusing to collect vision-probe features. "
+            f"mismatch_info={json.dumps(checkpoint_info, indent=2)}"
+        )
+    if missing_keys or unexpected_keys:
+        print(
+            "Warning: checkpoint loaded with non-img_encoder key mismatches:\n"
+            f"  missing_key_count={len(missing_keys)} missing_keys={missing_keys}\n"
+            f"  unexpected_key_count={len(unexpected_keys)} unexpected_keys={unexpected_keys}",
+            file=sys.stderr,
+        )
+    return {
+        **checkpoint_info,
     }
 
 
@@ -778,6 +804,10 @@ def run_dry_run(args: argparse.Namespace) -> dict[str, Any]:
                 "action_shape": list(action_np.shape),
             }
             summary["steps"].append(step_record)
+
+            if step == args.max_steps - 1:
+                summary["stopped_before_env_step_at_final_requested_timestep"] = step
+                break
 
             obs, reward, done, _info = env.step(action_np)
             if done:
