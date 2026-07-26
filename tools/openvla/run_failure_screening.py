@@ -49,7 +49,27 @@ _LIBERO_PRO_ROOT = os.path.abspath(
 if _LIBERO_PRO_ROOT not in sys.path:
     sys.path.insert(0, _LIBERO_PRO_ROOT)
 
+# Sibling helper modules (shared with the probe dry-run).
+_OPENVLA_TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
+if _OPENVLA_TOOLS_DIR not in sys.path:
+    sys.path.insert(0, _OPENVLA_TOOLS_DIR)
+
 from perturbation import BDDLParser, SwapPerturbator
+
+from model_input_transform import (
+    apply_center_crop,
+    get_libero_image,
+    pil_jpeg_encode_decode,
+    resize_image,
+)
+from spatial_task_resolver import (
+    DEFAULT_OOD_SPATIAL_CONFIG,
+    SpatialTaskEntities,
+    displacement,
+    get_entity_world_positions,
+    resolve_spatial_task,
+    resolve_spatial_task_from_env,
+)
 
 
 # -----------------------------------------------------------------------------
@@ -104,49 +124,43 @@ def log_section(title: str) -> None:
     print("=" * 72)
 
 
+# Image preprocessing lives in model_input_transform.py (imported above) so that
+# RGB frames and segmentation masks share one rotation / resize / crop chain.
+
+
 # -----------------------------------------------------------------------------
-# Image preprocessing (TensorFlow-free reimplementation)
+# GPU memory accounting
 # -----------------------------------------------------------------------------
-def pil_jpeg_encode_decode(img: np.ndarray, quality: int = 95) -> np.ndarray:
-    pil_img = Image.fromarray(img)
-    buf = io.BytesIO()
-    pil_img.save(buf, format="JPEG", quality=quality)
-    buf.seek(0)
-    decoded = Image.open(buf).convert("RGB")
-    return np.array(decoded)
+def reset_gpu_peak_stats() -> None:
+    if torch.cuda.is_available():
+        torch.cuda.synchronize()
+        torch.cuda.reset_peak_memory_stats()
 
 
-def resize_image(img: np.ndarray, resize_size: Tuple[int, int]) -> np.ndarray:
-    assert isinstance(resize_size, tuple) and len(resize_size) == 2
-    img = pil_jpeg_encode_decode(img)
-    pil_img = Image.fromarray(img)
-    pil_img = pil_img.resize((resize_size[1], resize_size[0]), Image.LANCZOS)
-    img = np.array(pil_img)
-    img = np.clip(np.rint(img), 0, 255).astype(np.uint8)
-    return img
+def gpu_memory_report() -> Optional[Dict[str, float]]:
+    if not torch.cuda.is_available():
+        return None
+    torch.cuda.synchronize()
+    mb = 1024 * 1024
+    return {
+        "peak_allocated_mb": float(torch.cuda.max_memory_allocated() / mb),
+        "peak_reserved_mb": float(torch.cuda.max_memory_reserved() / mb),
+        "final_allocated_mb": float(torch.cuda.memory_allocated() / mb),
+        "final_reserved_mb": float(torch.cuda.memory_reserved() / mb),
+    }
 
 
-def get_libero_image(obs: Dict[str, Any], resize_size: int) -> np.ndarray:
-    if isinstance(resize_size, int):
-        resize_size = (resize_size, resize_size)
-    img = obs["agentview_image"]
-    img = img[::-1, ::-1]
-    img = resize_image(img, resize_size)
-    return img
-
-
-def apply_center_crop(image: Image.Image, crop_scale: float = 0.9, output_size: Tuple[int, int] = (224, 224)) -> Image.Image:
-    img_np = np.array(image).astype(np.float32) / 255.0
-    h, w = img_np.shape[:2]
-    new_h = int(h * math.sqrt(crop_scale))
-    new_w = int(w * math.sqrt(crop_scale))
-    top = (h - new_h) // 2
-    left = (w - new_w) // 2
-    cropped = img_np[top : top + new_h, left : left + new_w]
-    cropped_uint8 = (np.clip(cropped, 0.0, 1.0) * 255).astype(np.uint8)
-    pil_cropped = Image.fromarray(cropped_uint8)
-    pil_cropped = pil_cropped.resize((output_size[1], output_size[0]), Image.BILINEAR)
-    return pil_cropped
+def env_success(env: Any, info: Any) -> Tuple[Optional[bool], str]:
+    """Official success check: ``info["success"]`` first, then ``env.check_success()``."""
+    if isinstance(info, dict) and "success" in info:
+        return bool(info["success"]), "info[\"success\"]"
+    checker = getattr(env, "check_success", None)
+    if callable(checker):
+        try:
+            return bool(checker()), "env.check_success()"
+        except Exception as exc:
+            return None, f"env.check_success() raised {exc}"
+    return None, "unavailable"
 
 
 # -----------------------------------------------------------------------------
@@ -475,6 +489,7 @@ def run_episode(
     condition: str,
     output_dir: str,
     args: argparse.Namespace,
+    entities: SpatialTaskEntities,
 ) -> Dict[str, Any]:
     os.makedirs(output_dir, exist_ok=True)
 
@@ -500,19 +515,39 @@ def run_episode(
         "init_state_success": False,
         "rollout_completed": False,
         "rollout_steps": 0,
+        # Success accounting: `done` alone is NOT treated as success.
+        "done": False,
+        "success_flag": None,
+        "success_source": None,
         "task_success": False,
+        "termination_reason": None,
+        "max_steps_reached": False,
         "nan_inf_detected": False,
         "exception_occurred": False,
         "exception_message": None,
         "failure_type": "unclassified",
-        "target_position_initial": None,
-        "target_position_final": None,
-        "target_displacement": None,
+        # Which objects this episode is about (resolved from the BDDL goal).
+        "source_object": entities.source_object,
+        "destination_object": entities.destination_object,
+        "swap_counterpart": entities.swap_counterpart,
+        "pre_grasp_relevant_entity": entities.pre_grasp_relevant_entity,
+        "post_grasp_relevant_entity": entities.post_grasp_relevant_entity,
+        "perturbation_moved_entities": entities.perturbation_moved_entities,
+        "swap_pairs": entities.swap_pairs,
+        "tracked_entities": entities.tracked_entities,
+        "entity_positions_initial": {},
+        "entity_positions_final": {},
+        "entity_displacements": {},
+        "gpu_memory_mb": None,
     }
 
     try:
         log_section(f"Running {condition} episode")
         print(f"Output directory: {output_dir}")
+        print(f"  source={entities.source_object} destination={entities.destination_object} "
+              f"swap_counterpart={entities.swap_counterpart}")
+
+        reset_gpu_peak_stats()
 
         obs = env.reset()
         metadata["reset_success"] = True
@@ -520,18 +555,12 @@ def run_episode(
         obs = env.set_init_state(initial_state)
         metadata["init_state_success"] = True
 
-        # Attempt to record target object position if the body exists.
-        target_body_name: Optional[str] = None
-        try:
-            body_names = list(env.sim.model.body_names)
-            # The object of interest for the default spatial task is akita_black_bowl_2.
-            candidates = [n for n in body_names if "akita_black_bowl_2" in n]
-            if candidates:
-                target_body_name = candidates[0]
-                body_id = env.sim.model.body_name2id(target_body_name)
-                metadata["target_position_initial"] = env.sim.data.body_xpos[body_id].tolist()
-        except Exception as e:
-            print(f"[WARN] Could not record initial target position: {e}")
+        # World poses of the resolved entities, not of a hard-coded object name.
+        metadata["entity_positions_initial"] = get_entity_world_positions(
+            env, entities.tracked_entities
+        )
+        for entity, position in metadata["entity_positions_initial"].items():
+            print(f"  initial pos {entity}: {position}")
 
         dummy_action = get_libero_dummy_action()
         raw_actions: List[np.ndarray] = []
@@ -610,7 +639,7 @@ def run_episode(
                 "gripper_qpos": obs["robot0_gripper_qpos"].tolist(),
             })
 
-            success_flag = info.get("success") if isinstance(info, dict) else None
+            success_flag, success_source = env_success(env, info)
             if camera_keys:
                 primary_key = camera_keys[0]
                 frame = np.flipud(obs[primary_key])
@@ -630,7 +659,9 @@ def run_episode(
             per_step_records.append({
                 "step": t,
                 "latency_ms": latency_ms,
+                "done": bool(done),
                 "success": success_flag,
+                "success_source": success_source,
                 "raw_action": raw_actions[-1].tolist(),
                 "final_action": final_actions[-1].tolist(),
             })
@@ -639,28 +670,68 @@ def run_episode(
                 print(
                     f"  step {t - args.num_steps_wait:3d}/{args.max_steps}: "
                     f"latency={latency_ms:.1f}ms, action[:3]=[{action[0]:+.3f}, {action[1]:+.3f}, {action[2]:+.3f}], "
-                    f"success={success_flag}"
+                    f"done={done}, success={success_flag}"
                 )
 
-            if done:
+            metadata["done"] = bool(done)
+            metadata["success_flag"] = success_flag
+            metadata["success_source"] = success_source
+
+            # `done` on its own is not success: only the official success check counts.
+            if success_flag:
                 metadata["task_success"] = True
-                print(f"Episode succeeded at step {t - args.num_steps_wait}")
+                metadata["termination_reason"] = "success"
+                print(
+                    f"Episode succeeded at step {t - args.num_steps_wait} "
+                    f"(source={success_source})"
+                )
+                break
+            if done:
+                metadata["termination_reason"] = "env_done_without_success"
+                print(
+                    f"Environment reported done=True at step {t - args.num_steps_wait} "
+                    f"but the official success check returned {success_flag}; "
+                    "recording as failure."
+                )
                 break
 
         metadata["rollout_completed"] = True
         metadata["rollout_steps"] = step_count
+        metadata["max_steps_reached"] = bool(step_count >= args.max_steps)
+        if metadata["termination_reason"] is None:
+            metadata["termination_reason"] = (
+                "max_steps_reached" if metadata["max_steps_reached"] else "loop_exhausted"
+            )
+        if not metadata["task_success"]:
+            metadata["failure_type"] = (
+                "timeout_no_success" if metadata["max_steps_reached"] else "early_termination"
+            )
+        print(
+            f"Termination: reason={metadata['termination_reason']}, done={metadata['done']}, "
+            f"success_flag={metadata['success_flag']}, task_success={metadata['task_success']}, "
+            f"max_steps_reached={metadata['max_steps_reached']}"
+        )
 
-        # Final target position.
-        if target_body_name is not None:
-            try:
-                body_id = env.sim.model.body_name2id(target_body_name)
-                metadata["target_position_final"] = env.sim.data.body_xpos[body_id].tolist()
-                if metadata["target_position_initial"] is not None:
-                    initial = np.array(metadata["target_position_initial"])
-                    final = np.array(metadata["target_position_final"])
-                    metadata["target_displacement"] = (final - initial).tolist()
-            except Exception as e:
-                print(f"[WARN] Could not record final target position: {e}")
+        # Final world poses and displacements for every resolved entity.
+        metadata["entity_positions_final"] = get_entity_world_positions(
+            env, entities.tracked_entities
+        )
+        metadata["entity_displacements"] = {
+            entity: displacement(
+                metadata["entity_positions_initial"].get(entity),
+                metadata["entity_positions_final"].get(entity),
+            )
+            for entity in entities.tracked_entities
+        }
+        for entity, delta in metadata["entity_displacements"].items():
+            print(f"  displacement {entity}: {delta}")
+
+        metadata["gpu_memory_mb"] = gpu_memory_report()
+        if metadata["gpu_memory_mb"]:
+            print(
+                f"VRAM peak allocated={metadata['gpu_memory_mb']['peak_allocated_mb']:.1f} MB, "
+                f"peak reserved={metadata['gpu_memory_mb']['peak_reserved_mb']:.1f} MB"
+            )
 
         # Save actions.
         if raw_actions:
@@ -725,6 +796,9 @@ def run_episode(
         except Exception:
             pass
 
+    if metadata["gpu_memory_mb"] is None:
+        metadata["gpu_memory_mb"] = gpu_memory_report()
+
     metadata_path = os.path.join(output_dir, "rollout_metadata.json")
     with open(metadata_path, "w", encoding="utf-8") as f:
         json.dump(metadata, f, indent=2, ensure_ascii=False)
@@ -757,6 +831,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--num_perturbation_inits", type=int, default=DEFAULT_NUM_PERTURBATION_INITS)
     parser.add_argument("--perturbation_seed", type=int, default=DEFAULT_PERTURBATION_SEED)
+    parser.add_argument("--ood_config_path", type=str, default=DEFAULT_OOD_SPATIAL_CONFIG)
     parser.add_argument("--skip_vanilla", action="store_true", help="Skip vanilla episode")
     parser.add_argument("--skip_perturbation", action="store_true", help="Skip perturbation episode")
     return parser.parse_args()
@@ -768,8 +843,12 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
 
-    os.makedirs(args.output_dir, exist_ok=True)
-    log_path = os.path.join(args.output_dir, "failure_screening.log")
+    # Every invocation writes into its own timestamped run directory so previous
+    # results are never overwritten.
+    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    run_dir = os.path.join(args.output_dir, f"screening_{timestamp}")
+    os.makedirs(run_dir, exist_ok=True)
+    log_path = os.path.join(run_dir, "failure_screening.log")
     logger = TeeLogger(log_path)
     sys.stdout = logger
     sys.stderr = logger
@@ -792,13 +871,14 @@ def main() -> int:
         "device": str(device),
         "seed": args.seed,
         "perturbation_seed": args.perturbation_seed,
+        "run_dir": run_dir,
         "vanilla": None,
         "position_perturbation": None,
     }
 
     try:
         log_section("Pre-flight checks")
-        print(f"Output directory: {args.output_dir}")
+        print(f"Run directory: {run_dir}")
         print(f"Python executable: {sys.executable}")
         print(f"libero.__path__: {libero.__path__}")
         print(f"mujoco.__version__: {mujoco.__version__}")
@@ -850,9 +930,20 @@ def main() -> int:
         original_bddl_path = task_suite.get_task_bddl_file_path(args.task_id)
         print(f"Original BDDL path: {original_bddl_path}")
 
-        task_output_root = os.path.join(args.output_dir, task.name)
+        log_section("Source / destination / swap-counterpart resolution")
+        entities = resolve_spatial_task(
+            bddl_path=original_bddl_path,
+            task_suite=args.task_suite,
+            task_name=task.name,
+            ood_config_path=args.ood_config_path,
+            perturbation_seed=args.perturbation_seed,
+        )
+        for line in entities.summary_lines():
+            print(f"  {line}")
+        comparison_metadata["spatial_entities"] = entities.to_dict()
+
+        task_output_root = os.path.join(run_dir, task.name)
         os.makedirs(task_output_root, exist_ok=True)
-        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
 
         # ---------------------------------------------------------------------
         # Vanilla episode
@@ -864,6 +955,14 @@ def main() -> int:
             os.makedirs(vanilla_output_dir, exist_ok=True)
 
             env, task_description = get_libero_env(task, resolution=args.resolution)
+            vanilla_entities = resolve_spatial_task_from_env(
+                env=env,
+                bddl_path=original_bddl_path,
+                task_suite=args.task_suite,
+                task_name=task.name,
+                ood_config_path=args.ood_config_path,
+                perturbation_seed=args.perturbation_seed,
+            )
             comparison_metadata["vanilla"] = run_episode(
                 vla=vla,
                 processor=processor,
@@ -874,6 +973,7 @@ def main() -> int:
                 condition="vanilla",
                 output_dir=vanilla_output_dir,
                 args=args,
+                entities=vanilla_entities,
             )
         else:
             print("[CONFIG] Skipping vanilla episode")
@@ -883,15 +983,13 @@ def main() -> int:
         # ---------------------------------------------------------------------
         if not args.skip_perturbation:
             perturb_bddl_dir = os.path.join(
-                args.output_dir, "temp", f"bddl_{timestamp}_{task.name}"
+                run_dir, "temp", f"bddl_{task.name}"
             )
             perturb_init_dir = os.path.join(
-                args.output_dir, "temp", f"init_{timestamp}_{task.name}"
+                run_dir, "temp", f"init_{task.name}"
             )
 
-            config_path = os.path.join(
-                _LIBERO_PRO_ROOT, "libero_ood", "ood_spatial_relation.yaml"
-            )
+            config_path = args.ood_config_path
             perturb_bddl_path = os.path.join(perturb_bddl_dir, f"{task.name}.bddl")
 
             log_section("Applying position swap perturbation")
@@ -928,6 +1026,34 @@ def main() -> int:
             os.makedirs(perturb_output_dir, exist_ok=True)
 
             perturb_env = get_libero_env_from_bddl(perturb_bddl_path, resolution=args.resolution)
+            # Same resolver, now against the perturbed BDDL: the goal (and therefore
+            # source/destination) is unchanged, while the init regions differ.
+            perturb_entities = resolve_spatial_task_from_env(
+                env=perturb_env,
+                bddl_path=perturb_bddl_path,
+                task_suite=args.task_suite,
+                task_name=task.name,
+                ood_config_path=args.ood_config_path,
+                perturbation_seed=args.perturbation_seed,
+            )
+            perturb_entities.swap_counterpart = entities.swap_counterpart
+            perturb_entities.swap_pairs = entities.swap_pairs
+            perturb_entities.perturbation_moved_entities = entities.perturbation_moved_entities
+            perturb_entities.swap_counterpart_partner_of = entities.swap_counterpart_partner_of
+            perturb_entities.swap_note = (
+                "swap fields copied from the original-vs-perturbed BDDL diff; the "
+                "perturbed file is already swapped, so re-running the perturbator on "
+                "it would describe a second swap"
+            )
+            comparison_metadata["perturbation_applied"] = {
+                "bddl_path": perturb_bddl_path,
+                "config_path": config_path,
+                "perturbation_seed": args.perturbation_seed,
+                "swap_pairs": entities.swap_pairs,
+                "moved_entities": entities.perturbation_moved_entities,
+                "original_init_regions": entities.init_regions,
+                "perturbed_init_regions": perturb_entities.init_regions,
+            }
             comparison_metadata["position_perturbation"] = run_episode(
                 vla=vla,
                 processor=processor,
@@ -938,6 +1064,7 @@ def main() -> int:
                 condition="position_perturbation",
                 output_dir=perturb_output_dir,
                 args=args,
+                entities=perturb_entities,
             )
         else:
             print("[CONFIG] Skipping perturbation episode")
@@ -954,7 +1081,7 @@ def main() -> int:
         comparison_metadata["exception_occurred"] = True
         comparison_metadata["exception_message"] = str(exc)
         comparison_metadata["exception_traceback"] = traceback.format_exc()
-        comparison_path = os.path.join(args.output_dir, "comparison_metadata_error.json")
+        comparison_path = os.path.join(run_dir, "comparison_metadata_error.json")
         with open(comparison_path, "w", encoding="utf-8") as f:
             json.dump(comparison_metadata, f, indent=2, ensure_ascii=False)
         return 1

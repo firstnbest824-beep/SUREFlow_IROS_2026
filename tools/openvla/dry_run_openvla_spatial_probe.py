@@ -3,8 +3,21 @@
 
 This script is intentionally independent of SUREFlow. It loads OpenVLA, runs a
 single LIBERO-Spatial episode for a small number of stabilization steps, captures
-intermediate representations with forward hooks at one timestep, and writes
-features, labels, actions, overlays, and metadata to a timestamped directory.
+intermediate representations with forward / forward-pre hooks at one timestep,
+and writes features, labels, actions, overlays, and metadata to a timestamped
+directory.
+
+Three things are aligned with the research plan:
+
+1. The analysed objects come from ``spatial_task_resolver`` -- the BDDL goal
+   decides ``source_object`` and ``destination_object``, and the LIBERO-PRO swap
+   configuration decides ``swap_counterpart``. Nothing is hard-coded.
+2. Every spatial label is stored twice: in the raw simulator frame *and* in
+   OpenVLA's model-input frame (180-degree rotation, 224x224 resize, center crop
+   0.9, resize back), using the shared ``model_input_transform`` chain.
+3. The representation stored as ``pre_action_hidden`` is the hidden state
+   entering ``lm_head`` (forward-pre hook), captured once per generation call in
+   call order. ``lm_head``'s own output is kept separately as vocabulary logits.
 
 Scope: vanilla condition, 1 task, 1 episode, 1 primary timestep (a few extra
 stabilization steps are allowed). No model fine-tuning, no checkpoint download,
@@ -21,11 +34,11 @@ import time
 import traceback
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 import torch
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 # Force headless EGL rendering and project-local LIBERO config before importing libero.
 os.environ.setdefault("MUJOCO_GL", "egl")
@@ -64,7 +77,6 @@ from run_single_vanilla_rollout import (  # type: ignore
     DEFAULT_CENTER_CROP,
     DEFAULT_UNNORM_KEY,
     DEFAULT_GPU,
-    get_libero_image,
     get_libero_dummy_action,
     quat2axisangle,
     load_openvla,
@@ -75,18 +87,37 @@ from run_single_vanilla_rollout import (  # type: ignore
 
 from dry_run_libero_label_pipeline import (  # type: ignore
     CAMERA_KEY_MAP,
-    unwrap_base_env,
-    select_single_movable_source,
-    target_instance_id,
     find_segmentation_key,
-    normalize_segmentation,
-    compute_mask_label,
-    save_overlay,
-    save_rgb,
-    get_target_world_pos,
-    get_robot_metadata,
     get_camera_metadata,
+    get_robot_metadata,
+    save_rgb,
     strict_json_ready,
+)
+
+from model_input_transform import (  # type: ignore
+    DEFAULT_CROP_SCALE,
+    MODEL_INPUT_CAMERA_KEY,
+    describe_transform,
+    get_libero_image,
+    map_uv_raw_to_model_input,
+    mask_statistics,
+    mask_to_model_input,
+    normalize_segmentation,
+    rgb_to_model_input,
+)
+
+from probe_hooks import (  # type: ignore
+    FORWARD_PROBE_TARGETS,
+    PRE_FORWARD_PROBE_TARGETS,
+    SINGLE_CALL_STAGES,
+    ProbeHookManager,
+    ProbeStream,
+)
+
+from spatial_task_resolver import (  # type: ignore
+    DEFAULT_OOD_SPATIAL_CONFIG,
+    get_entity_world_positions,
+    resolve_spatial_task_from_env,
 )
 
 
@@ -95,18 +126,28 @@ from dry_run_libero_label_pipeline import (  # type: ignore
 # -----------------------------------------------------------------------------
 DEFAULT_OUTPUT_DIR = "/home/hwkim/env-audit/openvla-spatial-probe-dry-run"
 
-# Module paths discovered by tools/openvla/inspect_openvla_architecture.py.
-# Values are (functional_stage, readout_description).
-PROBE_TARGETS: Dict[str, tuple[str, str]] = {
-    "vision_backbone.featurizer.blocks.23": ("final_vision_dinov2", "final DINOv2 block output"),
-    "vision_backbone.fused_featurizer.blocks.26": ("final_vision_siglip", "final SigLIP block output"),
-    "projector.fc3": ("projector_penultimate", "projector fc3 output"),
-    "projector": ("projector_output", "full projector output"),
-    "language_model.model.layers.0": ("llm_early", "first LLM layer hidden state"),
-    "language_model.model.layers.15": ("llm_middle", "middle LLM layer hidden state"),
-    "language_model.model.layers.31": ("llm_late", "late LLM layer hidden state"),
-    "language_model.lm_head": ("lm_head", "language model head logits"),
+# What the token axis of each saved tensor means, recorded in the manifest so a
+# downstream probe never has to guess.
+TOKEN_DIM_MEANING: Dict[str, str] = {
+    "final_vision_dinov2": "DINOv2 patch tokens (includes prefix/CLS tokens)",
+    "final_vision_siglip": "SigLIP patch tokens (256 patches, no CLS)",
+    "projector_penultimate": "projected visual tokens aligned 1:1 with SigLIP patches",
+    "projector_output": "projected visual tokens aligned 1:1 with SigLIP patches",
+    "llm_early": "multimodal LLM sequence: BOS + projected visual tokens + text tokens",
+    "llm_middle": "multimodal LLM sequence: BOS + projected visual tokens + text tokens",
+    "llm_late": "multimodal LLM sequence: BOS + projected visual tokens + text tokens",
+    "lm_head_logits": "vocabulary logits per sequence position",
+    "pre_action_hidden": "hidden state per sequence position entering lm_head",
 }
+
+LAST_TOKEN_STACK_MEANING = (
+    "row i = last-token readout of lm_head call i, in generation order "
+    "(call 0 is the prompt prefill, later calls are autoregressive steps)"
+)
+
+# Roles whose spatial labels are collected. Kept separate on purpose: the
+# pre-grasp phase is about the source, the post-grasp phase about the destination.
+LABEL_ROLES = ("source", "destination", "swap_counterpart")
 
 
 # -----------------------------------------------------------------------------
@@ -121,77 +162,35 @@ def log_section(title: str) -> None:
 def record_gpu_memory() -> Optional[Dict[str, float]]:
     if not torch.cuda.is_available():
         return None
+    mb = 1024 * 1024
     return {
-        "allocated_mb": float(torch.cuda.memory_allocated() / (1024 * 1024)),
-        "reserved_mb": float(torch.cuda.memory_reserved() / (1024 * 1024)),
-        "max_allocated_mb": float(torch.cuda.max_memory_allocated() / (1024 * 1024)),
+        "allocated_mb": float(torch.cuda.memory_allocated() / mb),
+        "reserved_mb": float(torch.cuda.memory_reserved() / mb),
+        "peak_allocated_mb": float(torch.cuda.max_memory_allocated() / mb),
+        "peak_reserved_mb": float(torch.cuda.max_memory_reserved() / mb),
     }
 
 
-def save_tensor(path: Path, tensor: torch.Tensor) -> Dict[str, Any]:
-    """Save a tensor as float32 numpy and return shape/dtype metadata."""
-    arr = tensor.detach().cpu().to(torch.float32).numpy()
-    np.save(path, arr)
+def save_array(path: Path, array: np.ndarray, readout: str, token_meaning: str) -> Dict[str, Any]:
+    array = np.asarray(array, dtype=np.float32)
+    np.save(path, array)
     return {
-        "shape": list(arr.shape),
-        "saved_dtype": "float32",
-        "original_dtype": str(tensor.dtype),
         "path": str(path),
+        "shape": [int(value) for value in array.shape],
+        "saved_dtype": "float32",
+        "readout": readout,
+        "pooling": "none",
+        "token_dim_meaning": token_meaning,
         "bytes": int(path.stat().st_size) if path.exists() else 0,
+        "has_nan": bool(np.isnan(array).any()),
+        "has_inf": bool(np.isinf(array).any()),
     }
-
-
-# -----------------------------------------------------------------------------
-# Probe hook manager
-# -----------------------------------------------------------------------------
-class ProbeHookManager:
-    def __init__(self, vla: Any):
-        self.vla = vla
-        self.features: Dict[str, torch.Tensor] = {}
-        self.handles: List[Any] = []
-        self.missing: List[str] = []
-        self._register_hooks()
-
-    def _hook_fn(self, module_path: str):
-        def hook(module: Any, inputs: Any, output: Any) -> None:
-            tensor = output
-            if isinstance(output, tuple):
-                tensor = output[0]
-            if not isinstance(tensor, torch.Tensor):
-                self.features[module_path] = None  # type: ignore[assignment]
-                return
-            self.features[module_path] = tensor.detach().clone()
-        return hook
-
-    def _get_module(self, path: str) -> Optional[Any]:
-        parts = path.split(".")
-        module: Any = self.vla
-        for part in parts:
-            if hasattr(module, part):
-                module = getattr(module, part)
-            else:
-                return None
-        return module
-
-    def _register_hooks(self) -> None:
-        for module_path in PROBE_TARGETS:
-            module = self._get_module(module_path)
-            if module is None:
-                self.missing.append(module_path)
-                continue
-            handle = module.register_forward_hook(self._hook_fn(module_path))
-            self.handles.append(handle)
-
-    def remove_hooks(self) -> None:
-        for handle in self.handles:
-            handle.remove()
-        self.handles.clear()
 
 
 # -----------------------------------------------------------------------------
 # Segmentation env creation
 # -----------------------------------------------------------------------------
-def get_segmentation_env(task: Any, resolution: int = 256) -> tuple[SegmentationRenderEnv, str]:
+def get_segmentation_env(task: Any, resolution: int = 256) -> Tuple[SegmentationRenderEnv, str]:
     """Create LIBERO SegmentationRenderEnv for the given task."""
     task_description = task.language
     task_bddl_file = os.path.join(
@@ -208,44 +207,239 @@ def get_segmentation_env(task: Any, resolution: int = 256) -> tuple[Segmentation
 
 
 # -----------------------------------------------------------------------------
-# Label extraction
+# Label extraction (raw simulator frame + OpenVLA model-input frame)
 # -----------------------------------------------------------------------------
-def build_label_record(
+def save_mask_overlay(
+    output_path: Path,
+    rgb: np.ndarray,
+    mask: np.ndarray,
+    stats: Dict[str, Any],
+    caption: str,
+) -> None:
+    image = Image.fromarray(np.asarray(rgb).astype(np.uint8)).convert("RGBA")
+    overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    overlay_array = np.zeros((image.size[1], image.size[0], 4), dtype=np.uint8)
+    overlay_array[np.asarray(mask).astype(bool)] = (255, 0, 0, 95)
+    overlay = Image.fromarray(overlay_array, mode="RGBA")
+
+    composed = Image.alpha_composite(image, overlay)
+    draw = ImageDraw.Draw(composed)
+    draw.rectangle((0, 0, image.size[0], 24), fill=(0, 0, 0, 170))
+    draw.text((4, 5), caption, fill=(255, 255, 255, 255), font=ImageFont.load_default())
+    if stats["centroid"] is not None:
+        u, v = stats["centroid"]
+        x0, y0, x1, y1 = stats["bbox"]
+        draw.rectangle((x0, y0, x1, y1), outline=(0, 255, 0, 255), width=2)
+        draw.ellipse((u - 3, v - 3, u + 3, v + 3), fill=(255, 255, 0, 255))
+    composed.convert("RGB").save(output_path)
+
+
+def build_role_label(
     obs: Dict[str, Any],
     output_dir: Path,
     step: int,
+    role: str,
+    entity: str,
+    segmentation_id: int,
     camera: str,
     mapping: Dict[str, str],
     segmentation_key: str,
-    target_object: str,
-    target_id: int,
     min_mask_pixels: int,
+    resize_size: int,
+    center_crop: bool,
+    crop_scale: float,
 ) -> Dict[str, Any]:
+    """Spatial label for one (role, camera) pair in both coordinate frames."""
     rgb = np.asarray(obs[mapping["obs_rgb"]])
     height, width = rgb.shape[:2]
-    segmentation = obs[segmentation_key]
-    label = compute_mask_label(segmentation, target_id, (height, width), min_mask_pixels)
+    segmentation = normalize_segmentation(obs[segmentation_key])
+    if segmentation.shape[:2] != (height, width):
+        raise ValueError(
+            f"RGB/segmentation shape mismatch for {camera}: rgb={(height, width)}, "
+            f"seg={segmentation.shape[:2]}"
+        )
 
-    overlay_path = output_dir / f"step_{step:03d}_{camera}_overlay.png"
-    rgb_path = output_dir / f"step_{step:03d}_{camera}_rgb.png"
-    mask_path = output_dir / f"step_{step:03d}_{camera}_mask.npy"
+    raw_mask = segmentation == segmentation_id
+    raw_stats = mask_statistics(raw_mask, min_mask_pixels)
 
-    save_overlay(overlay_path, rgb, label, camera, target_object, target_id)
-    save_rgb(rgb_path, rgb)
-    np.save(mask_path, label["mask"].astype(np.uint8))
+    prefix = f"step_{step:03d}_{role}_{entity}_{camera}"
+    raw_mask_path = output_dir / f"{prefix}_mask_raw.npy"
+    raw_overlay_path = output_dir / f"{prefix}_overlay_raw.png"
+    np.save(raw_mask_path, raw_mask.astype(np.uint8))
+    save_mask_overlay(
+        raw_overlay_path,
+        rgb,
+        raw_mask,
+        raw_stats,
+        caption=(
+            f"RAW {camera} {role}={entity} id={segmentation_id} "
+            f"vis={raw_stats['visible']} n={raw_stats['mask_pixel_count']}"
+        ),
+    )
 
-    record = {key: value for key, value in label.items() if key != "mask"}
+    record: Dict[str, Any] = {
+        "role": role,
+        "entity": entity,
+        "camera": camera,
+        "segmentation_key": segmentation_key,
+        "segmentation_id": int(segmentation_id),
+        "rgb_shape": [int(value) for value in rgb.shape],
+        "segmentation_shape": [int(value) for value in segmentation.shape],
+        "feeds_model_input": camera == "agentview",
+        # --- raw simulator frame ---
+        "visible_raw": raw_stats["visible"],
+        "below_min_mask_pixels_raw": raw_stats["below_min_mask_pixels"],
+        "min_mask_pixels": raw_stats["min_mask_pixels"],
+        "mask_pixel_count_raw": raw_stats["mask_pixel_count"],
+        "target_uv_raw": raw_stats["centroid"],
+        "target_uv_raw_normalized": raw_stats["centroid_normalized"],
+        "bbox_raw": raw_stats["bbox"],
+        "mask_raw_path": str(raw_mask_path),
+        "overlay_raw_path": str(raw_overlay_path),
+        # --- model-input frame (filled in below for the agentview camera) ---
+        "visible_model_input": None,
+        "below_min_mask_pixels_model_input": None,
+        "mask_pixel_count_model_input": None,
+        "target_uv_model_input": None,
+        "target_uv_model_input_normalized": None,
+        "bbox_model_input": None,
+        "mask_model_input_path": None,
+        "overlay_model_input_path": None,
+        "target_uv_model_input_analytic": None,
+        "centroid_mask_vs_analytic_l2": None,
+        "model_input_transform": None,
+    }
+
+    # Only the agentview camera is fed to OpenVLA, so only it has a model-input frame.
+    if camera != "agentview":
+        record["model_input_note"] = (
+            "camera is not part of OpenVLA's input; no model-input frame exists"
+        )
+        return record
+
+    model_mask = mask_to_model_input(
+        raw_mask,
+        resize_size=resize_size,
+        center_crop=center_crop,
+        crop_scale=crop_scale,
+    )
+    model_stats = mask_statistics(model_mask, min_mask_pixels)
+    model_rgb = rgb_to_model_input(
+        rgb, resize_size=resize_size, center_crop=center_crop, crop_scale=crop_scale
+    )
+
+    model_mask_path = output_dir / f"{prefix}_mask_model_input.npy"
+    model_overlay_path = output_dir / f"{prefix}_overlay_model_input.png"
+    np.save(model_mask_path, model_mask.astype(np.uint8))
+    save_mask_overlay(
+        model_overlay_path,
+        model_rgb,
+        model_mask,
+        model_stats,
+        caption=(
+            f"MODEL-IN {role}={entity} id={segmentation_id} "
+            f"vis={model_stats['visible']} n={model_stats['mask_pixel_count']}"
+        ),
+    )
+
+    analytic_uv = None
+    centroid_gap = None
+    if raw_stats["centroid"] is not None:
+        analytic_uv = list(
+            map_uv_raw_to_model_input(
+                raw_stats["centroid"][0],
+                raw_stats["centroid"][1],
+                raw_shape=(height, width),
+                resize_size=resize_size,
+                center_crop=center_crop,
+                crop_scale=crop_scale,
+            )
+        )
+        if model_stats["centroid"] is not None:
+            centroid_gap = float(
+                np.linalg.norm(np.array(analytic_uv) - np.array(model_stats["centroid"]))
+            )
+
     record.update(
         {
-            "rgb_shape": list(rgb.shape),
-            "segmentation_shape": list(np.asarray(segmentation).shape),
-            "segmentation_key": segmentation_key,
-            "overlay_path": str(overlay_path),
-            "rgb_path": str(rgb_path),
-            "mask_path": str(mask_path),
+            "visible_model_input": model_stats["visible"],
+            "below_min_mask_pixels_model_input": model_stats["below_min_mask_pixels"],
+            "mask_pixel_count_model_input": model_stats["mask_pixel_count"],
+            "target_uv_model_input": model_stats["centroid"],
+            "target_uv_model_input_normalized": model_stats["centroid_normalized"],
+            "bbox_model_input": model_stats["bbox"],
+            "mask_model_input_path": str(model_mask_path),
+            "overlay_model_input_path": str(model_overlay_path),
+            "target_uv_model_input_analytic": analytic_uv,
+            "centroid_mask_vs_analytic_l2": centroid_gap,
+            "model_input_transform": describe_transform(
+                raw_shape=rgb.shape[:2],
+                resize_size=resize_size,
+                center_crop=center_crop,
+                crop_scale=crop_scale,
+            ),
         }
     )
     return record
+
+
+# -----------------------------------------------------------------------------
+# Feature persistence
+# -----------------------------------------------------------------------------
+def save_stream(stream: ProbeStream, output_dir: Path) -> Dict[str, Any]:
+    """Persist one probe stream and describe it for the feature manifest."""
+    stage = stream.functional_stage
+    token_meaning = TOKEN_DIM_MEANING.get(stage, "unspecified")
+    entry: Dict[str, Any] = {
+        "module_path": stream.module_path,
+        "functional_stage": stage,
+        "hook_type": stream.hook_type,
+        "readout_description": stream.readout_description,
+        "is_action_head_input": stage == "pre_action_hidden",
+        "call_count": stream.call_count,
+        "non_tensor_calls": stream.non_tensor_calls,
+        "calls": [record.to_dict() for record in stream.records],
+        "prompt_call_indices": [
+            record.call_index for record in stream.records if record.call_type == "prompt_prefill"
+        ],
+        "generation_call_indices": [
+            record.call_index
+            for record in stream.records
+            if record.call_type == "autoregressive_generation"
+        ],
+        "captured": bool(stream.records),
+        "artifacts": {},
+    }
+    if not stream.records:
+        entry["reason"] = "hook never produced a tensor"
+        return entry
+
+    safe_stage = stage.replace(".", "_")
+
+    if stage in SINGLE_CALL_STAGES:
+        array = stream.prefill_tensor()
+        path = output_dir / f"feature_{safe_stage}.npy"
+        entry["artifacts"]["full"] = save_array(path, array, "full_forward_output", token_meaning)
+        return entry
+
+    prefill = stream.prefill_tensor()
+    if prefill is not None and prefill.ndim >= 2 and prefill.shape[1] > 1:
+        path = output_dir / f"feature_{safe_stage}_prefill_full.npy"
+        entry["artifacts"]["prefill_full_sequence"] = save_array(
+            path, prefill, "full_sequence_of_call_0", token_meaning
+        )
+
+    stacked = stream.last_token_stack()
+    if stacked is not None:
+        name = (
+            "pre_action_hidden_last_token.npy"
+            if stage == "pre_action_hidden"
+            else f"feature_{safe_stage}_last_token.npy"
+        )
+        entry["artifacts"]["last_token_stack"] = save_array(
+            output_dir / name, stacked, "last_token_per_call", LAST_TOKEN_STACK_MEANING
+        )
+    return entry
 
 
 # -----------------------------------------------------------------------------
@@ -265,6 +459,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resize_size", type=int, default=DEFAULT_RESIZE_SIZE)
     parser.add_argument("--center_crop", action="store_true", default=DEFAULT_CENTER_CROP)
     parser.add_argument("--no_center_crop", dest="center_crop", action="store_false")
+    parser.add_argument("--crop_scale", type=float, default=DEFAULT_CROP_SCALE)
     parser.add_argument("--unnorm_key", type=str, default=DEFAULT_UNNORM_KEY)
     parser.add_argument("--attn_implementation", type=str, default="eager")
     parser.add_argument("--dtype", type=str, default="bfloat16", choices=["bfloat16", "float16", "float32"])
@@ -272,6 +467,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output_dir", type=str, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--min_mask_pixels", type=int, default=10)
+    parser.add_argument("--ood_config_path", type=str, default=DEFAULT_OOD_SPATIAL_CONFIG)
+    parser.add_argument("--perturbation_seed", type=int, default=0)
     return parser.parse_args()
 
 
@@ -321,6 +518,7 @@ def main() -> int:
         "resolution": args.resolution,
         "resize_size": args.resize_size,
         "center_crop": args.center_crop,
+        "crop_scale": args.crop_scale,
         "unnorm_key": args.unnorm_key,
         "dtype": args.dtype,
         "gpu": args.gpu,
@@ -328,6 +526,7 @@ def main() -> int:
         "exception_occurred": False,
         "exception_message": None,
     }
+    env = None
 
     try:
         log_section("Pre-flight checks")
@@ -367,13 +566,14 @@ def main() -> int:
         task_suite = benchmark_dict[args.task_suite]()
         task = task_suite.get_task(args.task_id)
         initial_states = task_suite.get_task_init_states(args.task_id)
+        bddl_path = task_suite.get_task_bddl_file_path(args.task_id)
         print(f"Task name: {task.name}")
         print(f"Task language: {task.language}")
         print(f"Initial states shape: {initial_states.shape}")
 
         metadata["task_name"] = task.name
         metadata["task_instruction"] = task.language
-        metadata["bddl_path"] = task_suite.get_task_bddl_file_path(args.task_id)
+        metadata["bddl_path"] = bddl_path
 
         log_section("Creating SegmentationRenderEnv")
         env, task_description = get_segmentation_env(task, resolution=args.resolution)
@@ -392,6 +592,19 @@ def main() -> int:
                 raise RuntimeError(f"Environment terminated during dummy step {i}.")
         print(f"Completed {args.num_steps_wait} dummy steps.")
 
+        log_section("Source / destination / swap-counterpart resolution")
+        entities = resolve_spatial_task_from_env(
+            env=env,
+            bddl_path=bddl_path,
+            task_suite=args.task_suite,
+            task_name=task.name,
+            ood_config_path=args.ood_config_path,
+            perturbation_seed=args.perturbation_seed,
+        )
+        for line in entities.summary_lines():
+            print(f"  {line}")
+        metadata["spatial_entities"] = entities.to_dict()
+
         log_section("Observation inspection")
         for key in sorted(obs.keys()):
             value = obs[key]
@@ -400,32 +613,38 @@ def main() -> int:
             else:
                 print(f"  {key}: type={type(value).__name__}")
 
-        # Determine camera keys.
-        camera_keys = []
-        preferred = ["agentview_image", "robot0_eye_in_hand_image"]
-        for key in preferred:
-            if key in obs and isinstance(obs[key], np.ndarray) and obs[key].ndim == 3 and obs[key].shape[2] == 3:
-                camera_keys.append(key)
-        for key in sorted(obs.keys()):
-            if key not in camera_keys and key.endswith("_image") and isinstance(obs[key], np.ndarray):
-                if obs[key].ndim == 3 and obs[key].shape[2] == 3:
-                    camera_keys.append(key)
-        print(f"Selected camera keys: {camera_keys}")
-
-        log_section("Target object and segmentation keys")
         segmentation_keys = {
             camera: find_segmentation_key(obs, mapping["seg_camera"])
             for camera, mapping in CAMERA_KEY_MAP.items()
         }
         print(f"Segmentation keys: {segmentation_keys}")
 
-        target_object = select_single_movable_source(env)
-        target_id = target_instance_id(env, target_object)
-        print(f"Target object: {target_object}, segmentation id: {target_id}")
-        metadata["target_object"] = target_object
-        metadata["target_segmentation_id"] = target_id
+        instance_to_id = dict(getattr(env, "instance_to_id", {}))
+        role_entities: Dict[str, Optional[str]] = {
+            "source": entities.source_object,
+            "destination": entities.destination_object,
+            "swap_counterpart": entities.swap_counterpart,
+        }
+        segmentation_ids: Dict[str, Optional[int]] = {}
+        for role, entity in role_entities.items():
+            if entity is None:
+                segmentation_ids[role] = None
+                continue
+            if entity not in instance_to_id:
+                raise KeyError(
+                    f"{role} object {entity!r} missing from segmentation instance map. "
+                    f"Available: {sorted(instance_to_id)}"
+                )
+            segmentation_ids[role] = int(instance_to_id[entity])
+        print(f"Role -> entity: {role_entities}")
+        print(f"Role -> segmentation id: {segmentation_ids}")
+        metadata["role_entities"] = role_entities
+        metadata["role_segmentation_ids"] = segmentation_ids
 
         log_section("OpenVLA inference with probes (HOOK ON)")
+        if torch.cuda.is_available():
+            torch.cuda.reset_peak_memory_stats()
+
         img = get_libero_image(obs, args.resize_size)
         observation = {
             "full_image": img,
@@ -438,10 +657,13 @@ def main() -> int:
         if hook_manager.missing:
             print(f"[WARN] Missing modules: {hook_manager.missing}")
         else:
-            print("All probe targets registered.")
+            print(
+                f"Registered {len(FORWARD_PROBE_TARGETS)} forward hooks and "
+                f"{len(PRE_FORWARD_PROBE_TARGETS)} forward-pre hooks."
+            )
 
         inference_start = time.time()
-        action_with_hooks = get_vla_action(
+        action_with_hooks, model_input_image = get_vla_action(
             vla=vla,
             processor=processor,
             base_vla_name=args.checkpoint_id,
@@ -450,6 +672,7 @@ def main() -> int:
             unnorm_key=args.unnorm_key,
             center_crop=args.center_crop,
             dtype=dtype,
+            return_model_input_image=True,
         )
         latency_with_hooks_ms = (time.time() - inference_start) * 1000.0
         print(f"Action with hooks: {action_with_hooks}")
@@ -458,9 +681,35 @@ def main() -> int:
         if not np.isfinite(action_with_hooks).all():
             raise RuntimeError(f"Non-finite action with hooks: {action_with_hooks}")
 
+        log_section("Hook call accounting")
+        for key, stream in hook_manager.streams.items():
+            call_types = [record.call_type for record in stream.records]
+            print(
+                f"  {stream.functional_stage:24s} hook={stream.hook_type:11s} "
+                f"calls={stream.call_count} types={call_types}"
+            )
+        pre_action_stream = hook_manager.stream_by_stage("pre_action_hidden")
+        lm_head_stream = hook_manager.stream_by_stage("lm_head_logits")
+        if pre_action_stream is None or not pre_action_stream.records:
+            raise RuntimeError("pre_action_hidden was never captured.")
+        metadata["lm_head_call_count"] = lm_head_stream.call_count if lm_head_stream else 0
+        metadata["pre_action_hidden_call_count"] = pre_action_stream.call_count
+        metadata["action_dim"] = int(action_dim)
+        metadata["lm_head_calls_equal_action_dim"] = bool(
+            metadata["lm_head_call_count"] == int(action_dim)
+        )
+        print(
+            f"Measured lm_head calls: {metadata['lm_head_call_count']} "
+            f"(action_dim={action_dim}, not assumed equal)"
+        )
+
+        nonfinite = hook_manager.nonfinite_stages()
+        if nonfinite:
+            raise RuntimeError(f"NaN/Inf detected in captured activations: {nonfinite}")
+        print("No NaN/Inf in any captured activation.")
+
         log_section("OpenVLA inference without probes (HOOK OFF)")
         hook_manager.remove_hooks()
-        # Clear any cached feature tensors before running again.
         if torch.cuda.is_available():
             torch.cuda.synchronize()
 
@@ -500,73 +749,107 @@ def main() -> int:
         print(f"Raw action: {raw_action}")
         print(f"Final action: {action}")
 
-        log_section("Extracting labels from the same observation")
-        labels = {}
-        for camera, mapping in CAMERA_KEY_MAP.items():
-            labels[camera] = build_label_record(
-                obs=obs,
-                output_dir=output_dir,
-                step=1,
-                camera=camera,
-                mapping=mapping,
-                segmentation_key=segmentation_keys[camera],
-                target_object=target_object,
-                target_id=target_id,
-                min_mask_pixels=args.min_mask_pixels,
+        log_section("Model-input coordinate verification")
+        raw_agentview = np.asarray(obs[MODEL_INPUT_CAMERA_KEY])
+        reconstructed = rgb_to_model_input(
+            raw_agentview,
+            resize_size=args.resize_size,
+            center_crop=args.center_crop,
+            crop_scale=args.crop_scale,
+        )
+        model_input_delta = float(
+            np.max(np.abs(reconstructed.astype(np.int32) - model_input_image.astype(np.int32)))
+        )
+        print(f"Shared transform vs. actual OpenVLA input, max abs pixel diff: {model_input_delta}")
+        if model_input_delta != 0.0:
+            raise RuntimeError(
+                "The shared model-input transform does not reproduce the image handed to "
+                f"OpenVLA (max abs diff {model_input_delta}). Spatial labels would be "
+                "misaligned."
             )
-            print(f"  {camera}: visible={labels[camera]['visible']}, "
-                  f"count={labels[camera]['mask_pixel_count']}, "
-                  f"centroid={labels[camera]['target_uv_pixel']}")
+        metadata["model_input_transform_max_pixel_diff"] = model_input_delta
+        metadata["model_input_transform_verified"] = True
+
+        model_input_rgb_path = output_dir / "step_001_agentview_rgb_model_input.png"
+        raw_rgb_path = output_dir / "step_001_agentview_rgb_raw.png"
+        save_rgb(model_input_rgb_path, reconstructed)
+        save_rgb(raw_rgb_path, raw_agentview)
+        save_rgb(
+            output_dir / "step_001_eye_in_hand_rgb_raw.png",
+            np.asarray(obs[CAMERA_KEY_MAP["eye_in_hand"]["obs_rgb"]]),
+        )
+        print(f"Saved model-input RGB: {model_input_rgb_path}")
+
+        log_section("Extracting spatial labels (raw and model-input frames)")
+        labels: Dict[str, Dict[str, Any]] = {}
+        for role in LABEL_ROLES:
+            entity = role_entities.get(role)
+            if entity is None:
+                labels[role] = {"entity": None, "note": "role not resolved for this task"}
+                continue
+            labels[role] = {"entity": entity, "cameras": {}}
+            for camera, mapping in CAMERA_KEY_MAP.items():
+                record = build_role_label(
+                    obs=obs,
+                    output_dir=output_dir,
+                    step=1,
+                    role=role,
+                    entity=entity,
+                    segmentation_id=segmentation_ids[role],
+                    camera=camera,
+                    mapping=mapping,
+                    segmentation_key=segmentation_keys[camera],
+                    min_mask_pixels=args.min_mask_pixels,
+                    resize_size=args.resize_size,
+                    center_crop=args.center_crop,
+                    crop_scale=args.crop_scale,
+                )
+                labels[role]["cameras"][camera] = record
+                print(
+                    f"  {role:17s} {camera:11s} raw uv={record['target_uv_raw']} "
+                    f"n={record['mask_pixel_count_raw']} | model-input uv="
+                    f"{record['target_uv_model_input']} n={record['mask_pixel_count_model_input']}"
+                )
 
         log_section("Saving features")
-        feature_manifest: Dict[str, Any] = {}
-        for module_path, (functional_stage, readout_description) in PROBE_TARGETS.items():
-            tensor = hook_manager.features.get(module_path)
-            if tensor is None:
-                feature_manifest[module_path] = {
-                    "functional_stage": functional_stage,
-                    "captured": False,
-                    "reason": "missing_module" if module_path in hook_manager.missing else "no_output",
-                }
-                continue
-
-            safe_name = module_path.replace(".", "_")
-            feature_path = output_dir / f"feature_{safe_name}.npy"
-            tensor_meta = save_tensor(feature_path, tensor)
-
-            feature_manifest[module_path] = {
-                "functional_stage": functional_stage,
-                "readout": readout_description,
-                "readout_type": "direct_forward_output",
-                "pooling": "none",
-                "spatial_or_token": "spatial" if tensor.ndim == 3 and tensor.shape[1] > 1 else "token",
-                "captured": True,
-                "timestep": 1,
-                "batch_index": 0,
-                "module_name": module_path,
-                **tensor_meta,
+        feature_manifest: Dict[str, Any] = {
+            "probe_targets_forward": {
+                path: stage for path, (stage, _) in FORWARD_PROBE_TARGETS.items()
+            },
+            "probe_targets_forward_pre": {
+                path: stage for path, (stage, _) in PRE_FORWARD_PROBE_TARGETS.items()
+            },
+            "missing_modules": hook_manager.missing,
+            "streams": {},
+        }
+        for key, stream in hook_manager.streams.items():
+            entry = save_stream(stream, output_dir)
+            feature_manifest["streams"][key] = entry
+            saved = {
+                name: artifact["shape"] for name, artifact in entry["artifacts"].items()
             }
-            print(f"  {module_path}: shape={tensor_meta['shape']}, dtype={tensor_meta['original_dtype']}")
+            print(f"  {stream.functional_stage:24s} calls={entry['call_count']} saved={saved}")
 
-        # Validate features.
-        nan_inf_features = []
-        empty_features = []
-        for module_path, meta in feature_manifest.items():
-            if not meta.get("captured"):
-                continue
-            arr = np.load(meta["path"])
-            if not np.isfinite(arr).all():
-                nan_inf_features.append(module_path)
-            if arr.size == 0:
-                empty_features.append(module_path)
-
-        if nan_inf_features:
-            raise RuntimeError(f"NaN/Inf detected in features: {nan_inf_features}")
-        if empty_features:
-            raise RuntimeError(f"Empty feature arrays: {empty_features}")
+        nan_inf_artifacts = [
+            f"{key}:{name}"
+            for key, entry in feature_manifest["streams"].items()
+            for name, artifact in entry["artifacts"].items()
+            if artifact["has_nan"] or artifact["has_inf"]
+        ]
+        empty_artifacts = [
+            f"{key}:{name}"
+            for key, entry in feature_manifest["streams"].items()
+            for name, artifact in entry["artifacts"].items()
+            if 0 in artifact["shape"]
+        ]
+        if nan_inf_artifacts:
+            raise RuntimeError(f"NaN/Inf detected in saved features: {nan_inf_artifacts}")
+        if empty_artifacts:
+            raise RuntimeError(f"Empty feature arrays: {empty_artifacts}")
         print("Feature validation passed: no NaN/Inf, no empty arrays.")
 
         log_section("Saving observation metadata")
+        world_positions = get_entity_world_positions(env, entities.tracked_entities)
         observation_metadata: Dict[str, Any] = {
             "task_name": task.name,
             "task_instruction": task.language,
@@ -574,14 +857,26 @@ def main() -> int:
             "episode_id": args.init_state_id,
             "timestep": 1,
             "seed": args.seed,
-            "target_object": target_object,
-            "target_segmentation_id": target_id,
-            "target_world_pos": get_target_world_pos(env, target_object),
+            "spatial_entities": entities.to_dict(),
+            "role_entities": role_entities,
+            "role_segmentation_ids": segmentation_ids,
+            "pre_grasp_relevant_entity": entities.pre_grasp_relevant_entity,
+            "post_grasp_relevant_entity": entities.post_grasp_relevant_entity,
+            "entity_world_positions": world_positions,
             "robot_metadata": get_robot_metadata(obs),
             "camera_metadata": {
                 camera: get_camera_metadata(env, mapping["metadata_camera"])
                 for camera, mapping in CAMERA_KEY_MAP.items()
             },
+            "model_input_transform": describe_transform(
+                raw_shape=raw_agentview.shape[:2],
+                resize_size=args.resize_size,
+                center_crop=args.center_crop,
+                crop_scale=args.crop_scale,
+            ),
+            "model_input_transform_max_pixel_diff": model_input_delta,
+            "model_input_rgb_path": str(model_input_rgb_path),
+            "raw_rgb_path": str(raw_rgb_path),
             "labels": labels,
             "actions": {
                 "raw": raw_action.tolist(),
@@ -597,15 +892,17 @@ def main() -> int:
         obs_meta_path = output_dir / "observation_metadata.json"
         with open(obs_meta_path, "w", encoding="utf-8") as f:
             json.dump(strict_json_ready(observation_metadata), f, indent=2, allow_nan=False)
-        print(f"Saved observation_metadata.json")
+        print("Saved observation_metadata.json")
 
         log_section("Saving feature manifest")
         manifest_path = output_dir / "feature_manifest.json"
         with open(manifest_path, "w", encoding="utf-8") as f:
-            json.dump(feature_manifest, f, indent=2)
-        print(f"Saved feature_manifest.json")
+            json.dump(strict_json_ready(feature_manifest), f, indent=2, allow_nan=False)
+        print("Saved feature_manifest.json")
 
         log_section("Saving dry-run summary")
+        source_label = labels["source"]["cameras"]["agentview"]
+        destination_label = labels["destination"]["cameras"]["agentview"]
         summary = {
             "success": True,
             "output_dir": str(output_dir),
@@ -617,25 +914,43 @@ def main() -> int:
             "init_state_id": args.init_state_id,
             "timestep": 1,
             "condition": "vanilla",
+            "source_object": entities.source_object,
+            "destination_object": entities.destination_object,
+            "swap_counterpart": entities.swap_counterpart,
+            "perturbation_moved_entities": entities.perturbation_moved_entities,
+            "source_uv_raw": source_label["target_uv_raw"],
+            "source_uv_model_input": source_label["target_uv_model_input"],
+            "destination_uv_raw": destination_label["target_uv_raw"],
+            "destination_uv_model_input": destination_label["target_uv_model_input"],
+            "source_overlay_model_input": source_label["overlay_model_input_path"],
+            "destination_overlay_model_input": destination_label["overlay_model_input_path"],
+            "model_input_transform_max_pixel_diff": model_input_delta,
             "action_identity_pass": metadata["action_identity_pass"],
             "action_identity_max_diff": metadata["action_identity_max_diff"],
             "latency_with_hooks_ms": latency_with_hooks_ms,
             "latency_without_hooks_ms": latency_without_hooks_ms,
             "hook_overhead_ms": metadata["hook_overhead_ms"],
-            "features_captured": sum(1 for m in feature_manifest.values() if m.get("captured")),
-            "features_total": len(PROBE_TARGETS),
+            "lm_head_call_count": metadata["lm_head_call_count"],
+            "pre_action_hidden_call_count": metadata["pre_action_hidden_call_count"],
+            "action_dim": int(action_dim),
+            "streams_captured": sum(
+                1 for entry in feature_manifest["streams"].values() if entry["captured"]
+            ),
+            "streams_total": len(feature_manifest["streams"]),
             "features_missing": hook_manager.missing,
             "feature_manifest_path": str(manifest_path),
             "observation_metadata_path": str(obs_meta_path),
             "nan_inf_detected": False,
+            "gpu_memory_mb": record_gpu_memory(),
         }
         summary_path = output_dir / "dry_run_summary.json"
         with open(summary_path, "w", encoding="utf-8") as f:
-            json.dump(summary, f, indent=2)
-        print(f"Saved dry_run_summary.json")
+            json.dump(strict_json_ready(summary), f, indent=2, allow_nan=False)
+        print("Saved dry_run_summary.json")
 
         log_section("Closing environment")
         env.close()
+        env = None
         print("Environment closed.")
 
         metadata["dry_run_summary_path"] = str(summary_path)
@@ -648,14 +963,15 @@ def main() -> int:
         print("\n[ERROR] Exception during dry-run:")
         traceback.print_exc()
         try:
-            env.close()
+            if env is not None:
+                env.close()
         except Exception:
             pass
         return 1
     finally:
         metadata_path = output_dir / "dry_run_metadata.json"
         with open(metadata_path, "w", encoding="utf-8") as f:
-            json.dump(metadata, f, indent=2, ensure_ascii=False)
+            json.dump(strict_json_ready(metadata), f, indent=2, ensure_ascii=False)
         print(f"Metadata saved: {metadata_path}")
         log_file.close()
         sys.stdout = sys.__stdout__

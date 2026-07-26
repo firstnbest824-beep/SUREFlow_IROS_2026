@@ -43,6 +43,11 @@ import robosuite
 from libero.libero import benchmark, get_libero_path
 from libero.libero.envs import OffScreenRenderEnv
 
+# Make the sibling helper modules importable no matter how this file is loaded.
+_OPENVLA_TOOLS_DIR = os.path.dirname(os.path.abspath(__file__))
+if _OPENVLA_TOOLS_DIR not in sys.path:
+    sys.path.insert(0, _OPENVLA_TOOLS_DIR)
+
 
 # -----------------------------------------------------------------------------
 # Constants
@@ -97,55 +102,16 @@ def log_section(title: str) -> None:
 
 # -----------------------------------------------------------------------------
 # Image preprocessing (TensorFlow-free reimplementation)
+#
+# Implemented once in model_input_transform.py so that RGB frames and
+# segmentation masks provably go through the same rotation / resize / crop.
 # -----------------------------------------------------------------------------
-def pil_jpeg_encode_decode(img: np.ndarray, quality: int = 95) -> np.ndarray:
-    """Approximate tf.image.encode_jpeg / tf.io.decode_image with PIL."""
-    pil_img = Image.fromarray(img)
-    buf = io.BytesIO()
-    pil_img.save(buf, format="JPEG", quality=quality)
-    buf.seek(0)
-    decoded = Image.open(buf).convert("RGB")
-    return np.array(decoded)
-
-
-def resize_image(img: np.ndarray, resize_size: Tuple[int, int]) -> np.ndarray:
-    """Resize uint8 HWC image with JPEG encode/decode and Lanczos3 resize."""
-    assert isinstance(resize_size, tuple) and len(resize_size) == 2
-    img = pil_jpeg_encode_decode(img)
-    pil_img = Image.fromarray(img)
-    # PIL.resize expects (width, height); resize_size is (height, width).
-    pil_img = pil_img.resize((resize_size[1], resize_size[0]), Image.LANCZOS)
-    img = np.array(pil_img)
-    img = np.clip(np.rint(img), 0, 255).astype(np.uint8)
-    return img
-
-
-def get_libero_image(obs: Dict[str, Any], resize_size: int) -> np.ndarray:
-    """Extract agentview_image, rotate 180 degrees, and resize to model input size."""
-    if isinstance(resize_size, int):
-        resize_size = (resize_size, resize_size)
-    img = obs["agentview_image"]
-    img = img[::-1, ::-1]  # rotate 180 degrees to match train preprocessing
-    img = resize_image(img, resize_size)
-    return img
-
-
-def apply_center_crop(image: Image.Image, crop_scale: float = 0.9, output_size: Tuple[int, int] = (224, 224)) -> Image.Image:
-    """Center-crop image to area crop_scale * original area, then resize back.
-
-    Mirrors the dlimp/OpenVLA center-crop augmentation used at training time.
-    """
-    img_np = np.array(image).astype(np.float32) / 255.0
-    h, w = img_np.shape[:2]
-    new_h = int(h * math.sqrt(crop_scale))
-    new_w = int(w * math.sqrt(crop_scale))
-    top = (h - new_h) // 2
-    left = (w - new_w) // 2
-    cropped = img_np[top : top + new_h, left : left + new_w]
-    cropped_uint8 = (np.clip(cropped, 0.0, 1.0) * 255).astype(np.uint8)
-    pil_cropped = Image.fromarray(cropped_uint8)
-    pil_cropped = pil_cropped.resize((output_size[1], output_size[0]), Image.BILINEAR)
-    return pil_cropped
+from model_input_transform import (  # noqa: E402  (import after sys.path setup above)
+    apply_center_crop,
+    get_libero_image,
+    pil_jpeg_encode_decode,
+    resize_image,
+)
 
 
 # -----------------------------------------------------------------------------
@@ -219,8 +185,14 @@ def get_vla_action(
     unnorm_key: str,
     center_crop: bool,
     dtype: torch.dtype,
-) -> np.ndarray:
-    """Generate a single action from OpenVLA given a preprocessed observation."""
+    return_model_input_image: bool = False,
+):
+    """Generate a single action from OpenVLA given a preprocessed observation.
+
+    With ``return_model_input_image=True`` the exact uint8 array handed to the
+    processor is returned alongside the action, so spatial labels can be checked
+    against the image the model actually sees.
+    """
     image = Image.fromarray(obs["full_image"]).convert("RGB")
     if center_crop:
         image = apply_center_crop(image)
@@ -254,6 +226,8 @@ def get_vla_action(
         unnorm_key=unnorm_key,
         do_sample=False,
     )
+    if return_model_input_image:
+        return action, np.array(image)
     return action
 
 
