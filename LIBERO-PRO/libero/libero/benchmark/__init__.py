@@ -4,7 +4,7 @@ import glob
 import random
 import torch
 
-from typing import List, NamedTuple, Type
+from typing import List, NamedTuple, Optional, Type
 from libero.libero import get_libero_path
 from libero.libero.benchmark.libero_suite_task_map import libero_task_map
 
@@ -190,7 +190,7 @@ class Benchmark(abc.ABC):
         self.task_order_index = task_order_index
 
     @staticmethod
-    def _fallback_problem_folder(problem_folder: str) -> str | None:
+    def _fallback_problem_folder(problem_folder: str) -> Optional[str]:
         for suffix in ("_object", "_swap", "_lan", "_task", "_temp", "_env"):
             if problem_folder.endswith(suffix):
                 return problem_folder[: -len(suffix)]
