@@ -1,0 +1,37 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Large artifacts (do not commit checkpoints, rollouts, or features)
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+*.npy
+*.npz
+*.mp4
+*.avi
+*.mov
+*.log
+
+# Local experiment outputs
+env-audit/
+results/
+outputs/
+logs/
