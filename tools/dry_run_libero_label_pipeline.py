@@ -1,8 +1,12 @@
-"""Dry-run validation for LIBERO RGB/segmentation/target-label collection.
+"""[MODEL-AGNOSTIC UTILITY] Dry-run validation for LIBERO RGB/segmentation/target-label collection.
 
 This script does not construct SUREFlow, load a checkpoint, install dependencies,
 or run a policy. It validates one stabilized LIBERO simulator observation and
 writes camera overlays plus a strict JSON summary.
+
+NOTE: This utility is model-independent and can be reused by the OpenVLA
+spatial-diagnostics pipeline. Any SUREFlow-specific import paths or assumptions
+should be removed before reuse in the active OpenVLA path.
 """
 
 from __future__ import annotations

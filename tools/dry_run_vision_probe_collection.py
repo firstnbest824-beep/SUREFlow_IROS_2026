@@ -1,9 +1,13 @@
-"""Dry-run validation for SUREFlow vision-probe feature collection.
+"""[LEGACY / SUREFlow-only] Dry-run validation for SUREFlow vision-probe feature collection.
 
 This script intentionally collects only a tiny rollout window. It validates that
 RGB frames, instance segmentation masks, target 2D labels, target world position,
 and camera-specific ResNet features can be read from the same pre-action
 simulator state.
+
+NOTE: This file is part of the legacy SUREFlow (IROS 2026) artifact and is NOT on
+the active OpenVLA spatial-diagnostics path. The active probe dry-run lives in
+`tools/openvla/dry_run_openvla_spatial_probe.py`.
 """
 
 from __future__ import annotations
