@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # MIT License
 #
 # Copyright (c) 2021 Soohwan Kim and Sangchun Ha and Soyoung Cho

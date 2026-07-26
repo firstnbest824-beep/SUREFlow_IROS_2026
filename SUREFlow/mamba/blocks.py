@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 # Copyright (c) 2024, Tri Dao, Albert Gu.
 from typing import Optional
 

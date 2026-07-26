@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 ###########################################
 # Authors: OpenAI
 # Credit: https://github.com/openai/CLIP

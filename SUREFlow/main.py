@@ -1,5 +1,7 @@
 """Shared utilities for all main scripts."""
 
+
+from __future__ import annotations
 import os
 import pickle
 import random
