@@ -75,6 +75,7 @@ from task_phase_resolver import (
     TaskPhaseResolver,
     compute_frame_inputs,
     config_snapshot as phase_resolver_config_snapshot,
+    per_step_phase_fields,
     phase_result_to_timeline_entry,
     save_phase_timeline,
 )
@@ -328,6 +329,8 @@ def add_text_overlay(
     camera_name: str,
     condition: str,
     phase_result: Optional[Any] = None,
+    source_object: Optional[str] = None,
+    destination_object: Optional[str] = None,
 ) -> np.ndarray:
     img = frame.copy()
     h, w = img.shape[:2]
@@ -349,12 +352,17 @@ def add_text_overlay(
     if phase_result is not None:
         dist = phase_result.source_to_gripper_distance
         dist_str = f"{dist:.3f}" if dist is not None else "n/a"
-        lines.append(
-            f"phase: {phase_result.phase} rel={phase_result.relevant_entity or 'none'}"
-        )
-        lines.append(
-            f"grasp_conf={phase_result.grasp_confidence:.2f} src->grip={dist_str}"
-        )
+        # Mark which of the two named entities the phase currently selects, so
+        # the overlay makes the pre/post-grasp switch visually unambiguous.
+        role = phase_result.relevant_entity_role
+        src_mark = "*" if role == "source" else " "
+        dst_mark = "*" if role == "destination" else " "
+        lines.append(f"phase: {phase_result.phase}")
+        lines.append(f"{src_mark}src: {source_object or 'n/a'}")
+        lines.append(f"{dst_mark}dst: {destination_object or 'n/a'}")
+        lines.append(f"relevant: {phase_result.relevant_entity or 'none'} ({role})")
+        lines.append(f"grasp_conf={phase_result.grasp_confidence:.2f} contact={phase_result.contact}")
+        lines.append(f"src->grip: {dist_str}")
 
     y0 = 12
     dy = 12
@@ -632,7 +640,7 @@ def run_episode(
                 seed_inputs = compute_frame_inputs(
                     env, obs, entities.source_object, entities.destination_object
                 )
-                seed_result = phase_resolver.step(timestep=0, **seed_inputs)
+                seed_result = phase_resolver.update(timestep=0, **seed_inputs)
                 phase_timeline.append(phase_result_to_timeline_entry(seed_result))
                 phase_resolver_seeded = True
 
@@ -683,7 +691,7 @@ def run_episode(
                 frame_inputs = compute_frame_inputs(
                     env, obs, entities.source_object, entities.destination_object
                 )
-                phase_result = phase_resolver.step(
+                phase_result = phase_resolver.update(
                     timestep=step_count,
                     gripper_command=float(action[-1]) if action.size else None,
                     **frame_inputs,
@@ -705,33 +713,23 @@ def run_episode(
                     camera_name=primary_key,
                     condition=condition,
                     phase_result=phase_result,
+                    source_object=entities.source_object,
+                    destination_object=entities.destination_object,
                 )
                 replay_images.append(labeled)
 
-            per_step_records.append({
-                "step": t,
-                "latency_ms": latency_ms,
-                "done": bool(done),
-                "success": success_flag,
-                "success_source": success_source,
-                "raw_action": raw_actions[-1].tolist(),
-                "final_action": final_actions[-1].tolist(),
-                "phase": phase_result.phase if phase_result is not None else None,
-                "relevant_entity": phase_result.relevant_entity if phase_result is not None else None,
-                "relevant_entity_role": phase_result.relevant_entity_role if phase_result is not None else None,
-                "grasp_detected": phase_result.grasp_detected if phase_result is not None else None,
-                "grasp_confidence": phase_result.grasp_confidence if phase_result is not None else None,
-                "phase_reason": phase_result.reason if phase_result is not None else None,
-                "source_to_gripper_distance": (
-                    phase_result.source_to_gripper_distance if phase_result is not None else None
-                ),
-                "source_height_delta": phase_result.source_height_delta if phase_result is not None else None,
-                "source_displacement": phase_result.source_displacement if phase_result is not None else None,
-                "gripper_state": phase_result.gripper_state if phase_result is not None else None,
-                "contact": phase_result.contact if phase_result is not None else None,
-                "source_position": phase_result.source_position if phase_result is not None else None,
-                "destination_position": phase_result.destination_position if phase_result is not None else None,
-            })
+            per_step_records.append(dict(
+                {
+                    "step": t,
+                    "latency_ms": latency_ms,
+                    "done": bool(done),
+                    "success": success_flag,
+                    "success_source": success_source,
+                    "raw_action": raw_actions[-1].tolist(),
+                    "final_action": final_actions[-1].tolist(),
+                },
+                **per_step_phase_fields(phase_result),
+            ))
 
             if (t - args.num_steps_wait) % 20 == 0 or (t - args.num_steps_wait) == 1:
                 print(
@@ -824,7 +822,7 @@ def run_episode(
 
         if phase_timeline:
             log_section(f"Saving phase timeline for {condition}")
-            phase_summary = save_phase_timeline(phase_timeline, output_dir)
+            phase_summary = save_phase_timeline(phase_timeline, output_dir, thresholds=PHASE_DEFAULT_THRESHOLDS)
             metadata["phase_summary"] = phase_summary
             print(
                 f"Phase counts: {phase_summary['phase_counts']}, "

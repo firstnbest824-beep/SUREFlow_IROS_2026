@@ -63,11 +63,23 @@ scripts must import them rather than reimplement their logic.
   combined into a confidence score, and a transition only fires once that
   evidence has been sustained for several consecutive timesteps (thresholds are
   code constants in `PhaseThresholds`, recorded verbatim via `config_snapshot()`).
-  `uncertain` never guesses a relevant entity. Used by
-  `dry_run_openvla_spatial_probe.py`, `run_failure_screening.py`, and
-  `run_single_vanilla_rollout.py`; `save_phase_timeline()` writes the shared
-  `phase_timeline.csv` / `phase_timeline.jsonl` / `phase_transition_summary.json`
-  shape for all three. Self-test (no simulator required):
+  `uncertain` never guesses a relevant entity.
+
+  **Comovement means *moving together*, not *a constant distance*.** Requiring
+  only that the gripper-to-source distance is stable makes a closed gripper
+  hovering over a resting object score as a grasp — two stationary bodies
+  trivially keep a constant offset. Comovement therefore additionally requires
+  that *both* bodies actually travelled at least `min_comovement_motion_m` over
+  the window while their relative offset stayed within
+  `comovement_relative_drift_m`.
+
+  Used by `dry_run_openvla_spatial_probe.py`, `run_failure_screening.py`, and
+  `run_single_vanilla_rollout.py`. `save_phase_timeline()` writes the shared
+  artifact set for all three: `phase_timeline.csv`, `phase_timeline.jsonl`,
+  `phase_summary.json`, `phase_transition_summary.json`,
+  `uncertain_timesteps.json`, `relevant_entity_timeline.csv`. Per-timestep
+  records get their phase columns from `per_step_phase_fields()`.
+  Self-test (no simulator required):
 
       python tools/openvla/task_phase_resolver.py
 

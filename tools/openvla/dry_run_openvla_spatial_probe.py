@@ -127,6 +127,8 @@ from task_phase_resolver import (  # type: ignore
     TaskPhaseResolver,
     compute_frame_inputs,
     config_snapshot as phase_resolver_config_snapshot,
+    phase_result_to_timeline_entry,
+    save_phase_timeline,
 )
 
 
@@ -687,7 +689,7 @@ def main() -> int:
         phase_frame_inputs = compute_frame_inputs(
             env, obs, entities.source_object, entities.destination_object
         )
-        phase_result = phase_resolver.step(timestep=1, **phase_frame_inputs)
+        phase_result = phase_resolver.update(timestep=1, **phase_frame_inputs)
         print(
             f"  phase={phase_result.phase} relevant_entity={phase_result.relevant_entity} "
             f"role={phase_result.relevant_entity_role} grasp_confidence={phase_result.grasp_confidence:.2f}"
@@ -871,13 +873,21 @@ def main() -> int:
         if phase_result.phase != PHASE_UNCERTAIN and relevant_role in labels and phase_result.relevant_entity:
             relevant_record = labels[relevant_role]["cameras"]["agentview"]
             relevant_target_label: Dict[str, Any] = {
-                "valid": True,
+                "relevant_target_valid": True,
                 "invalid_reason": None,
                 "phase": phase_result.phase,
+                "relevant_target_name": phase_result.relevant_entity,
+                "relevant_target_role": relevant_role,
+                # Kept as aliases so consumers written against the resolver's own
+                # field names keep working.
                 "relevant_entity": phase_result.relevant_entity,
                 "relevant_entity_role": relevant_role,
                 "relevant_target_uv_raw": relevant_record["target_uv_raw"],
+                "relevant_target_uv_raw_normalized": relevant_record["target_uv_raw_normalized"],
                 "relevant_target_uv_model_input": relevant_record["target_uv_model_input"],
+                "relevant_target_uv_model_input_normalized": relevant_record[
+                    "target_uv_model_input_normalized"
+                ],
                 "relevant_target_world_position": get_entity_world_position(
                     env, phase_result.relevant_entity
                 ),
@@ -886,22 +896,37 @@ def main() -> int:
             }
         else:
             relevant_target_label = {
-                "valid": False,
+                "relevant_target_valid": False,
                 "invalid_reason": (
                     "phase is uncertain: relevant entity not guessed"
                     if phase_result.phase == PHASE_UNCERTAIN
                     else "relevant entity role unresolved for this task"
                 ),
                 "phase": phase_result.phase,
+                "relevant_target_name": None,
+                "relevant_target_role": "none",
                 "relevant_entity": None,
                 "relevant_entity_role": "none",
                 "relevant_target_uv_raw": None,
+                "relevant_target_uv_raw_normalized": None,
                 "relevant_target_uv_model_input": None,
+                "relevant_target_uv_model_input_normalized": None,
                 "relevant_target_world_position": None,
                 "relevant_target_visible": None,
                 "relevant_target_mask_pixel_count": None,
             }
         print(f"  relevant_target_label: {relevant_target_label}")
+
+        # Emit the same phase artifacts as the rollout runners. This dry-run has a
+        # single timestep, so the "timeline" has one row -- the point is that the
+        # file shape is identical to a full rollout's.
+        phase_summary = save_phase_timeline(
+            [phase_result_to_timeline_entry(phase_result)],
+            str(output_dir),
+            thresholds=PHASE_DEFAULT_THRESHOLDS,
+        )
+        metadata["phase_summary"] = phase_summary
+        print(f"  phase artifacts written: {phase_summary['phase_summary_path']}")
 
         log_section("Saving features")
         feature_manifest: Dict[str, Any] = {
@@ -1017,7 +1042,7 @@ def main() -> int:
             "relevant_entity": phase_result.relevant_entity,
             "relevant_entity_role": phase_result.relevant_entity_role,
             "grasp_confidence": phase_result.grasp_confidence,
-            "relevant_target_label_valid": relevant_target_label["valid"],
+            "relevant_target_valid": relevant_target_label["relevant_target_valid"],
             "source_uv_raw": source_label["target_uv_raw"],
             "source_uv_model_input": source_label["target_uv_model_input"],
             "destination_uv_raw": destination_label["target_uv_raw"],

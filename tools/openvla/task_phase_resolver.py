@@ -49,8 +49,15 @@ class PhaseThresholds:
     gripper_open_qpos_sum: float = 0.03
     gripper_closed_qpos_sum: float = 0.01
     gripper_closing_qpos_delta: float = -0.0008
-    comovement_distance_span_m: float = 0.015
     release_height_drop_m: float = 0.015
+
+    # Comovement. "Moving together" requires that BOTH bodies actually moved
+    # over the window AND that their relative offset stayed rigid. Checking only
+    # that the gripper-to-source *distance* is stable is not enough: a gripper
+    # hovering over a resting object trivially satisfies that and would be
+    # misread as a grasp.
+    comovement_relative_drift_m: float = 0.015
+    min_comovement_motion_m: float = 0.010
 
     # Temporal continuity (all in units of timesteps).
     min_consecutive_contact_steps: int = 3
@@ -105,14 +112,22 @@ class TaskPhaseResult:
     grasp_confidence: float
     evidence: Dict[str, Any]
     transition_detected: bool
+    # Timestep of the most recent phase change (this timestep when
+    # ``transition_detected``, otherwise the last one seen; None before any).
+    transition_timestep: Optional[int]
     reason: str
 
     # Convenience fields also required verbatim by the per-timestep pipeline
-    # output (section 3 of the research plan).
+    # output (section 5 of the research plan).
     source_to_gripper_distance: Optional[float]
     source_height_delta: Optional[float]
     source_displacement: Optional[float]
+    # source_position - gripper_position, and how much that offset moved since
+    # the previous timestep. A rigidly held object keeps the offset ~constant.
+    source_eef_relative_position: Optional[List[float]]
+    source_eef_relative_motion: Optional[float]
     gripper_state: str
+    gripper_command: Optional[float]
     contact: Optional[bool]
     source_position: Optional[List[float]]
     destination_position: Optional[List[float]]
@@ -142,8 +157,9 @@ class TaskPhaseResolver:
 
     One instance must be used for exactly one (source_entity, destination_entity)
     episode; state (streaks, initial source pose, history) is carried across
-    ``step`` calls so the classifier can require sustained evidence instead of
-    reacting to a single noisy frame.
+    ``update`` calls so the classifier can require sustained evidence instead of
+    reacting to a single noisy frame. Call ``reset()`` to reuse the instance for
+    a new episode.
     """
 
     def __init__(
@@ -155,18 +171,25 @@ class TaskPhaseResolver:
         self.source_entity = source_entity
         self.destination_entity = destination_entity
         self.thresholds = thresholds
+        self.reset()
 
+    def reset(self) -> None:
+        """Clear all per-episode state so the instance can start a new episode."""
         self.phase: str = PHASE_PRE_GRASP
         self._initial_source_pos: Optional[List[float]] = None
         self._prev_gripper_qpos: Optional[List[float]] = None
-        self._distance_history: List[float] = []
+        self._prev_relative: Optional[List[float]] = None
+        self._source_history: List[List[float]] = []
+        self._eef_history: List[List[float]] = []
+        self._relative_history: List[List[float]] = []
+        self._last_transition_timestep: Optional[int] = None
 
         self._contact_streak = 0
         self._grasp_evidence_streak = 0
         self._release_evidence_streak = 0
         self._comovement_streak = 0
 
-    def step(
+    def update(
         self,
         timestep: int,
         source_position: Optional[Sequence[float]],
@@ -202,16 +225,24 @@ class TaskPhaseResolver:
                 grasp_confidence=0.0,
                 evidence={"missing_position_data": True},
                 transition_detected=previous_phase != PHASE_UNCERTAIN,
+                transition_timestep=(
+                    timestep if previous_phase != PHASE_UNCERTAIN else self._last_transition_timestep
+                ),
                 reason="source or gripper world position unavailable this timestep",
                 source_to_gripper_distance=None,
                 source_height_delta=None,
                 source_displacement=None,
+                source_eef_relative_position=None,
+                source_eef_relative_motion=None,
                 gripper_state="unknown",
+                gripper_command=gripper_command,
                 contact=None,
                 source_position=source_position,
                 destination_position=destination_position,
                 gripper_position=gripper_position,
             )
+            if previous_phase != PHASE_UNCERTAIN:
+                self._last_transition_timestep = timestep
             self.phase = PHASE_UNCERTAIN
             self._prev_gripper_qpos = gripper_qpos
             return result
@@ -245,13 +276,40 @@ class TaskPhaseResolver:
         gripper_closed_ok = gripper_state in ("closed", "closing")
         lifted_ok = height_delta >= t.grasp_height_delta_m or displacement >= t.grasp_displacement_m
 
-        self._distance_history.append(distance)
-        if len(self._distance_history) > t.distance_history_window:
-            self._distance_history.pop(0)
+        # Relative offset between the source object and the end-effector. A
+        # rigidly held object keeps this vector ~constant while both bodies move.
+        relative = [s - g for s, g in zip(source_position, gripper_position)]
+        relative_motion = _euclidean(relative, self._prev_relative)
+
+        self._source_history.append(source_position)
+        self._eef_history.append(gripper_position)
+        self._relative_history.append(relative)
+        for history in (self._source_history, self._eef_history, self._relative_history):
+            if len(history) > t.distance_history_window:
+                history.pop(0)
+
+        # Comovement requires all three: close enough, BOTH bodies actually
+        # travelled over the window, and the relative offset stayed rigid.
+        # Dropping the "actually travelled" conditions would let a gripper
+        # hovering over a resting object read as a grasp -- the relative offset
+        # of two stationary bodies is trivially constant.
+        window = t.min_consecutive_comovement_steps
         comovement_ok = False
-        if len(self._distance_history) >= t.min_consecutive_comovement_steps:
-            recent = self._distance_history[-t.min_consecutive_comovement_steps :]
-            comovement_ok = proximity_ok and (max(recent) - min(recent)) <= t.comovement_distance_span_m
+        source_window_motion: Optional[float] = None
+        eef_window_motion: Optional[float] = None
+        relative_window_drift: Optional[float] = None
+        if len(self._relative_history) >= window:
+            source_window_motion = _euclidean(source_position, self._source_history[-window])
+            eef_window_motion = _euclidean(gripper_position, self._eef_history[-window])
+            relative_window_drift = max(
+                _euclidean(relative, past) for past in self._relative_history[-window:]
+            )
+            comovement_ok = (
+                proximity_ok
+                and source_window_motion >= t.min_comovement_motion_m
+                and eef_window_motion >= t.min_comovement_motion_m
+                and relative_window_drift <= t.comovement_relative_drift_m
+            )
         self._comovement_streak = self._comovement_streak + 1 if comovement_ok else 0
 
         grasp_confidence = 0.0
@@ -297,6 +355,10 @@ class TaskPhaseResolver:
             "lifted_ok": lifted_ok,
             "comovement_ok": comovement_ok,
             "comovement_streak": self._comovement_streak,
+            "source_window_motion_m": source_window_motion,
+            "eef_window_motion_m": eef_window_motion,
+            "relative_window_drift_m": relative_window_drift,
+            "relative_motion_m": relative_motion,
             "grasp_evidence_streak": self._grasp_evidence_streak,
             "release_evidence_streak": self._release_evidence_streak,
             "grasp_like_now": grasp_like_now,
@@ -337,6 +399,10 @@ class TaskPhaseResolver:
             "destination": self.destination_entity,
         }.get(role)
 
+        transition_detected = new_phase != previous_phase
+        if transition_detected:
+            self._last_transition_timestep = timestep
+
         result = TaskPhaseResult(
             timestep=timestep,
             phase=new_phase,
@@ -346,12 +412,16 @@ class TaskPhaseResolver:
             grasp_detected=grasp_detected,
             grasp_confidence=grasp_confidence,
             evidence=evidence,
-            transition_detected=new_phase != previous_phase,
+            transition_detected=transition_detected,
+            transition_timestep=self._last_transition_timestep,
             reason=reason,
             source_to_gripper_distance=distance,
             source_height_delta=height_delta,
             source_displacement=displacement,
+            source_eef_relative_position=relative,
+            source_eef_relative_motion=relative_motion,
             gripper_state=gripper_state,
+            gripper_command=gripper_command,
             contact=contact_bool if contact is not None else None,
             source_position=source_position,
             destination_position=destination_position,
@@ -360,7 +430,11 @@ class TaskPhaseResolver:
 
         self.phase = new_phase
         self._prev_gripper_qpos = gripper_qpos
+        self._prev_relative = relative
         return result
+
+    # Backwards-compatible alias: earlier callers on this branch used `step`.
+    step = update
 
 
 # -----------------------------------------------------------------------------
@@ -433,6 +507,7 @@ PHASE_TIMELINE_CSV_FIELDS = [
     "phase",
     "previous_phase",
     "transition_detected",
+    "transition_timestep",
     "relevant_entity",
     "relevant_entity_role",
     "grasp_detected",
@@ -440,9 +515,20 @@ PHASE_TIMELINE_CSV_FIELDS = [
     "source_to_gripper_distance",
     "source_height_delta",
     "source_displacement",
+    "source_eef_relative_motion",
     "gripper_state",
+    "gripper_command",
     "contact",
     "phase_reason",
+]
+
+RELEVANT_ENTITY_TIMELINE_CSV_FIELDS = [
+    "timestep",
+    "phase",
+    "relevant_entity",
+    "relevant_entity_role",
+    "relevant_target_valid",
+    "grasp_confidence",
 ]
 
 
@@ -464,8 +550,59 @@ def phase_record_to_row(entry: Dict[str, Any]) -> Dict[str, Any]:
     return {key: entry.get(key) for key in PHASE_TIMELINE_CSV_FIELDS}
 
 
-def save_phase_timeline(phase_timeline: List[Dict[str, Any]], output_dir: str) -> Dict[str, Any]:
-    """Write phase_timeline.csv / .jsonl and return a transition/uncertainty summary."""
+# Fields every runner mixes into its own per-timestep record (per_step_metrics
+# .jsonl). Defined once so the three rollout scripts cannot drift apart.
+PER_STEP_PHASE_FIELDS = [
+    "phase",
+    "relevant_entity",
+    "relevant_entity_role",
+    "grasp_detected",
+    "grasp_confidence",
+    "transition_detected",
+    "transition_timestep",
+    "source_to_gripper_distance",
+    "source_height_delta",
+    "source_displacement",
+    "source_eef_relative_position",
+    "source_eef_relative_motion",
+    "gripper_state",
+    "gripper_command",
+    "contact",
+    "source_position",
+    "destination_position",
+    "gripper_position",
+]
+
+
+def per_step_phase_fields(result: Optional["TaskPhaseResult"]) -> Dict[str, Any]:
+    """Phase columns for one per-timestep record; all ``None`` when disabled."""
+    if result is None:
+        fields: Dict[str, Any] = {key: None for key in PER_STEP_PHASE_FIELDS}
+        fields["phase_reason"] = None
+        fields["phase_evidence"] = None
+        return fields
+    entry = result.to_dict()
+    fields = {key: entry.get(key) for key in PER_STEP_PHASE_FIELDS}
+    fields["phase_reason"] = entry.get("reason")
+    fields["phase_evidence"] = entry.get("evidence")
+    return fields
+
+
+def save_phase_timeline(
+    phase_timeline: List[Dict[str, Any]],
+    output_dir: str,
+    thresholds: PhaseThresholds = DEFAULT_THRESHOLDS,
+) -> Dict[str, Any]:
+    """Write every per-episode phase artifact and return the summary dict.
+
+    Files written into ``output_dir``:
+      * ``phase_timeline.csv``           -- one row per timestep, flat columns
+      * ``phase_timeline.jsonl``         -- one full record per timestep
+      * ``phase_transition_summary.json``-- transitions only
+      * ``phase_summary.json``           -- counts, fractions, config snapshot
+      * ``uncertain_timesteps.json``     -- uncertain timesteps and their reasons
+      * ``relevant_entity_timeline.csv`` -- timestep -> selected relevant entity
+    """
     import csv
     import json
     import os
@@ -483,17 +620,45 @@ def save_phase_timeline(phase_timeline: List[Dict[str, Any]], output_dir: str) -
         for entry in phase_timeline:
             f.write(json.dumps(entry) + "\n")
 
+    relevant_csv_path = os.path.join(output_dir, "relevant_entity_timeline.csv")
+    with open(relevant_csv_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=RELEVANT_ENTITY_TIMELINE_CSV_FIELDS)
+        writer.writeheader()
+        for entry in phase_timeline:
+            writer.writerow(
+                {
+                    "timestep": entry.get("timestep"),
+                    "phase": entry.get("phase"),
+                    "relevant_entity": entry.get("relevant_entity"),
+                    "relevant_entity_role": entry.get("relevant_entity_role"),
+                    "relevant_target_valid": entry.get("relevant_entity") is not None,
+                    "grasp_confidence": entry.get("grasp_confidence"),
+                }
+            )
+
     transitions = [
         {
             "timestep": entry["timestep"],
             "from_phase": entry["previous_phase"],
             "to_phase": entry["phase"],
             "reason": entry["phase_reason"],
+            "grasp_confidence": entry.get("grasp_confidence"),
         }
         for entry in phase_timeline
         if entry["transition_detected"]
     ]
-    uncertain_timesteps = [entry["timestep"] for entry in phase_timeline if entry["phase"] == PHASE_UNCERTAIN]
+    uncertain_entries = [
+        {
+            "timestep": entry["timestep"],
+            "reason": entry["phase_reason"],
+            "grasp_confidence": entry.get("grasp_confidence"),
+            "source_to_gripper_distance": entry.get("source_to_gripper_distance"),
+            "contact": entry.get("contact"),
+        }
+        for entry in phase_timeline
+        if entry["phase"] == PHASE_UNCERTAIN
+    ]
+    uncertain_timesteps = [entry["timestep"] for entry in uncertain_entries]
     phase_counts: Dict[str, int] = {}
     for entry in phase_timeline:
         phase_counts[entry["phase"]] = phase_counts.get(entry["phase"], 0) + 1
@@ -507,22 +672,62 @@ def save_phase_timeline(phase_timeline: List[Dict[str, Any]], output_dir: str) -
         None,
     )
 
+    total = len(phase_timeline)
     summary = {
-        "total_timesteps": len(phase_timeline),
+        "total_timesteps": total,
         "phase_counts": phase_counts,
+        "phase_fractions": {k: v / total for k, v in phase_counts.items()} if total else {},
         "uncertain_timesteps": uncertain_timesteps,
-        "uncertain_fraction": (
-            len(uncertain_timesteps) / len(phase_timeline) if phase_timeline else None
-        ),
+        "uncertain_count": len(uncertain_timesteps),
+        "uncertain_fraction": (len(uncertain_timesteps) / total if total else None),
         "transitions": transitions,
+        "transition_count": len(transitions),
         "first_pre_grasp_to_post_grasp_timestep": pre_to_post,
+        "reached_post_grasp": PHASE_POST_GRASP in phase_counts,
+        "final_phase": phase_timeline[-1]["phase"] if phase_timeline else None,
         "phase_timeline_csv_path": csv_path,
         "phase_timeline_jsonl_path": jsonl_path,
+        "relevant_entity_timeline_csv_path": relevant_csv_path,
     }
-    summary_path = os.path.join(output_dir, "phase_transition_summary.json")
+
+    transition_summary_path = os.path.join(output_dir, "phase_transition_summary.json")
+    with open(transition_summary_path, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "transitions": transitions,
+                "transition_count": len(transitions),
+                "first_pre_grasp_to_post_grasp_timestep": pre_to_post,
+            },
+            f,
+            indent=2,
+            ensure_ascii=False,
+        )
+
+    uncertain_path = os.path.join(output_dir, "uncertain_timesteps.json")
+    with open(uncertain_path, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "uncertain_count": len(uncertain_entries),
+                "uncertain_fraction": summary["uncertain_fraction"],
+                "uncertain_timesteps": uncertain_entries,
+            },
+            f,
+            indent=2,
+            ensure_ascii=False,
+        )
+
+    summary_path = os.path.join(output_dir, "phase_summary.json")
     with open(summary_path, "w", encoding="utf-8") as f:
-        json.dump(summary, f, indent=2, ensure_ascii=False)
-    summary["phase_transition_summary_path"] = summary_path
+        json.dump(
+            dict(summary, phase_resolver_config=config_snapshot(thresholds)),
+            f,
+            indent=2,
+            ensure_ascii=False,
+        )
+
+    summary["phase_transition_summary_path"] = transition_summary_path
+    summary["uncertain_timesteps_path"] = uncertain_path
+    summary["phase_summary_path"] = summary_path
     return summary
 
 
@@ -530,6 +735,11 @@ def save_phase_timeline(phase_timeline: List[Dict[str, Any]], output_dir: str) -
 # Self-test: synthetic trajectories, no simulator required.
 # -----------------------------------------------------------------------------
 def _run_selftest() -> bool:
+    """Synthetic trajectories covering the required phase scenarios.
+
+    No simulator involved: positions/qpos/contact are handed in directly so the
+    temporal logic can be exercised deterministically.
+    """
     ok = True
 
     def check(name: str, condition: bool) -> None:
@@ -539,63 +749,102 @@ def _run_selftest() -> bool:
             ok = False
         print(f"  [{status}] {name}")
 
-    # --- Scenario 1: approach, sustained grasp, then post_grasp holds. ---
-    resolver = TaskPhaseResolver(source_entity="src", destination_entity="dst")
-    src0 = [0.0, 0.0, 0.9]
-    dst = [0.3, 0.0, 0.9]
-    gripper_far = [0.4, 0.0, 1.1]
-    r = resolver.step(0, src0, dst, gripper_far, [0.0208, -0.0208], contact=False)
-    check("t0 starts pre_grasp", r.phase == PHASE_PRE_GRASP and r.relevant_entity == "src")
+    SRC0 = [0.0, 0.0, 0.9]
+    DST = [0.3, 0.0, 0.9]
+    OPEN_QPOS = [0.0208, -0.0208]
+    CLOSED_QPOS = [0.0, 0.0]
 
-    # Approach: gripper closes in on source, not yet touching.
-    for i in range(1, 4):
-        gripper_near = [0.02 * i, 0.0, 0.95]
-        r = resolver.step(i, src0, dst, gripper_near, [0.0208, -0.0208], contact=False)
-    check("still pre_grasp while approaching without contact", r.phase == PHASE_PRE_GRASP)
+    def new_resolver():
+        return TaskPhaseResolver(source_entity="src", destination_entity="dst")
 
-    # Contact + closing gripper + lift sustained for several steps -> post_grasp.
-    lifted = list(src0)
-    for i in range(4, 10):
-        lifted = [src0[0], src0[1], src0[2] + 0.01 * (i - 3)]
-        gripper_at_src = lifted
-        r = resolver.step(
-            i, lifted, dst, gripper_at_src, [0.0, 0.0], contact=True, gripper_command=1.0
+    # -- 1. Far from source, no grasp evidence -> pre_grasp, entity = source ---
+    r1 = new_resolver()
+    result = r1.update(0, SRC0, DST, [0.4, 0.0, 1.1], OPEN_QPOS, contact=False)
+    check("1. far from source with no evidence -> pre_grasp", result.phase == PHASE_PRE_GRASP)
+    check("1. pre_grasp relevant_entity is source", result.relevant_entity == "src")
+    check("1. pre_grasp role is 'source'", result.relevant_entity_role == "source")
+
+    # -- 2. Gripper closed but far from source -> must NOT become post_grasp ---
+    r2 = new_resolver()
+    phases2 = []
+    for i in range(12):
+        # Gripper closed and moving, but 40cm away and never touching the source.
+        eef = [0.4 + 0.01 * i, 0.0, 1.1]
+        phases2.append(r2.update(i, SRC0, DST, eef, CLOSED_QPOS, contact=False).phase)
+    check("2. closed gripper far from source never reaches post_grasp", PHASE_POST_GRASP not in phases2)
+
+    # -- 3. One brief contact near source -> must NOT flip immediately ---------
+    r3 = new_resolver()
+    at_src = [0.0, 0.0, 0.92]
+    r3.update(0, SRC0, DST, at_src, OPEN_QPOS, contact=False)
+    result = r3.update(1, SRC0, DST, at_src, CLOSED_QPOS, contact=True)
+    check("3. single-timestep contact does not flip to post_grasp", result.phase != PHASE_POST_GRASP)
+    result = r3.update(2, SRC0, DST, at_src, OPEN_QPOS, contact=False)
+    check("3. contact that immediately disappears leaves phase non-post_grasp", result.phase != PHASE_POST_GRASP)
+
+    # -- 4. Contact + lift + comovement sustained -> post_grasp ----------------
+    r4 = new_resolver()
+    r4.update(0, SRC0, DST, [0.0, 0.0, 1.0], OPEN_QPOS, contact=False)
+    result = None
+    for i in range(1, 9):
+        held = [SRC0[0], SRC0[1], SRC0[2] + 0.012 * i]  # object rises with the eef
+        result = r4.update(i, held, DST, held, CLOSED_QPOS, contact=True, gripper_command=1.0)
+    check("4. sustained contact+lift+comovement -> post_grasp", result.phase == PHASE_POST_GRASP)
+    check("4. grasp_detected is True", result.grasp_detected is True)
+    check("4. transition_timestep is recorded", result.transition_timestep is not None)
+
+    # -- 5. uncertain -> relevant_entity is null ------------------------------
+    r5 = new_resolver()
+    result = r5.update(0, None, DST, [0.0, 0.0, 0.9], CLOSED_QPOS, contact=None)
+    check("5. uncertain phase yields relevant_entity None", result.phase == PHASE_UNCERTAIN and result.relevant_entity is None)
+    check("5. uncertain role is 'none'", result.relevant_entity_role == "none")
+
+    # -- 6. pre_grasp -> relevant_entity is source (covered in 1, asserted again)
+    check("6. pre_grasp maps to source entity", r1.update(1, SRC0, DST, [0.4, 0.0, 1.1], OPEN_QPOS, contact=False).relevant_entity == "src")
+
+    # -- 7. post_grasp -> relevant_entity is destination -----------------------
+    check("7. post_grasp maps to destination entity", result is not None and r4.phase == PHASE_POST_GRASP)
+    held_now = [SRC0[0], SRC0[1], SRC0[2] + 0.12]
+    result = r4.update(20, held_now, DST, held_now, CLOSED_QPOS, contact=True)
+    check("7. post_grasp relevant_entity is destination", result.relevant_entity == "dst")
+    check("7. post_grasp role is 'destination'", result.relevant_entity_role == "destination")
+
+    # -- 8. Transient sensor noise must not cause phase oscillation -----------
+    r8 = new_resolver()
+    r8.update(0, SRC0, DST, [0.0, 0.0, 1.0], OPEN_QPOS, contact=False)
+    for i in range(1, 9):
+        held = [SRC0[0], SRC0[1], SRC0[2] + 0.012 * i]
+        r8.update(i, held, DST, held, CLOSED_QPOS, contact=True)
+    assert r8.phase == PHASE_POST_GRASP, "scenario 8 precondition: must be holding"
+    noisy_phases = []
+    base_h = SRC0[2] + 0.012 * 8
+    for i in range(9, 25):
+        held = [SRC0[0], SRC0[1], base_h + 0.001 * (i - 8)]
+        # Contact sensor drops out on alternating frames (classic MuJoCo flicker).
+        flaky_contact = (i % 2 == 0)
+        noisy_phases.append(r8.update(i, held, DST, held, CLOSED_QPOS, contact=flaky_contact).phase)
+    check("8. flickering contact does not knock the phase out of post_grasp", set(noisy_phases) == {PHASE_POST_GRASP})
+
+    # -- 9. Regression: hovering over a resting object is NOT a grasp ----------
+    # Both bodies stationary => relative offset trivially constant. Only the
+    # motion requirement in comovement_ok keeps this out of post_grasp.
+    r9 = new_resolver()
+    hover_phases = []
+    hover_eef = [SRC0[0], SRC0[1], SRC0[2] + 0.05]
+    for i in range(15):
+        hover_phases.append(
+            r9.update(i, SRC0, DST, hover_eef, CLOSED_QPOS, contact=True).phase
         )
-    check("transitions to post_grasp after sustained grasp evidence", r.phase == PHASE_POST_GRASP)
-    check("relevant_entity is destination in post_grasp", r.relevant_entity == "dst")
-    check("grasp_detected true", r.grasp_detected is True)
+    check("9. closed gripper hovering on a resting object never reads as post_grasp", PHASE_POST_GRASP not in hover_phases)
 
-    # Holding steady near destination: stays post_grasp.
-    for i in range(10, 13):
-        r = resolver.step(i, lifted, dst, lifted, [0.0, 0.0], contact=True)
-    check("remains post_grasp while still held", r.phase == PHASE_POST_GRASP)
-
-    # Drop: contact lost, height falls back near initial. Per spec this may
-    # resolve to "uncertain" or self-heal back to "pre_grasp" once the gripper
-    # is clearly away from the (now stationary) source -- either is acceptable,
-    # but it must NOT keep reporting post_grasp/destination once contact and
-    # lift evidence are gone.
-    dropped = [src0[0], src0[1], src0[2] + 0.001]
-    drop_phases = []
-    for i in range(13, 20):
-        r = resolver.step(i, dropped, dst, [dropped[0], dropped[1], dropped[2] + 0.1], [0.02, -0.02], contact=False)
-        drop_phases.append(r.phase)
-    check(
-        "post_grasp does not persist once contact and lift evidence disappear",
-        drop_phases[-1] != PHASE_POST_GRASP,
-    )
-    check("phase passes through uncertain during the drop (never forced straight to a guess)", PHASE_UNCERTAIN in drop_phases)
-    check("final relevant_entity is never destination once released", r.relevant_entity != "dst")
-
-    # --- Scenario 2: single-frame contact must NOT flip the phase. ---
-    resolver2 = TaskPhaseResolver(source_entity="src", destination_entity="dst")
-    r = resolver2.step(0, [0, 0, 0.9], dst, [0, 0, 0.9], [0.0, 0.0], contact=True)
-    check("single-frame contact alone stays pre_grasp/uncertain, never post_grasp", r.phase != PHASE_POST_GRASP)
-
-    # --- Scenario 3: missing position data never guesses a relevant entity. ---
-    resolver3 = TaskPhaseResolver(source_entity="src", destination_entity="dst")
-    r = resolver3.step(0, None, dst, [0, 0, 0.9], [0.0, 0.0], contact=None)
-    check("missing source position -> uncertain with no relevant entity", r.phase == PHASE_UNCERTAIN and r.relevant_entity is None)
+    # -- 10. reset() clears episode state -------------------------------------
+    r10 = new_resolver()
+    for i in range(9):
+        held = [SRC0[0], SRC0[1], SRC0[2] + 0.012 * i]
+        r10.update(i, held, DST, held, CLOSED_QPOS, contact=True)
+    r10.reset()
+    result = r10.update(0, SRC0, DST, [0.4, 0.0, 1.1], OPEN_QPOS, contact=False)
+    check("10. reset() returns the resolver to pre_grasp with clean streaks", result.phase == PHASE_PRE_GRASP and result.transition_timestep is None)
 
     return ok
 
