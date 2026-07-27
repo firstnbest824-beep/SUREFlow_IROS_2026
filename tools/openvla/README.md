@@ -23,9 +23,9 @@ It is intentionally separate from the legacy SUREFlow code (`SUREFlow/`,
 
 ## Shared modules
 
-These three modules are the single source of truth for the probe dry-run and the
-failure-screening runner; both scripts must import them rather than reimplement
-their logic.
+These modules are the single source of truth for the probe dry-run, the
+failure-screening runner, and the single-vanilla-rollout runner; all three
+scripts must import them rather than reimplement their logic.
 
 - `spatial_task_resolver.py` — derives `source_object`, `destination_object`, the
   goal predicate, the entities moved by the LIBERO-PRO swap and the
@@ -47,6 +47,34 @@ their logic.
   captured with a forward-pre hook as `pre_action_hidden` and saved as
   `pre_action_hidden_last_token.npy` with shape `[num_lm_head_calls, hidden_dim]`.
   The number of calls is measured, never assumed equal to the action dimension.
+  `lm_head_logits`'s own prefill array (~35 MB/timestep) is skipped on disk by
+  default in `dry_run_openvla_spatial_probe.py`; pass `--save_lm_head_logits` to
+  persist it. All other streams (vision features, projector features, LLM
+  hidden states, `pre_action_hidden`) are always saved.
+
+- `task_phase_resolver.py` — the single source of truth for whether a timestep
+  is `pre_grasp`, `post_grasp`, or `uncertain`, and therefore which resolved
+  entity (`spatial_task_resolver`'s `source_object` / `destination_object`) is
+  the "relevant entity" for that timestep. No object name is hard-coded and no
+  image-based heuristic is used; only simulator state drives the decision
+  (gripper qpos, world poses, MuJoCo contact via robosuite's
+  `MujocoEnv.check_contact`). A single noisy frame never flips the phase --
+  contact, proximity, gripper closure, and object displacement/comovement are
+  combined into a confidence score, and a transition only fires once that
+  evidence has been sustained for several consecutive timesteps (thresholds are
+  code constants in `PhaseThresholds`, recorded verbatim via `config_snapshot()`).
+  `uncertain` never guesses a relevant entity. Used by
+  `dry_run_openvla_spatial_probe.py`, `run_failure_screening.py`, and
+  `run_single_vanilla_rollout.py`; `save_phase_timeline()` writes the shared
+  `phase_timeline.csv` / `phase_timeline.jsonl` / `phase_transition_summary.json`
+  shape for all three. Self-test (no simulator required):
+
+      python tools/openvla/task_phase_resolver.py
+
+  `run_failure_screening.py --action_parity_check` runs a short vanilla episode
+  twice (phase resolver on vs. off, identical seed/init state) and reports the
+  max abs action difference, to verify phase logging never changes policy
+  behavior.
 
 ## Important
 

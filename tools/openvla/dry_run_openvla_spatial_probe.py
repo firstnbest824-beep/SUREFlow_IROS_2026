@@ -116,8 +116,17 @@ from probe_hooks import (  # type: ignore
 
 from spatial_task_resolver import (  # type: ignore
     DEFAULT_OOD_SPATIAL_CONFIG,
+    get_entity_world_position,
     get_entity_world_positions,
     resolve_spatial_task_from_env,
+)
+
+from task_phase_resolver import (  # type: ignore
+    DEFAULT_THRESHOLDS as PHASE_DEFAULT_THRESHOLDS,
+    PHASE_UNCERTAIN,
+    TaskPhaseResolver,
+    compute_frame_inputs,
+    config_snapshot as phase_resolver_config_snapshot,
 )
 
 
@@ -386,8 +395,14 @@ def build_role_label(
 # -----------------------------------------------------------------------------
 # Feature persistence
 # -----------------------------------------------------------------------------
-def save_stream(stream: ProbeStream, output_dir: Path) -> Dict[str, Any]:
-    """Persist one probe stream and describe it for the feature manifest."""
+def save_stream(stream: ProbeStream, output_dir: Path, save_lm_head_logits: bool = False) -> Dict[str, Any]:
+    """Persist one probe stream and describe it for the feature manifest.
+
+    ``lm_head_logits`` (vocabulary logits) is the one stream whose full prefill
+    array is large (~35 MB/timestep). It is skipped by default; the hook still
+    runs so ``call_count`` / NaN-Inf validation are unaffected, only the disk
+    write is gated on ``save_lm_head_logits``.
+    """
     stage = stream.functional_stage
     token_meaning = TOKEN_DIM_MEANING.get(stage, "unspecified")
     entry: Dict[str, Any] = {
@@ -412,6 +427,14 @@ def save_stream(stream: ProbeStream, output_dir: Path) -> Dict[str, Any]:
     }
     if not stream.records:
         entry["reason"] = "hook never produced a tensor"
+        return entry
+
+    if stage == "lm_head_logits" and not save_lm_head_logits:
+        entry["reason"] = (
+            "lm_head_logits array saving skipped by default (~35 MB/timestep); "
+            "pass --save_lm_head_logits to persist it. call_count/shape/NaN-Inf "
+            "validation above is unaffected."
+        )
         return entry
 
     safe_stage = stage.replace(".", "_")
@@ -467,6 +490,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output_dir", type=str, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--seed", type=int, default=7)
     parser.add_argument("--min_mask_pixels", type=int, default=10)
+    parser.add_argument(
+        "--save_lm_head_logits",
+        action="store_true",
+        default=False,
+        help=(
+            "Persist the lm_head_logits prefill array to disk (~35 MB/timestep). "
+            "Off by default; vision/projector/LLM-hidden/pre_action_hidden features "
+            "are always saved regardless of this flag."
+        ),
+    )
     parser.add_argument("--ood_config_path", type=str, default=DEFAULT_OOD_SPATIAL_CONFIG)
     parser.add_argument("--perturbation_seed", type=int, default=0)
     return parser.parse_args()
@@ -520,6 +553,7 @@ def main() -> int:
         "center_crop": args.center_crop,
         "crop_scale": args.crop_scale,
         "unnorm_key": args.unnorm_key,
+        "save_lm_head_logits": args.save_lm_head_logits,
         "dtype": args.dtype,
         "gpu": args.gpu,
         "output_dir": str(output_dir),
@@ -640,6 +674,27 @@ def main() -> int:
         print(f"Role -> segmentation id: {segmentation_ids}")
         metadata["role_entities"] = role_entities
         metadata["role_segmentation_ids"] = segmentation_ids
+
+        log_section("Task-phase / relevant-entity resolution")
+        # A single-timestep dry-run has no rollout history to build streaks from,
+        # so this reduces to a one-frame evidence check (see task_phase_resolver's
+        # own docstring for what "sustained" evidence normally means across a
+        # rollout). The full-rollout runners (run_failure_screening.py,
+        # run_single_vanilla_rollout.py) are what exercise the temporal logic.
+        phase_resolver = TaskPhaseResolver(
+            entities.source_object, entities.destination_object, thresholds=PHASE_DEFAULT_THRESHOLDS
+        )
+        phase_frame_inputs = compute_frame_inputs(
+            env, obs, entities.source_object, entities.destination_object
+        )
+        phase_result = phase_resolver.step(timestep=1, **phase_frame_inputs)
+        print(
+            f"  phase={phase_result.phase} relevant_entity={phase_result.relevant_entity} "
+            f"role={phase_result.relevant_entity_role} grasp_confidence={phase_result.grasp_confidence:.2f}"
+        )
+        print(f"  reason: {phase_result.reason}")
+        metadata["phase_result"] = phase_result.to_dict()
+        metadata["phase_resolver_config"] = phase_resolver_config_snapshot(PHASE_DEFAULT_THRESHOLDS)
 
         log_section("OpenVLA inference with probes (HOOK ON)")
         if torch.cuda.is_available():
@@ -811,6 +866,43 @@ def main() -> int:
                     f"{record['target_uv_model_input']} n={record['mask_pixel_count_model_input']}"
                 )
 
+        log_section("Relevant-entity primary label (phase-gated)")
+        relevant_role = phase_result.relevant_entity_role
+        if phase_result.phase != PHASE_UNCERTAIN and relevant_role in labels and phase_result.relevant_entity:
+            relevant_record = labels[relevant_role]["cameras"]["agentview"]
+            relevant_target_label: Dict[str, Any] = {
+                "valid": True,
+                "invalid_reason": None,
+                "phase": phase_result.phase,
+                "relevant_entity": phase_result.relevant_entity,
+                "relevant_entity_role": relevant_role,
+                "relevant_target_uv_raw": relevant_record["target_uv_raw"],
+                "relevant_target_uv_model_input": relevant_record["target_uv_model_input"],
+                "relevant_target_world_position": get_entity_world_position(
+                    env, phase_result.relevant_entity
+                ),
+                "relevant_target_visible": relevant_record["visible_model_input"],
+                "relevant_target_mask_pixel_count": relevant_record["mask_pixel_count_model_input"],
+            }
+        else:
+            relevant_target_label = {
+                "valid": False,
+                "invalid_reason": (
+                    "phase is uncertain: relevant entity not guessed"
+                    if phase_result.phase == PHASE_UNCERTAIN
+                    else "relevant entity role unresolved for this task"
+                ),
+                "phase": phase_result.phase,
+                "relevant_entity": None,
+                "relevant_entity_role": "none",
+                "relevant_target_uv_raw": None,
+                "relevant_target_uv_model_input": None,
+                "relevant_target_world_position": None,
+                "relevant_target_visible": None,
+                "relevant_target_mask_pixel_count": None,
+            }
+        print(f"  relevant_target_label: {relevant_target_label}")
+
         log_section("Saving features")
         feature_manifest: Dict[str, Any] = {
             "probe_targets_forward": {
@@ -823,7 +915,7 @@ def main() -> int:
             "streams": {},
         }
         for key, stream in hook_manager.streams.items():
-            entry = save_stream(stream, output_dir)
+            entry = save_stream(stream, output_dir, save_lm_head_logits=args.save_lm_head_logits)
             feature_manifest["streams"][key] = entry
             saved = {
                 name: artifact["shape"] for name, artifact in entry["artifacts"].items()
@@ -862,6 +954,9 @@ def main() -> int:
             "role_segmentation_ids": segmentation_ids,
             "pre_grasp_relevant_entity": entities.pre_grasp_relevant_entity,
             "post_grasp_relevant_entity": entities.post_grasp_relevant_entity,
+            "phase_result": phase_result.to_dict(),
+            "phase_resolver_config": metadata["phase_resolver_config"],
+            "relevant_target_label": relevant_target_label,
             "entity_world_positions": world_positions,
             "robot_metadata": get_robot_metadata(obs),
             "camera_metadata": {
@@ -918,6 +1013,11 @@ def main() -> int:
             "destination_object": entities.destination_object,
             "swap_counterpart": entities.swap_counterpart,
             "perturbation_moved_entities": entities.perturbation_moved_entities,
+            "phase": phase_result.phase,
+            "relevant_entity": phase_result.relevant_entity,
+            "relevant_entity_role": phase_result.relevant_entity_role,
+            "grasp_confidence": phase_result.grasp_confidence,
+            "relevant_target_label_valid": relevant_target_label["valid"],
             "source_uv_raw": source_label["target_uv_raw"],
             "source_uv_model_input": source_label["target_uv_model_input"],
             "destination_uv_raw": destination_label["target_uv_raw"],

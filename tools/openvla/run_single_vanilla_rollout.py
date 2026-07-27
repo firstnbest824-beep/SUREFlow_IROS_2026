@@ -112,6 +112,18 @@ from model_input_transform import (  # noqa: E402  (import after sys.path setup 
     pil_jpeg_encode_decode,
     resize_image,
 )
+from spatial_task_resolver import (  # noqa: E402
+    DEFAULT_OOD_SPATIAL_CONFIG,
+    resolve_spatial_task_from_env,
+)
+from task_phase_resolver import (  # noqa: E402
+    DEFAULT_THRESHOLDS as PHASE_DEFAULT_THRESHOLDS,
+    TaskPhaseResolver,
+    compute_frame_inputs,
+    config_snapshot as phase_resolver_config_snapshot,
+    phase_result_to_timeline_entry,
+    save_phase_timeline,
+)
 
 
 # -----------------------------------------------------------------------------
@@ -280,6 +292,7 @@ def add_text_overlay(
     success: Optional[bool],
     latency_ms: float,
     camera_name: str,
+    phase_result: Optional[Any] = None,
 ) -> np.ndarray:
     """Add small labels to an RGB uint8 frame."""
     img = frame.copy()
@@ -298,6 +311,11 @@ def add_text_overlay(
     ]
     if success is not None:
         lines.append(f"success: {success}")
+    if phase_result is not None:
+        dist = phase_result.source_to_gripper_distance
+        dist_str = f"{dist:.3f}" if dist is not None else "n/a"
+        lines.append(f"phase: {phase_result.phase} rel={phase_result.relevant_entity or 'none'}")
+        lines.append(f"grasp_conf={phase_result.grasp_confidence:.2f} src->grip={dist_str}")
 
     y0 = 12
     dy = 12
@@ -402,6 +420,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--gpu", type=int, default=DEFAULT_GPU)
     parser.add_argument("--output_dir", type=str, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument("--ood_config_path", type=str, default=DEFAULT_OOD_SPATIAL_CONFIG)
+    parser.add_argument("--perturbation_seed", type=int, default=0)
+    parser.add_argument(
+        "--disable_phase_resolver",
+        action="store_true",
+        help="Skip task-phase / relevant-entity resolution and logging entirely.",
+    )
     return parser.parse_args()
 
 
@@ -551,6 +576,21 @@ def main() -> int:
         metadata["init_state_success"] = True
         print(f"env.set_init_state(initial_states[{args.init_state_id}]) succeeded.")
 
+        log_section("Source / destination resolution")
+        entities = resolve_spatial_task_from_env(
+            env=env,
+            bddl_path=metadata["bddl_path"],
+            task_suite=args.task_suite,
+            task_name=task.name,
+            ood_config_path=args.ood_config_path,
+            perturbation_seed=args.perturbation_seed,
+        )
+        for line in entities.summary_lines():
+            print(f"  {line}")
+        metadata["spatial_entities"] = entities.to_dict()
+        metadata["phase_resolver_enabled"] = not args.disable_phase_resolver
+        metadata["phase_resolver_config"] = phase_resolver_config_snapshot(PHASE_DEFAULT_THRESHOLDS)
+
         log_section("Observation inspection")
         obs_summary: List[Dict[str, Any]] = []
         for key in sorted(obs.keys()):
@@ -588,6 +628,13 @@ def main() -> int:
         replay_images: List[np.ndarray] = []
         latencies_ms: List[float] = []
         per_step_records: List[Dict[str, Any]] = []
+        phase_timeline: List[Dict[str, Any]] = []
+        phase_resolver = (
+            TaskPhaseResolver(entities.source_object, entities.destination_object, thresholds=PHASE_DEFAULT_THRESHOLDS)
+            if not args.disable_phase_resolver
+            else None
+        )
+        phase_resolver_seeded = False
         step_success_count = 0
         done = False
         t = 0
@@ -607,6 +654,14 @@ def main() -> int:
                 obs, reward, done, info = env.step(dummy_action)
                 t += 1
                 continue
+
+            if phase_resolver is not None and not phase_resolver_seeded:
+                seed_inputs = compute_frame_inputs(
+                    env, obs, entities.source_object, entities.destination_object
+                )
+                seed_result = phase_resolver.step(timestep=0, **seed_inputs)
+                phase_timeline.append(phase_result_to_timeline_entry(seed_result))
+                phase_resolver_seeded = True
 
             # Preprocess image.
             img = get_libero_image(obs, args.resize_size)
@@ -659,6 +714,18 @@ def main() -> int:
                 "gripper_qpos": obs["robot0_gripper_qpos"].tolist(),
             })
 
+            phase_result = None
+            if phase_resolver is not None:
+                frame_inputs = compute_frame_inputs(
+                    env, obs, entities.source_object, entities.destination_object
+                )
+                phase_result = phase_resolver.step(
+                    timestep=step_success_count,
+                    gripper_command=float(action[-1]) if action.size else None,
+                    **frame_inputs,
+                )
+                phase_timeline.append(phase_result_to_timeline_entry(phase_result))
+
             # Record frame(s) for video.
             success_flag = info.get("success") if isinstance(info, dict) else None
             if camera_keys:
@@ -673,6 +740,7 @@ def main() -> int:
                     success=success_flag,
                     latency_ms=latency_ms,
                     camera_name=primary_key,
+                    phase_result=phase_result,
                 )
                 replay_images.append(labeled)
 
@@ -683,6 +751,21 @@ def main() -> int:
                 "raw_action": raw_actions[-1].tolist(),
                 "final_action": final_actions[-1].tolist(),
                 "gpu_memory_mb": record_gpu_memory(),
+                "phase": phase_result.phase if phase_result is not None else None,
+                "relevant_entity": phase_result.relevant_entity if phase_result is not None else None,
+                "relevant_entity_role": phase_result.relevant_entity_role if phase_result is not None else None,
+                "grasp_detected": phase_result.grasp_detected if phase_result is not None else None,
+                "grasp_confidence": phase_result.grasp_confidence if phase_result is not None else None,
+                "phase_reason": phase_result.reason if phase_result is not None else None,
+                "source_to_gripper_distance": (
+                    phase_result.source_to_gripper_distance if phase_result is not None else None
+                ),
+                "source_height_delta": phase_result.source_height_delta if phase_result is not None else None,
+                "source_displacement": phase_result.source_displacement if phase_result is not None else None,
+                "gripper_state": phase_result.gripper_state if phase_result is not None else None,
+                "contact": phase_result.contact if phase_result is not None else None,
+                "source_position": phase_result.source_position if phase_result is not None else None,
+                "destination_position": phase_result.destination_position if phase_result is not None else None,
             })
 
             if (t - args.num_steps_wait) % 20 == 0 or (t - args.num_steps_wait) == 1:
@@ -723,6 +806,17 @@ def main() -> int:
         with open(os.path.join(args.output_dir, "per_step_metrics.jsonl"), "w", encoding="utf-8") as f:
             for rec in per_step_records:
                 f.write(json.dumps(rec) + "\n")
+
+        if phase_timeline:
+            log_section("Saving phase timeline")
+            phase_summary = save_phase_timeline(phase_timeline, args.output_dir)
+            metadata["phase_summary"] = phase_summary
+            print(
+                f"Phase counts: {phase_summary['phase_counts']}, "
+                f"uncertain_fraction={phase_summary['uncertain_fraction']}, "
+                f"first pre_grasp->post_grasp at timestep="
+                f"{phase_summary['first_pre_grasp_to_post_grasp_timestep']}"
+            )
 
         # Save latency summary.
         if latencies_ms:

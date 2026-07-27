@@ -70,6 +70,14 @@ from spatial_task_resolver import (
     resolve_spatial_task,
     resolve_spatial_task_from_env,
 )
+from task_phase_resolver import (
+    DEFAULT_THRESHOLDS as PHASE_DEFAULT_THRESHOLDS,
+    TaskPhaseResolver,
+    compute_frame_inputs,
+    config_snapshot as phase_resolver_config_snapshot,
+    phase_result_to_timeline_entry,
+    save_phase_timeline,
+)
 
 
 # -----------------------------------------------------------------------------
@@ -319,6 +327,7 @@ def add_text_overlay(
     latency_ms: float,
     camera_name: str,
     condition: str,
+    phase_result: Optional[Any] = None,
 ) -> np.ndarray:
     img = frame.copy()
     h, w = img.shape[:2]
@@ -337,6 +346,15 @@ def add_text_overlay(
     ]
     if success is not None:
         lines.append(f"success: {success}")
+    if phase_result is not None:
+        dist = phase_result.source_to_gripper_distance
+        dist_str = f"{dist:.3f}" if dist is not None else "n/a"
+        lines.append(
+            f"phase: {phase_result.phase} rel={phase_result.relevant_entity or 'none'}"
+        )
+        lines.append(
+            f"grasp_conf={phase_result.grasp_confidence:.2f} src->grip={dist_str}"
+        )
 
     y0 = 12
     dy = 12
@@ -490,6 +508,7 @@ def run_episode(
     output_dir: str,
     args: argparse.Namespace,
     entities: SpatialTaskEntities,
+    enable_phase_resolver: bool = True,
 ) -> Dict[str, Any]:
     os.makedirs(output_dir, exist_ok=True)
 
@@ -539,6 +558,9 @@ def run_episode(
         "entity_positions_final": {},
         "entity_displacements": {},
         "gpu_memory_mb": None,
+        "phase_resolver_enabled": enable_phase_resolver,
+        "phase_resolver_config": phase_resolver_config_snapshot(PHASE_DEFAULT_THRESHOLDS),
+        "phase_summary": None,
     }
 
     try:
@@ -569,6 +591,13 @@ def run_episode(
         replay_images: List[np.ndarray] = []
         latencies_ms: List[float] = []
         per_step_records: List[Dict[str, Any]] = []
+        phase_timeline: List[Dict[str, Any]] = []
+        phase_resolver = (
+            TaskPhaseResolver(entities.source_object, entities.destination_object, thresholds=PHASE_DEFAULT_THRESHOLDS)
+            if enable_phase_resolver
+            else None
+        )
+        phase_resolver_seeded = False
 
         camera_keys = []
         preferred = ["agentview_image", "robot0_eye_in_hand_image"]
@@ -596,6 +625,16 @@ def run_episode(
                 obs, reward, done, info = env.step(dummy_action)
                 t += 1
                 continue
+
+            if phase_resolver is not None and not phase_resolver_seeded:
+                # Seed phase 0 from the post-stabilization, pre-action observation
+                # so "initial source position" reflects the true episode start.
+                seed_inputs = compute_frame_inputs(
+                    env, obs, entities.source_object, entities.destination_object
+                )
+                seed_result = phase_resolver.step(timestep=0, **seed_inputs)
+                phase_timeline.append(phase_result_to_timeline_entry(seed_result))
+                phase_resolver_seeded = True
 
             img = get_libero_image(obs, args.resize_size)
             observation = {
@@ -639,6 +678,18 @@ def run_episode(
                 "gripper_qpos": obs["robot0_gripper_qpos"].tolist(),
             })
 
+            phase_result = None
+            if phase_resolver is not None:
+                frame_inputs = compute_frame_inputs(
+                    env, obs, entities.source_object, entities.destination_object
+                )
+                phase_result = phase_resolver.step(
+                    timestep=step_count,
+                    gripper_command=float(action[-1]) if action.size else None,
+                    **frame_inputs,
+                )
+                phase_timeline.append(phase_result_to_timeline_entry(phase_result))
+
             success_flag, success_source = env_success(env, info)
             if camera_keys:
                 primary_key = camera_keys[0]
@@ -653,6 +704,7 @@ def run_episode(
                     latency_ms=latency_ms,
                     camera_name=primary_key,
                     condition=condition,
+                    phase_result=phase_result,
                 )
                 replay_images.append(labeled)
 
@@ -664,6 +716,21 @@ def run_episode(
                 "success_source": success_source,
                 "raw_action": raw_actions[-1].tolist(),
                 "final_action": final_actions[-1].tolist(),
+                "phase": phase_result.phase if phase_result is not None else None,
+                "relevant_entity": phase_result.relevant_entity if phase_result is not None else None,
+                "relevant_entity_role": phase_result.relevant_entity_role if phase_result is not None else None,
+                "grasp_detected": phase_result.grasp_detected if phase_result is not None else None,
+                "grasp_confidence": phase_result.grasp_confidence if phase_result is not None else None,
+                "phase_reason": phase_result.reason if phase_result is not None else None,
+                "source_to_gripper_distance": (
+                    phase_result.source_to_gripper_distance if phase_result is not None else None
+                ),
+                "source_height_delta": phase_result.source_height_delta if phase_result is not None else None,
+                "source_displacement": phase_result.source_displacement if phase_result is not None else None,
+                "gripper_state": phase_result.gripper_state if phase_result is not None else None,
+                "contact": phase_result.contact if phase_result is not None else None,
+                "source_position": phase_result.source_position if phase_result is not None else None,
+                "destination_position": phase_result.destination_position if phase_result is not None else None,
             })
 
             if (t - args.num_steps_wait) % 20 == 0 or (t - args.num_steps_wait) == 1:
@@ -755,6 +822,17 @@ def run_episode(
             for rec in per_step_records:
                 f.write(json.dumps(rec) + "\n")
 
+        if phase_timeline:
+            log_section(f"Saving phase timeline for {condition}")
+            phase_summary = save_phase_timeline(phase_timeline, output_dir)
+            metadata["phase_summary"] = phase_summary
+            print(
+                f"Phase counts: {phase_summary['phase_counts']}, "
+                f"uncertain_fraction={phase_summary['uncertain_fraction']}, "
+                f"first pre_grasp->post_grasp at timestep="
+                f"{phase_summary['first_pre_grasp_to_post_grasp_timestep']}"
+            )
+
         if latencies_ms:
             with open(os.path.join(output_dir, "inference_latency.csv"), "w", newline="", encoding="utf-8") as f:
                 writer = csv.writer(f)
@@ -834,6 +912,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--ood_config_path", type=str, default=DEFAULT_OOD_SPATIAL_CONFIG)
     parser.add_argument("--skip_vanilla", action="store_true", help="Skip vanilla episode")
     parser.add_argument("--skip_perturbation", action="store_true", help="Skip perturbation episode")
+    parser.add_argument(
+        "--disable_phase_resolver",
+        action="store_true",
+        help="Skip task-phase / relevant-entity resolution and logging entirely.",
+    )
+    parser.add_argument(
+        "--action_parity_check",
+        action="store_true",
+        help=(
+            "Instead of the normal vanilla/perturbation run, execute a short vanilla "
+            "episode twice (phase resolver on vs. off, same seed/init state) and "
+            "report the max abs action difference. Used to verify the phase resolver "
+            "never changes policy behavior."
+        ),
+    )
+    parser.add_argument("--action_parity_max_steps", type=int, default=15)
     return parser.parse_args()
 
 
@@ -945,6 +1039,63 @@ def main() -> int:
         task_output_root = os.path.join(run_dir, task.name)
         os.makedirs(task_output_root, exist_ok=True)
 
+        if args.action_parity_check:
+            log_section("Phase resolver action-parity check (short vanilla episode, resolver on vs. off)")
+            parity_args = argparse.Namespace(**vars(args))
+            parity_args.max_steps = args.action_parity_max_steps
+            parity_dir = os.path.join(run_dir, "phase_resolver_action_parity")
+            os.makedirs(parity_dir, exist_ok=True)
+
+            env_on, task_description_on = get_libero_env(task, resolution=args.resolution)
+            entities_on = resolve_spatial_task_from_env(
+                env=env_on, bddl_path=original_bddl_path, task_suite=args.task_suite,
+                task_name=task.name, ood_config_path=args.ood_config_path,
+                perturbation_seed=args.perturbation_seed,
+            )
+            run_episode(
+                vla=vla, processor=processor, task=task, task_description=task_description_on,
+                env=env_on, initial_state=vanilla_initial_states[args.init_state_id],
+                condition="parity_resolver_on", output_dir=os.path.join(parity_dir, "resolver_on"),
+                args=parity_args, entities=entities_on, enable_phase_resolver=True,
+            )
+
+            env_off, task_description_off = get_libero_env(task, resolution=args.resolution)
+            entities_off = resolve_spatial_task_from_env(
+                env=env_off, bddl_path=original_bddl_path, task_suite=args.task_suite,
+                task_name=task.name, ood_config_path=args.ood_config_path,
+                perturbation_seed=args.perturbation_seed,
+            )
+            run_episode(
+                vla=vla, processor=processor, task=task, task_description=task_description_off,
+                env=env_off, initial_state=vanilla_initial_states[args.init_state_id],
+                condition="parity_resolver_off", output_dir=os.path.join(parity_dir, "resolver_off"),
+                args=parity_args, entities=entities_off, enable_phase_resolver=False,
+            )
+
+            actions_on = np.load(os.path.join(parity_dir, "resolver_on", "actions_final.npy"))
+            actions_off = np.load(os.path.join(parity_dir, "resolver_off", "actions_final.npy"))
+            n = min(len(actions_on), len(actions_off))
+            max_diff = float(np.max(np.abs(actions_on[:n] - actions_off[:n]))) if n > 0 else None
+            parity_report = {
+                "steps_resolver_on": int(len(actions_on)),
+                "steps_resolver_off": int(len(actions_off)),
+                "steps_compared": int(n),
+                "identical_step_counts": bool(len(actions_on) == len(actions_off)),
+                "action_max_abs_diff": max_diff,
+                "pass": bool(max_diff == 0.0 and len(actions_on) == len(actions_off)) if max_diff is not None else False,
+                "note": (
+                    "Phase resolution reads simulator state read-only after env.step() and "
+                    "never feeds back into action selection; any nonzero diff here reflects "
+                    "GPU inference nondeterminism, not the resolver."
+                ),
+            }
+            parity_path = os.path.join(parity_dir, "action_parity_report.json")
+            with open(parity_path, "w", encoding="utf-8") as f:
+                json.dump(parity_report, f, indent=2)
+            print(f"Action parity report: {parity_report}")
+            print(f"Saved: {parity_path}")
+            return 0 if parity_report["pass"] else 1
+
         # ---------------------------------------------------------------------
         # Vanilla episode
         # ---------------------------------------------------------------------
@@ -974,6 +1125,7 @@ def main() -> int:
                 output_dir=vanilla_output_dir,
                 args=args,
                 entities=vanilla_entities,
+                enable_phase_resolver=not args.disable_phase_resolver,
             )
         else:
             print("[CONFIG] Skipping vanilla episode")
@@ -1065,6 +1217,7 @@ def main() -> int:
                 output_dir=perturb_output_dir,
                 args=args,
                 entities=perturb_entities,
+                enable_phase_resolver=not args.disable_phase_resolver,
             )
         else:
             print("[CONFIG] Skipping perturbation episode")
