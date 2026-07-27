@@ -1,6 +1,8 @@
 """Call-order-preserving forward / forward-pre hooks for OpenVLA probing.
 
-Two problems with the previous hook manager are fixed here.
+Every probe point here is the tensor the model *actually consumes*, verified
+against the executed ``modeling_prismatic.py`` rather than assumed from module
+names. Four problems with earlier versions of this file are fixed.
 
 1. ``language_model.lm_head`` produces *vocabulary logits*, not the hidden state
    that drives action generation. Its output is therefore recorded under the
@@ -15,6 +17,22 @@ Two problems with the previous hook manager are fixed here.
    order (prompt prefill first, then one call per autoregressive step) is
    preserved and reported. The number of calls is *measured*, never assumed to
    equal the 7-dimensional action.
+
+3. The vision hooks pointed at the *last* transformer block of each featurizer
+   (``blocks.23`` / ``blocks.26``). The model never uses those: each featurizer's
+   ``forward`` is monkey-patched to return the **second-to-last** block's patch
+   tokens. The last block still runs -- so the hook fired and produced
+   plausible-looking data -- but its output is discarded. Those tensors differed
+   from the consumed ones by rel_L2 1.61 (DINOv2) / 1.17 (SigLIP), cos 0.59 /
+   0.66 on the real checkpoint. The hooks now sit on the featurizer modules, so
+   they capture the prefix-stripped tensors that reach the projector.
+
+4. ``projector.fc3`` and ``projector`` were both hooked, but for the fused
+   backbone ``fc3`` is the final layer and its output *is* the projector's
+   return value -- the same tensor object. Only ``projector`` is hooked now, and
+   a ``forward_pre`` hook records the projector's input, which nothing captured
+   before and which is the "before" endpoint for measuring projector-induced
+   spatial-information loss.
 """
 
 from __future__ import annotations
@@ -26,10 +44,30 @@ import numpy as np
 import torch
 
 # module path -> (functional stage, readout description)
+#
+# Vision: hook the two featurizer *modules*, not a block inside them.
+# `PrismaticVisionBackbone.__init__` monkey-patches each featurizer's `forward`
+# to `get_intermediate_layers(n={len(blocks) - 2})`, so the model consumes the
+# **second-to-last** block (DINOv2 block 22 of 24, SigLIP block 25 of 27) with
+# DINOv2's 5 prefix tokens (CLS + 4 registers) stripped and no final norm.
+# Hooking `blocks.23` / `blocks.26` -- as this file used to -- captured tensors
+# the model computes but then discards; on the real checkpoint those differ from
+# the consumed ones by rel_L2 1.61 / 1.17 (cos 0.59 / 0.66), i.e. a different
+# representation entirely. Hooking the module returns exactly the tensor handed
+# to the projector: [1, 256, 1024] and [1, 256, 1152].
 FORWARD_PROBE_TARGETS: Dict[str, Tuple[str, str]] = {
-    "vision_backbone.featurizer.blocks.23": ("final_vision_dinov2", "final DINOv2 block output"),
-    "vision_backbone.fused_featurizer.blocks.26": ("final_vision_siglip", "final SigLIP block output"),
-    "projector.fc3": ("projector_penultimate", "projector fc3 output"),
+    "vision_backbone.featurizer": (
+        "final_vision_dinov2",
+        "DINOv2 features the projector consumes (penultimate block, prefix tokens stripped)",
+    ),
+    "vision_backbone.fused_featurizer": (
+        "final_vision_siglip",
+        "SigLIP features the projector consumes (penultimate block)",
+    ),
+    # `projector.fc3` is deliberately NOT hooked: for the fused backbone `fc3` is
+    # the last layer and its output IS the projector's return value, so the two
+    # hooks received the same tensor object (identical `data_ptr`, bitwise-equal
+    # `.npy` files). Keeping both wasted 4.19 MB/timestep for zero information.
     "projector": ("projector_output", "full projector output"),
     "language_model.model.layers.0": ("llm_early", "first LLM layer hidden state"),
     "language_model.model.layers.15": ("llm_middle", "middle LLM layer hidden state"),
@@ -40,6 +78,15 @@ FORWARD_PROBE_TARGETS: Dict[str, Tuple[str, str]] = {
 
 # module path -> (functional stage, readout description) captured with forward_pre
 PRE_FORWARD_PROBE_TARGETS: Dict[str, Tuple[str, str]] = {
+    # The concatenated vision features actually entering the projector:
+    # torch.cat([dinov2_features, siglip_features], dim=2) -> [1, 256, 2176].
+    # This is the "before" endpoint for measuring what the projector does to
+    # spatial information; without it only the "after" side was recorded.
+    "projector": (
+        "projector_input",
+        "concatenated DINOv2+SigLIP features entering the projector "
+        "(channel-wise concat, dim=2)",
+    ),
     "language_model.lm_head": (
         "pre_action_hidden",
         "hidden state entering lm_head, i.e. the representation immediately "
@@ -51,7 +98,7 @@ PRE_FORWARD_PROBE_TARGETS: Dict[str, Tuple[str, str]] = {
 SINGLE_CALL_STAGES = {
     "final_vision_dinov2",
     "final_vision_siglip",
-    "projector_penultimate",
+    "projector_input",
     "projector_output",
 }
 

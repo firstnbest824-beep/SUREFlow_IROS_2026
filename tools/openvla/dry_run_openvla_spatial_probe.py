@@ -140,10 +140,16 @@ DEFAULT_OUTPUT_DIR = "/home/hwkim/env-audit/openvla-spatial-probe-dry-run"
 # What the token axis of each saved tensor means, recorded in the manifest so a
 # downstream probe never has to guess.
 TOKEN_DIM_MEANING: Dict[str, str] = {
-    "final_vision_dinov2": "DINOv2 patch tokens (includes prefix/CLS tokens)",
-    "final_vision_siglip": "SigLIP patch tokens (256 patches, no CLS)",
-    "projector_penultimate": "projected visual tokens aligned 1:1 with SigLIP patches",
-    "projector_output": "projected visual tokens aligned 1:1 with SigLIP patches",
+    "final_vision_dinov2": (
+        "DINOv2 patch tokens the projector consumes: 256 patches, prefix "
+        "(CLS + 4 register) tokens already stripped, no final norm"
+    ),
+    "final_vision_siglip": "SigLIP patch tokens the projector consumes (256 patches, no CLS)",
+    "projector_input": (
+        "concatenated visual tokens entering the projector: 256 patches, "
+        "channel-wise concat of DINOv2 (1024) and SigLIP (1152) = 2176"
+    ),
+    "projector_output": "projected visual tokens aligned 1:1 with the 256 input patches",
     "llm_early": "multimodal LLM sequence: BOS + projected visual tokens + text tokens",
     "llm_middle": "multimodal LLM sequence: BOS + projected visual tokens + text tokens",
     "llm_late": "multimodal LLM sequence: BOS + projected visual tokens + text tokens",
@@ -765,6 +771,57 @@ def main() -> int:
             raise RuntimeError(f"NaN/Inf detected in captured activations: {nonfinite}")
         print("No NaN/Inf in any captured activation.")
 
+        log_section("Vision -> projector wiring check")
+        # The projector's input must be exactly the channel-wise concat of the two
+        # captured vision streams. This is what proves the vision hooks sit on the
+        # tensors the model actually consumes: hooking a discarded block (as an
+        # earlier version did with blocks.23/blocks.26) fails this check outright.
+        dinov2_stream = hook_manager.stream_by_stage("final_vision_dinov2")
+        siglip_stream = hook_manager.stream_by_stage("final_vision_siglip")
+        projector_input_stream = hook_manager.stream_by_stage("projector_input")
+        missing_streams = [
+            name
+            for name, stream in (
+                ("final_vision_dinov2", dinov2_stream),
+                ("final_vision_siglip", siglip_stream),
+                ("projector_input", projector_input_stream),
+            )
+            if stream is None or not stream.records
+        ]
+        if missing_streams:
+            raise RuntimeError(f"Vision/projector streams never captured: {missing_streams}")
+
+        dinov2_features = dinov2_stream.tensors[0]
+        siglip_features = siglip_stream.tensors[0]
+        projector_input = projector_input_stream.tensors[0]
+        vision_concat = torch.cat([dinov2_features, siglip_features], dim=2)
+        if vision_concat.shape != projector_input.shape:
+            raise RuntimeError(
+                "concat(DINOv2, SigLIP) does not match the projector input shape: "
+                f"{tuple(vision_concat.shape)} vs {tuple(projector_input.shape)}. The "
+                "vision hooks are not capturing the features the projector consumes."
+            )
+        concat_max_abs_diff = float((vision_concat - projector_input).abs().max().item())
+        concat_exact = bool(torch.equal(vision_concat, projector_input))
+        print(f"  dinov2  {tuple(dinov2_features.shape)}")
+        print(f"  siglip  {tuple(siglip_features.shape)}")
+        print(f"  concat  {tuple(vision_concat.shape)} vs projector_input "
+              f"{tuple(projector_input.shape)}")
+        print(f"  torch.equal={concat_exact}  max_abs_diff={concat_max_abs_diff}")
+        if not concat_exact or concat_max_abs_diff != 0.0:
+            raise RuntimeError(
+                "concat(DINOv2, SigLIP) != projector input "
+                f"(torch.equal={concat_exact}, max_abs_diff={concat_max_abs_diff}). The "
+                "vision hooks are capturing tensors the projector does not consume."
+            )
+        metadata["vision_concat_equals_projector_input"] = concat_exact
+        metadata["vision_concat_max_abs_diff"] = concat_max_abs_diff
+        metadata["vision_stream_shapes"] = {
+            "final_vision_dinov2": [int(v) for v in dinov2_features.shape],
+            "final_vision_siglip": [int(v) for v in siglip_features.shape],
+            "projector_input": [int(v) for v in projector_input.shape],
+        }
+
         log_section("OpenVLA inference without probes (HOOK OFF)")
         hook_manager.remove_hooks()
         if torch.cuda.is_available():
@@ -1050,6 +1107,9 @@ def main() -> int:
             "source_overlay_model_input": source_label["overlay_model_input_path"],
             "destination_overlay_model_input": destination_label["overlay_model_input_path"],
             "model_input_transform_max_pixel_diff": model_input_delta,
+            "vision_stream_shapes": metadata["vision_stream_shapes"],
+            "vision_concat_equals_projector_input": metadata["vision_concat_equals_projector_input"],
+            "vision_concat_max_abs_diff": metadata["vision_concat_max_abs_diff"],
             "action_identity_pass": metadata["action_identity_pass"],
             "action_identity_max_diff": metadata["action_identity_max_diff"],
             "latency_with_hooks_ms": latency_with_hooks_ms,

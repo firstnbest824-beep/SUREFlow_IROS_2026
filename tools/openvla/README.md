@@ -47,6 +47,40 @@ scripts must import them rather than reimplement their logic.
   captured with a forward-pre hook as `pre_action_hidden` and saved as
   `pre_action_hidden_last_token.npy` with shape `[num_lm_head_calls, hidden_dim]`.
   The number of calls is measured, never assumed equal to the action dimension.
+
+  Vision/projector probe points and their verified shapes (batch 1):
+
+  | stage | hooked module | hook | shape |
+  |---|---|---|---|
+  | `final_vision_dinov2` | `vision_backbone.featurizer` | forward | `[1, 256, 1024]` |
+  | `final_vision_siglip` | `vision_backbone.fused_featurizer` | forward | `[1, 256, 1152]` |
+  | `projector_input` | `projector` | forward_pre | `[1, 256, 2176]` |
+  | `projector_output` | `projector` | forward | `[1, 256, 4096]` |
+
+  The dry-run asserts `cat([dinov2, siglip], dim=2) == projector_input` exactly
+  (`torch.equal`, `max_abs_diff == 0.0`), which is what proves the vision hooks
+  sit on the tensors the model consumes.
+
+  > **⚠️ Results collected before commit `f935f19` are not usable for probing.**
+  > Earlier revisions hooked `vision_backbone.featurizer.blocks.23` and
+  > `vision_backbone.fused_featurizer.blocks.26` and saved them as
+  > `final_vision_dinov2` / `final_vision_siglip` with shapes `[1, 261, 1024]`
+  > and `[1, 256, 1152]`. **The model never consumes those tensors.**
+  > `PrismaticVisionBackbone.__init__` monkey-patches each featurizer's `forward`
+  > to `get_intermediate_layers(n={len(blocks) - 2})`, so it consumes the
+  > **second-to-last** block — DINOv2 block 22 of 24, SigLIP block 25 of 27 —
+  > with DINOv2's 5 prefix tokens (CLS + 4 registers) stripped and no final norm.
+  > The last block still executes, so the old hooks fired and produced
+  > plausible-looking arrays, but their output is discarded. On the real
+  > checkpoint they differ from the consumed features by rel_L2 1.61 / 1.17
+  > (cos 0.59 / 0.66) — a different representation, not a small numerical drift.
+  > Any `feature_final_vision_*.npy` from an older run must be re-collected.
+  >
+  > Those runs also contain `feature_projector_penultimate.npy` (a hook on
+  > `projector.fc3`). For the fused backbone `fc3` is the final layer, so its
+  > output *is* the projector's return value — the same tensor object, and the
+  > file is bitwise-identical to `feature_projector_output.npy`. That hook has
+  > been removed; the file is redundant, not wrong.
   `lm_head_logits`'s own prefill array (~35 MB/timestep) is skipped on disk by
   default in `dry_run_openvla_spatial_probe.py`; pass `--save_lm_head_logits` to
   persist it. All other streams (vision features, projector features, LLM
