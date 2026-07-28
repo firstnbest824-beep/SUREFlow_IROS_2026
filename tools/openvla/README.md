@@ -122,6 +122,56 @@ scripts must import them rather than reimplement their logic.
   max abs action difference, to verify phase logging never changes policy
   behavior.
 
+## Activation collection
+
+- `collect_activation_pilot.py` — runs a real LIBERO rollout and saves, for every
+  control step, the activations together with the observation, action,
+  proprioceptive state and task phase that belong to that same step.
+
+      python tools/openvla/collect_activation_pilot.py --max_steps 90
+
+  **Timestep convention.** At control step `k` the loop is
+  `obs_pre → action = policy(obs_pre) → obs_post = env.step(action)`.
+  Everything stored under timestep `k` derives from `obs_pre`: the activations,
+  the proprioceptive vector fed to the model, the action, *and the task-phase
+  label*. `obs_post` is stored separately so `obs_post(k) == obs_pre(k+1)` can be
+  checked.
+
+  > ⚠️ `run_single_vanilla_rollout.py` and `run_failure_screening.py` call the
+  > phase resolver **after** `env.step`, so they label step `k` with `obs_post(k)`.
+  > For rollout-level questions ("when did the grasp happen") that is fine. For
+  > probe training it would put every label one control step ahead of the
+  > activation it is paired with, so the collector uses the `obs_pre` convention
+  > and `activation_integrity.check_alignment` enforces it.
+
+- `activation_integrity.py` — simulator-free verification of a collected run.
+  Six check groups, each PASS/WARNING/FAIL with the numbers behind the verdict:
+  **A** counts agree, **B** shapes match the spec above (including the
+  `dinov2 + siglip == projector_input` channel invariant), **C** value sanity,
+  **D** temporal alignment / off-by-one, **E** hooks fired the expected number of
+  times and no tensor was reused, **F** the episode actually changed. Runnable on
+  any past run:
+
+      python tools/openvla/activation_integrity.py --run_dir <run>
+
+- `activation_dashboard.py` — builds a self-contained `dashboard.html`
+  (frames, activation-norm and per-step-delta plots, action plot, hook table,
+  representative timesteps with 16×16 token-norm heatmaps). Everything is inlined
+  as data URIs, so the file can be copied anywhere.
+
+### Known data characteristic: LLaMA massive activations
+
+`llm_middle` and `llm_late` put ~1.5e4 into **exactly 2 of 4096 channels**
+(indices 2533 and 1415 on this checkpoint) while the median stays ~0.4–1.25 and
+p99.99 is ~25–43. `llm_early` shows none, and `pre_action_hidden` (post-RMSNorm)
+peaks around 76. This is normal LLaMA behaviour, not corruption — the integrity
+check therefore thresholds on the **bulk** magnitude (p99.9), not the maximum.
+
+Consequence for probing: a probe trained on raw `llm_middle` / `llm_late` will be
+dominated by those two channels. Standardize per channel (or use the
+post-RMSNorm `pre_action_hidden`) before drawing conclusions about spatial
+decodability.
+
 ## Important
 
 - Do not import or load SUREFlow modules, checkpoints, or scalers from this path.
