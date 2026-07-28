@@ -610,10 +610,15 @@ def run_all_checks(episode_dir: str) -> Dict[str, Any]:
 def build_integrity_report(run_dir: str) -> Dict[str, Any]:
     """Run every episode's checks and aggregate into one report."""
     episodes_root = os.path.join(run_dir, "episodes")
+    # Only completed episodes are analysed. In-flight artifacts -- `.partial`
+    # (interrupted write) and anything dot-prefixed such as `.transfer_tmp` --
+    # are skipped so a crashed or still-running collection never corrupts a report.
     episode_dirs = sorted(
         os.path.join(episodes_root, d)
         for d in os.listdir(episodes_root)
         if os.path.isdir(os.path.join(episodes_root, d))
+        and not d.startswith(".")
+        and not d.endswith(".partial")
     ) if os.path.isdir(episodes_root) else []
 
     per_episode = [run_all_checks(d) for d in episode_dirs]

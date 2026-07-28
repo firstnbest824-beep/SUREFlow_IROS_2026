@@ -159,6 +159,124 @@ scripts must import them rather than reimplement their logic.
   representative timesteps with 16×16 token-norm heatmaps). Everything is inlined
   as data URIs, so the file can be copied anywhere.
 
+### Storage layout: SSD staging → 4TB ext4 final
+
+This server has one NVMe (`/`, ~108 GB free) and two 4 TB spinning disks. The
+collector produces ~28.35 MB/timestep at ~318 ms/timestep, i.e. **~89 MB/s
+sustained**. Measured with the real write pattern:
+
+| target | device | true sustained write | verdict |
+|---|---|---|---|
+| `/` (nvme0n1p2) | NVMe SSD | **596 MB/s** | fast, but only ~108 GB free — must not be the destination |
+| `/home/user/4TB` (sdb) | **rotational** HDD, ext4 | **85.9 MB/s** | 1.9 TB free, but just under the 89 MB/s the collector needs |
+| `/home/HDD` (sda2) | rotational HDD, ntfs-3g/FUSE | slower still | archive only, never the hot path |
+
+So neither disk alone is right: the SSD has speed but no room, the HDD has room
+but not quite enough speed. Hence **staged** mode — write each episode to a
+bounded SSD buffer, then transfer to the HDD in the background while the next
+episode is already being collected. The ~3.5 MB/s shortfall accumulates only
+~10 GB of backlog over a full 250 GB run, well inside the 32 GB staging budget.
+
+#### Modes
+
+- `direct` — write straight to `--output_root`. Correct when the destination is
+  fast enough, or when staging would not help.
+- `staged` — SSD buffer + background transfer. If staging is unsafe (same
+  filesystem as the destination, rotational staging disk, or not enough free
+  space) it **falls back to direct and records why**.
+- `auto` *(default)* — pick `staged` when it is both safe and useful.
+
+#### Recommended command
+
+```bash
+python3 tools/openvla/collect_activation_pilot.py \
+  --task_suite libero_spatial \
+  --task_id 0 \
+  --init_state_id 0 \
+  --seed 7 \
+  --num_episodes 20 \
+  --max_steps 220 \
+  --gpu 0 \
+  --storage_mode auto \
+  --output_root /home/user/4TB/hwkim/openvla_activation_collection \
+  --staging_root /home/hwkim/.cache/openvla_activation_stage \
+  --staging_max_gb 32 \
+  --staging_min_free_gb 64
+```
+
+> ⚠️ Do **not** run this at full scale yet: the perturbation init-state
+> determinism blocker is still open, so a perturbation run cannot be reproduced
+> or compared. Vanilla-only collection is unaffected.
+
+Before starting, check there is room:
+
+```bash
+df -h / /home/user/4TB
+```
+
+`/` must keep at least `--staging_min_free_gb` (64 GB) free, and the destination
+needs the full run size plus margin.
+
+#### Safety limits
+
+- staging never exceeds `--staging_max_gb` (32 GB default)
+- `/` never drops below `--staging_min_free_gb` (64 GB default)
+- at most `--transfer_queue_size` (2) episodes wait for transfer, counting the
+  one being copied
+- when any limit is hit the collector **pauses** — it never drops activations or
+  fills the disk. If it cannot resume within 30 minutes it stops with an error.
+- a single transfer worker on purpose: parallel copies to one spinning disk
+  multiply seeks and reduce total throughput
+
+#### Staging states and crash recovery
+
+| state | meaning |
+|---|---|
+| `<episode>.partial` | being written now, or interrupted mid-write |
+| `<episode>.ready` | fully written, waiting for / undergoing transfer |
+| `<final_run>/.transfer_tmp/<episode>` | copy in progress |
+| `<final_run>/episodes/<episode>` | complete and verified |
+
+An episode appears under `episodes/` only after every byte is copied and
+verified against its manifest (relative path, size, file count), then moved with
+an atomic rename. The staging copy is deleted only after that verification
+passes; a failed transfer keeps the staging copy and records the error.
+
+Just re-run the same command after a crash. On startup the collector:
+
+- re-queues every `.ready` episode
+- deletes stale `.transfer_tmp` copies (never trusted) and re-copies from `.ready`
+- reports `.partial` directories as **orphans and never deletes them** — inspect
+  them yourself
+- refuses to overwrite an already-complete episode
+
+#### Why `/home/HDD` is not the hot path
+
+It is NTFS via ntfs-3g (FUSE): per-syscall overhead on ~3,000 files per episode,
+and no POSIX ownership or permissions (everything shows as `root:root 0777`).
+Use it as a cold archive only, after a run is finished and verified:
+
+```bash
+python3 tools/openvla/archive_activation_run.py \
+  --run_dir /home/user/4TB/hwkim/openvla_activation_collection/<run_id> \
+  --archive_root /home/HDD/hwkim/openvla_activation_archive \
+  --mode tar --dry_run
+```
+
+It verifies the ext4 source first, writes one tar per episode, and **never
+deletes the original**.
+
+#### Verifying a finished run
+
+```bash
+python3 tools/openvla/activation_integrity.py --run_dir <final_run_dir>
+python3 tools/openvla/activation_dashboard.py  --run_dir <final_run_dir>
+```
+
+Both operate on the final destination only. In-flight artifacts (`.partial`,
+`.transfer_tmp`) are skipped, so these are safe to run while a collection is
+still going.
+
 ### Known data characteristic: LLaMA massive activations
 
 `llm_middle` and `llm_late` put ~1.5e4 into **exactly 2 of 4096 channels**

@@ -685,9 +685,17 @@ def save_phase_timeline(
         "first_pre_grasp_to_post_grasp_timestep": pre_to_post,
         "reached_post_grasp": PHASE_POST_GRASP in phase_counts,
         "final_phase": phase_timeline[-1]["phase"] if phase_timeline else None,
+        # Absolute paths record where the files were *written*. Under staged
+        # collection that is the SSD staging directory, which no longer exists
+        # once the episode has been transferred, so they are kept for backward
+        # compatibility only. The `*_filename` fields below are relative to the
+        # episode directory and stay correct wherever the episode ends up.
         "phase_timeline_csv_path": csv_path,
         "phase_timeline_jsonl_path": jsonl_path,
         "relevant_entity_timeline_csv_path": relevant_csv_path,
+        "phase_timeline_csv_filename": os.path.basename(csv_path),
+        "phase_timeline_jsonl_filename": os.path.basename(jsonl_path),
+        "relevant_entity_timeline_csv_filename": os.path.basename(relevant_csv_path),
     }
 
     transition_summary_path = os.path.join(output_dir, "phase_transition_summary.json")

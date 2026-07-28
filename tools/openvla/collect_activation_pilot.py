@@ -106,8 +106,19 @@ from activation_integrity import (  # noqa: E402
     build_integrity_report,
     tensor_stats,
 )
-
-DEFAULT_OUTPUT_ROOT = "outputs/openvla_activation_collection"
+from activation_storage import (  # noqa: E402
+    DEFAULT_OUTPUT_ROOT,
+    DEFAULT_STAGING_MAX_GB,
+    DEFAULT_STAGING_MIN_FREE_GB,
+    DEFAULT_STAGING_ROOT,
+    DEFAULT_TRANSFER_QUEUE_SIZE,
+    MODE_AUTO,
+    MODE_DIRECT,
+    MODE_STAGED,
+    ActivationStorage,
+    describe_filesystem,
+    free_gb,
+)
 # Pilot default. Full rollouts are 220 steps; at ~28 MB/timestep that is ~6 GB,
 # far more than a wiring check needs.
 DEFAULT_PILOT_MAX_STEPS = 30
@@ -228,7 +239,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--attn_implementation", type=str, default="eager")
     parser.add_argument("--dtype", type=str, default="bfloat16", choices=["bfloat16", "float16", "float32"])
     parser.add_argument("--gpu", type=int, default=0)
-    parser.add_argument("--output_root", type=str, default=DEFAULT_OUTPUT_ROOT)
+    parser.add_argument("--output_root", type=str, default=DEFAULT_OUTPUT_ROOT,
+                        help="final storage root (must NOT be on '/'; default is the 4TB ext4 disk)")
+    # --- storage backend -----------------------------------------------------
+    parser.add_argument("--storage_mode", type=str, default=MODE_AUTO,
+                        choices=[MODE_DIRECT, MODE_STAGED, MODE_AUTO],
+                        help="direct: write straight to output_root. staged: write to SSD then "
+                             "transfer asynchronously. auto: staged when it is safe and useful, "
+                             "otherwise direct with the reason recorded.")
+    parser.add_argument("--staging_root", type=str, default=DEFAULT_STAGING_ROOT,
+                        help="SSD staging buffer (only used in staged mode)")
+    parser.add_argument("--staging_max_gb", type=float, default=DEFAULT_STAGING_MAX_GB,
+                        help="max bytes the staging buffer may hold before the collector waits")
+    parser.add_argument("--staging_min_free_gb", type=float, default=DEFAULT_STAGING_MIN_FREE_GB,
+                        help="free space that must remain on the staging filesystem")
+    parser.add_argument("--transfer_queue_size", type=int, default=DEFAULT_TRANSFER_QUEUE_SIZE,
+                        help="episodes allowed to wait for transfer before collection pauses")
+    parser.add_argument("--keep_staging_on_success", action="store_true", default=False,
+                        help="debugging: keep the staging copy after a verified transfer")
     parser.add_argument("--ood_config_path", type=str, default=DEFAULT_OOD_SPATIAL_CONFIG)
     parser.add_argument("--perturbation_seed", type=int, default=0)
     parser.add_argument("--save_lm_head_logits", action="store_true", default=False,
@@ -546,16 +574,27 @@ def main() -> int:
     if run_dir.exists():
         print(f"[FATAL] run_id already exists, refusing to overwrite: {run_dir}")
         return 1
-    run_dir.mkdir(parents=True, exist_ok=False)
 
-    # Disk guard.
-    free_gb = free_disk_gb(str(output_root.resolve()))
+    storage = ActivationStorage(
+        run_id=run_id,
+        output_root=str(output_root),
+        storage_mode=args.storage_mode,
+        staging_root=args.staging_root,
+        staging_max_gb=args.staging_max_gb,
+        staging_min_free_gb=args.staging_min_free_gb,
+        transfer_queue_size=args.transfer_queue_size,
+        keep_staging_on_success=args.keep_staging_on_success,
+    )
+    run_dir = Path(storage.final_run_dir)
+
     per_step_mb = 8.65 + 4.77 * 4  # vision/projector + 4 LLM-family prefills, fp32
     if args.save_fp16:
         per_step_mb /= 2
     if args.save_lm_head_logits:
         per_step_mb += 35.0
     estimated_gb = per_step_mb * args.max_steps * args.num_episodes / 1024.0
+    final_free = free_gb(str(output_root))
+
     print(f"Run dir            : {run_dir}")
     print(f"Task               : {task.name}")
     print(f"Instruction        : {task.language}")
@@ -564,11 +603,28 @@ def main() -> int:
     print(f"Saved stages       : {saved_stages}")
     print(f"Storage dtype      : {save_dtype.__name__}")
     print(f"Estimated size     : {estimated_gb:.2f} GB ({per_step_mb:.1f} MB/timestep x {args.max_steps} steps)")
-    print(f"Free disk          : {free_gb:.1f} GB")
-    if free_gb - estimated_gb < args.min_free_disk_gb:
-        print(f"[FATAL] would leave under {args.min_free_disk_gb} GB free; aborting.")
-        shutil.rmtree(run_dir, ignore_errors=True)
+    print(f"Storage mode       : {args.storage_mode} -> {storage.resolved_mode}")
+    print(f"  reason           : {storage.mode_reason}")
+    print(f"  final fs         : {storage.final_fs.get('source')} {storage.final_fs.get('fstype')} "
+          f"rotational={storage.final_fs.get('rotational')} free={final_free:.1f} GB")
+    if storage.resolved_mode == MODE_STAGED:
+        print(f"  staging          : {storage.staging_root}")
+        print(f"  staging fs       : {storage.staging_fs.get('source')} {storage.staging_fs.get('fstype')} "
+              f"rotational={storage.staging_fs.get('rotational')} free={free_gb(args.staging_root):.1f} GB")
+        print(f"  staging budget   : max {args.staging_max_gb} GB, keep {args.staging_min_free_gb} GB free, "
+              f"queue {args.transfer_queue_size}")
+
+    if final_free - estimated_gb < args.min_free_disk_gb:
+        print(f"[FATAL] final storage would drop under {args.min_free_disk_gb} GB free; aborting.")
+        storage.close(timeout=5)
         return 1
+
+    # Recover anything an interrupted run left behind before writing new data.
+    recovery = storage.recover()
+    if any(recovery["found"].values()):
+        print(f"Recovery scan      : {recovery['found']}")
+        for action in recovery["actions"]:
+            print(f"  - {action}")
 
     run_config = {
         "run_id": run_id,
@@ -593,6 +649,13 @@ def main() -> int:
         "probe_targets_forward": {p: s for p, (s, _) in FORWARD_PROBE_TARGETS.items()},
         "probe_targets_forward_pre": {p: s for p, (s, _) in PRE_FORWARD_PROBE_TARGETS.items()},
         "phase_resolver_config": phase_resolver_config_snapshot(PHASE_DEFAULT_THRESHOLDS),
+        "storage": storage.metadata(),
+        "filesystem_free_gb_at_start": {
+            "final": final_free,
+            "staging": free_gb(args.staging_root) if storage.resolved_mode == MODE_STAGED else None,
+            "root": free_gb("/"),
+        },
+        "recovery_scan": recovery,
         "python_version": sys.version,
         "torch_version": torch.__version__,
         "libero_path": list(getattr(libero, "__path__", [])),
@@ -632,17 +695,38 @@ def main() -> int:
         episode_metas = []
         for episode_id in range(args.num_episodes):
             log_section(f"Collecting episode {episode_id}")
-            episode_dir = run_dir / "episodes" / f"episode_{episode_id:03d}"
+            # begin_episode applies backpressure (staging budget / free space /
+            # queue depth) BEFORE any byte of this episode is written.
+            write_dir = Path(storage.begin_episode(episode_id))
             meta = collect_episode(
                 vla=vla, processor=processor, env=env, task=task,
                 task_description=task_description,
                 initial_state=initial_states[args.init_state_id],
-                entities=entities, episode_dir=episode_dir, episode_id=episode_id,
+                entities=entities, episode_dir=write_dir, episode_id=episode_id,
                 args=args, dtype=dtype, save_dtype=save_dtype, saved_stages=saved_stages,
             )
+            # Seal: manifest + .partial -> .ready + enqueue async transfer.
+            storage.finish_episode(episode_id, str(write_dir))
+            record = storage.records[episode_id]
+            meta["storage"] = {
+                "mode": storage.resolved_mode,
+                "raw_bytes": record.raw_bytes,
+                "file_count": record.file_count,
+                "write_started_at": record.write_started_at,
+                "write_finished_at": record.write_finished_at,
+            }
             episode_metas.append(meta)
             print(f"  timesteps={meta['num_timesteps']} success={meta['task_success']} "
                   f"termination={meta['termination_reason']}")
+
+        if storage.resolved_mode == MODE_STAGED:
+            log_section("Draining transfer queue")
+            if not storage.wait_for_transfers(timeout=7200):
+                raise RuntimeError(
+                    "transfers did not complete; staging copies preserved: "
+                    f"{storage.errors}"
+                )
+            print("  all episodes transferred and verified")
 
     except KeyboardInterrupt:
         interrupted = True
@@ -664,6 +748,11 @@ def main() -> int:
                 env.close()
         except Exception:
             pass
+        # Drain and shut down the transfer worker. Staging copies of anything
+        # that failed to transfer are deliberately left in place.
+        if not storage.close(timeout=7200):
+            print(f"[WARN] transfers incomplete; staging preserved at {storage.staging_root}")
+            print(f"       errors: {storage.errors}")
 
     log_section("Integrity checks")
     report = build_integrity_report(str(run_dir))
@@ -695,6 +784,11 @@ def main() -> int:
         "total_size_mb": total_bytes / 1e6,
         "interrupted": interrupted,
         "integrity_overall": report["overall"],
+        "storage": storage.metadata(),
+        "filesystem_free_gb_at_end": {
+            "final": free_gb(str(output_root)),
+            "root": free_gb("/"),
+        },
     }
     with open(run_dir / "collection_summary.json", "w", encoding="utf-8") as handle:
         json.dump(summary, handle, indent=2, ensure_ascii=False)
