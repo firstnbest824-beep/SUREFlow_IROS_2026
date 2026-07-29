@@ -129,40 +129,72 @@ def make_env(bddl_path: str, resolution: int) -> Any:
     return env
 
 
+def _poses_under_applied_init(
+    bddl: str, roles: Any, resolution: int, suite: str, condition: str,
+    task_id: int, task_name: str, seed: int, init_state_id: int,
+) -> Tuple[Dict[str, Any], Any]:
+    """Poses of the state the rollout will actually start from.
+
+    Resetting is not enough. LIBERO samples object placements inside their
+    regions on every reset, and the episode then overwrites that with a pinned
+    init state -- the official ``.pruned_init`` where one ships, a locally frozen
+    capture otherwise. Diffing bare resets would therefore describe a state no
+    episode ever runs, and would fold per-reset placement jitter of the untouched
+    objects into the perturbation's measured effect.
+    """
+    env = make_env(bddl, resolution)
+    try:
+        env.reset()
+        state, record = resolve_init_state(
+            env=env, bddl_path=bddl, suite=suite, condition=condition,
+            task_id=task_id, task_name=task_name, seed=seed,
+            init_state_id=init_state_id,
+        )
+        env.set_init_state(state)
+        return extract_object_poses(env, roles.tracked_entities), record
+    finally:
+        try:
+            env.close()
+        except Exception:
+            pass
+
+
 def measure_change(
     vanilla_bddl: str,
     perturbed_bddl: Optional[str],
     roles: Any,
     resolution: int,
+    suite: str,
+    condition: str,
+    task_id: int,
+    task_name: str,
+    seed: int,
+    init_state_id: int = 0,
 ) -> Tuple[Any, Dict[str, Any]]:
-    """Reset both BDDLs and diff their initial poses. Returns (report, poses)."""
-    vanilla_env = make_env(vanilla_bddl, resolution)
-    try:
-        vanilla_env.reset()
-        vanilla_poses = extract_object_poses(vanilla_env, roles.tracked_entities)
-    finally:
-        try:
-            vanilla_env.close()
-        except Exception:
-            pass
+    """Diff the two initial states the episodes actually start from."""
+    vanilla_poses, vanilla_init = _poses_under_applied_init(
+        vanilla_bddl, roles, resolution, suite, "vanilla", task_id, task_name,
+        seed, init_state_id,
+    )
 
     if perturbed_bddl is None:
-        perturbed_poses = vanilla_poses
+        perturbed_poses, perturbed_init = vanilla_poses, vanilla_init
     else:
-        perturbed_env = make_env(perturbed_bddl, resolution)
-        try:
-            perturbed_env.reset()
-            perturbed_poses = extract_object_poses(perturbed_env, roles.tracked_entities)
-        finally:
-            try:
-                perturbed_env.close()
-            except Exception:
-                pass
+        perturbed_poses, perturbed_init = _poses_under_applied_init(
+            perturbed_bddl, roles, resolution, suite, condition, task_id, task_name,
+            seed, init_state_id,
+        )
 
     report = detect_changed_entities(vanilla_poses, perturbed_poses, roles)
     poses = {
         "vanilla": {k: v.to_dict() for k, v in vanilla_poses.items()},
         "perturbed": {k: v.to_dict() for k, v in perturbed_poses.items()},
+        "vanilla_init_state": vanilla_init.to_dict(),
+        "perturbed_init_state": perturbed_init.to_dict(),
+        # Flagged, not hidden: when the two conditions draw their init state from
+        # different sources, objects the perturbation never touched can still
+        # differ, and the change report above is what quantifies that.
+        "init_state_sources_match": vanilla_init.source == perturbed_init.source,
     }
     return report, poses
 
@@ -215,6 +247,7 @@ class EpisodeContext:
     pair: Any
     roles: Any
     change_report: Any
+    initial_poses: Dict[str, Any]
     provider: SegmentationLabelProvider
     init_state: np.ndarray
     init_record: Any
@@ -483,6 +516,7 @@ def build_manifest(
         "measured_translation_m": measured,
         "entity_roles": context.roles.to_dict(),
         "change_report": report.to_dict(),
+        "initial_pose_measurement": context.initial_poses,
         "change_class": report.change_class,
         "is_clean_condition": is_clean(report.change_class),
         "tracked_entities": tracked,
@@ -554,7 +588,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     roles = resolve_entity_roles_from_path(pair.perturbed_bddl_path or pair.vanilla_bddl_path)
     report, poses = measure_change(
-        pair.vanilla_bddl_path, pair.perturbed_bddl_path, roles, args.resolution
+        vanilla_bddl=pair.vanilla_bddl_path,
+        perturbed_bddl=pair.perturbed_bddl_path,
+        roles=roles,
+        resolution=args.resolution,
+        suite=pair.suite,
+        condition=pair.perturbation_name,
+        task_id=pair.task_id,
+        task_name=pair.task_name,
+        seed=seed,
+        init_state_id=args.init_state_id,
     )
 
     print(f"suite/condition : {pair.suite} / {pair.perturbation_name} ({pair.perturbation_family})")
@@ -593,7 +636,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         init_state, init_record = resolve_init_state(
             env=env, bddl_path=bddl, suite=pair.suite, condition=pair.perturbation_name,
             task_id=pair.task_id, task_name=pair.task_name, seed=seed,
-            init_state_id=args.init_state_id,
+            init_state_id=args.init_state_id, resolution=args.resolution,
         )
         print(f"init state      : {init_record.source} sha={init_record.sha256[:12]} "
               f"({init_record.num_available} available)")
@@ -605,6 +648,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         context = EpisodeContext(
             vla=vla, processor=processor, env=env, pair=pair, roles=roles,
             change_report=report,
+            initial_poses=poses,
             provider=SegmentationLabelProvider(
                 env, height=args.resolution, width=args.resolution
             ),
@@ -614,11 +658,24 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
         summaries = []
         for episode_index in range(args.num_episodes):
+            # A deterministic policy on a pinned state replays the same episode,
+            # so each episode draws its own placement: episode i gets init state
+            # i. Both sources support this -- 50 shipped placements for the
+            # official files, successive seeded resets for the frozen ones.
+            episode_init_id = args.init_state_id + episode_index
+            if episode_init_id != context.init_record.init_state_id:
+                context.init_state, context.init_record = resolve_init_state(
+                    env=env, bddl_path=bddl, suite=pair.suite,
+                    condition=pair.perturbation_name, task_id=pair.task_id,
+                    task_name=pair.task_name, seed=seed,
+                    init_state_id=episode_init_id, resolution=args.resolution,
+                )
             final_dir = episode_dir_for(
                 args.output_root, pair.suite, pair.perturbation_name,
                 pair.task_id, seed, episode_index,
             )
-            print(f"\n-- episode {episode_index} -> {final_dir}")
+            print(f"\n-- episode {episode_index} (init {episode_init_id}, "
+                  f"{context.init_record.source}) -> {final_dir}")
             summaries.append(collect_episode(context, episode_index, final_dir))
             last = summaries[-1]
             print(f"   timesteps={last['num_timesteps']} success={last['success']} "

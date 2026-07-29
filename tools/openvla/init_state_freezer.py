@@ -106,9 +106,39 @@ def load_init_states(path: str | os.PathLike) -> np.ndarray:
 # Local freezing
 # -----------------------------------------------------------------------------
 def frozen_init_state_path(
-    suite: str, condition: str, task_id: int, seed: int, root: Path = FROZEN_ROOT
+    suite: str, condition: str, task_id: int, seed: int, init_state_id: int = 0,
+    root: Path = FROZEN_ROOT,
 ) -> Path:
-    return root / suite / condition / f"task_{task_id:02d}__seed{seed}.npy"
+    return (
+        root / suite / condition
+        / f"task_{task_id:02d}__seed{seed}__init{init_state_id:03d}.npy"
+    )
+
+
+def capture_init_state(bddl_path: str, resolution: int, init_state_id: int) -> np.ndarray:
+    """Deterministically capture the ``init_state_id``-th placement draw.
+
+    LIBERO samples object placements inside their regions on every reset, so
+    successive resets of a seeded env give successive independent draws -- the
+    same thing the shipped ``.pruned_init`` files are: a list of sampled
+    placements. Index ``k`` is therefore the state after ``k + 1`` resets of a
+    freshly seeded env, which is reproducible from the seed alone.
+    """
+    from libero.libero.envs import OffScreenRenderEnv
+
+    env = OffScreenRenderEnv(
+        bddl_file_name=str(bddl_path), camera_heights=resolution, camera_widths=resolution
+    )
+    try:
+        env.seed(0)
+        for _ in range(init_state_id + 1):
+            env.reset()
+        return np.asarray(env.sim.get_state().flatten(), dtype=np.float64)
+    finally:
+        try:
+            env.close()
+        except Exception:
+            pass
 
 
 def freeze_init_state(
@@ -118,6 +148,9 @@ def freeze_init_state(
     task_id: int,
     task_name: str,
     seed: int,
+    init_state_id: int = 0,
+    bddl_path: Optional[str] = None,
+    resolution: int = 256,
     root: Path = FROZEN_ROOT,
     allow_create: bool = True,
 ) -> FrozenInitState:
@@ -126,7 +159,7 @@ def freeze_init_state(
     ``env`` must already be reset. Nothing is written when the file exists, so
     calling this on every episode is safe and is in fact the intended usage.
     """
-    path = frozen_init_state_path(suite, condition, task_id, seed, root)
+    path = frozen_init_state_path(suite, condition, task_id, seed, init_state_id, root)
     notes: List[str] = []
 
     if path.is_file():
@@ -138,7 +171,10 @@ def freeze_init_state(
                 f"no frozen init state at {path} and creation is disabled. "
                 "Run the freezer once before collecting."
             )
-        state = np.asarray(env.sim.get_state().flatten(), dtype=np.float64)
+        if init_state_id == 0 or bddl_path is None:
+            state = np.asarray(env.sim.get_state().flatten(), dtype=np.float64)
+        else:
+            state = capture_init_state(bddl_path, resolution, init_state_id)
         path.parent.mkdir(parents=True, exist_ok=True)
         temporary = path.with_suffix(".tmp")
         # np.save appends ".npy" unless the *handle* form is used, which would
@@ -156,6 +192,7 @@ def freeze_init_state(
                     "task_id": task_id,
                     "task_name": task_name,
                     "seed": seed,
+                    "init_state_id": init_state_id,
                     "sha256": digest,
                     "state_dim": int(state.size),
                 },
@@ -181,7 +218,7 @@ def freeze_init_state(
         task_id=task_id,
         task_name=task_name,
         seed=seed,
-        init_state_id=0,
+        init_state_id=init_state_id,
         source=SOURCE_FROZEN,
         path=str(path),
         sha256=digest,
@@ -203,6 +240,7 @@ def resolve_init_state(
     task_name: str,
     seed: int,
     init_state_id: int = 0,
+    resolution: int = 256,
     root: Path = FROZEN_ROOT,
 ) -> tuple[np.ndarray, FrozenInitState]:
     """Official state when one ships; otherwise the locally frozen one."""
@@ -230,7 +268,11 @@ def resolve_init_state(
             notes=["official evaluation init state, used verbatim"],
         )
 
-    record = freeze_init_state(env, suite, condition, task_id, task_name, seed, root)
+    record = freeze_init_state(
+        env=env, suite=suite, condition=condition, task_id=task_id, task_name=task_name,
+        seed=seed, init_state_id=init_state_id, bddl_path=str(bddl_path),
+        resolution=resolution, root=root,
+    )
     return np.load(record.path), record
 
 
