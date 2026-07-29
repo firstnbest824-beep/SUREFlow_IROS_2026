@@ -5,7 +5,15 @@
 
 > **NOTICE — active research branch switched to OpenVLA spatial diagnostics.**
 > This repository currently hosts two lines of work:
-> 1. **OpenVLA spatial-diagnostics experiments** (active): code lives under `tools/openvla/` and targets `openvla/openvla-7b-finetuned-libero-spatial`.
+> 1. **OpenVLA spatial-diagnostics experiments** (active): code lives under `tools/openvla/`.
+>    Two suites, two different questions:
+>    - `libero_object` + `x0.1` / `y0.1` → **source / pick generalisation** (the object to pick moves). Measured `clean_source_only`.
+>    - `libero_spatial` + `swap` → **destination / place generalisation**. Measured `destination_and_distractor` — **confounded**, because the destination *and* its swap partner both move. Never report it as clean destination-only.
+>
+>    Checkpoints are pinned per suite (`openvla-7b-finetuned-libero-spatial` @ `962318ce`, `openvla-7b-finetuned-libero-object` @ `287d6cfd`).
+>    Which entity a perturbation actually moved is **measured per episode**, never inferred from the suite or condition name — the profile is not constant across tasks. `x0.1` is a *level*, not a displacement: measured, it moves the source 7 cm.
+>    Conditions above `x0.1`/`y0.1` additionally teleport a distractor ~10 m out of the scene and are excluded as scene edits rather than spatial perturbations.
+>    See `tools/openvla/README.md` for the collection pipeline and `docs/bulk_collection_plan.md` for cost.
 > 2. **SUREFlow** (legacy / IROS 2026 artifact): the original SUREFlow training/evaluation code, kept under `SUREFlow/`, `configs/`, `dataloader/`, `run.py`, and `tools/dry_run_*` for reproducibility. It is no longer on the active experimental path.
 >
 > The instructions below describe the legacy SUREFlow workflow. For the active OpenVLA work, see `tools/openvla/`.
