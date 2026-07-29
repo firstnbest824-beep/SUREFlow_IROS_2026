@@ -16,6 +16,15 @@ written so that a plausible bug in the collector would trip it:
      obs_t -> label_t -> activation_t -> action_t -> env.step(action_t), and the
      recorded state-hash chain must actually close:
      record[t].next_sim_state_sha == record[t+1].sim_state_sha
+     NECESSARY BUT NOT SUFFICIENT. Both hashes come from the two get_state()
+     calls bracketing env.step; neither touches obs, the hook tensors, eef_pos or
+     the labels. Deliberately shifting action_applied and eef_pos by +1 inside a
+     record file leaves the chain 100% closed. What F does prove is that
+     consecutive records are temporally contiguous and that no env.step was
+     skipped, duplicated or interleaved. Proving the *content* alignment needs a
+     replay -- see validate_phase_against_simulator.py, which reproduces the
+     recorded eef_pos exactly (0.0 m) from a pre-step read while either
+     off-by-one pairing lands 4.7e-3 m away.
  G   BDDL / init-state / checkpoint hashes recorded, and equal to expectations
  H   source / destination / changed_entities / change_class recorded, and the
      change_class is one the detector can actually emit

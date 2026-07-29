@@ -58,6 +58,13 @@ REQUIRED_STAGES: Sequence[str] = (
 LABEL_REFERENCE = "pre_step_observation"
 ACTIVATION_REFERENCE = "pre_step_observation"
 ACTION_REFERENCE = "computed_from_same_observation"
+#: `success` and `done` are the ONLY post-step fields in a record. LIBERO
+#: evaluates its goal predicate after the step (bddl_base_domain.py sets
+#: `done = self._check_success()` on the stepped state), so a pre-step reading
+#: would be impossible: at index t the episode has not yet been acted on.
+#: Recorded explicitly so nothing has to infer it from the other three.
+OUTCOME_REFERENCE = "post_step_observation"
+POST_STEP_FIELDS = ("success", "done")
 
 
 def sha256_file(path: str | os.PathLike) -> str:
@@ -102,6 +109,8 @@ class StepRecord:
         record["label_reference"] = LABEL_REFERENCE
         record["activation_reference"] = ACTIVATION_REFERENCE
         record["action_reference"] = ACTION_REFERENCE
+        record["outcome_reference"] = OUTCOME_REFERENCE
+        record["post_step_fields"] = list(POST_STEP_FIELDS)
         return record
 
 

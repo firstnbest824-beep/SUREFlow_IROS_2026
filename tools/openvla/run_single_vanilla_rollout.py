@@ -174,6 +174,13 @@ def load_openvla(
     vla.eval()
 
     # Attach dataset statistics for action un-normalization.
+    # NOTE: `checkpoint_id` is a HF hub id ("openvla/openvla-7b-finetuned-..."),
+    # not a local directory, so this path never resolves and the warning branch
+    # below always fires. That is currently harmless -- config.json's `norm_stats`
+    # and the hub's dataset_statistics.json were verified byte-identical for both
+    # LIBERO checkpoints -- but the un-normalisation statistics in use come from
+    # config.json, not from this file. Kept as-is so the loaded statistics do not
+    # silently change; if it is ever "fixed", re-verify the q01/q99 values first.
     dataset_statistics_path = os.path.join(checkpoint_id, "dataset_statistics.json")
     if os.path.isfile(dataset_statistics_path):
         with open(dataset_statistics_path, "r", encoding="utf-8") as f:
