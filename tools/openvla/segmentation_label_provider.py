@@ -145,7 +145,6 @@ class SegmentationLabelProvider:
         min_visible_pixels: int = MIN_VISIBLE_PIXELS,
     ) -> None:
         self.env = env
-        self.sim = _unwrap_sim(env)
         self.cameras = list(cameras)
         self.height = int(height)
         self.width = int(width)
@@ -153,6 +152,17 @@ class SegmentationLabelProvider:
         self._geom_to_body: Dict[int, str] = {}
         self._transforms: Dict[str, np.ndarray] = {}
         self.refresh_bindings()
+
+    @property
+    def sim(self) -> Any:
+        """Resolved on every access.
+
+        ``env.reset()`` rebuilds the MuJoCo model and frees the previous
+        ``MjSim``; a cached handle turns into an object whose ``.model`` has been
+        deleted. Looking it up each time costs an attribute walk and removes a
+        whole class of stale-handle bugs.
+        """
+        return _unwrap_sim(self.env)
 
     # -- setup ----------------------------------------------------------------
     def refresh_bindings(self) -> None:
