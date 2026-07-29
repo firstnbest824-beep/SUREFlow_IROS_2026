@@ -1,0 +1,10 @@
+{
+  "suite": "libero_spatial",
+  "condition": "swap",
+  "task_id": 6,
+  "task_name": "pick_up_the_black_bowl_next_to_the_cookie_box_and_place_it_on_the_plate",
+  "seed": 0,
+  "init_state_id": 0,
+  "sha256": "ee0a2a162264585de844a798e9677f481d397cca511c14f21f5906b4527c84c7",
+  "state_dim": 92
+}

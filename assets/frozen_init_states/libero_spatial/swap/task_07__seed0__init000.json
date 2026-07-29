@@ -1,0 +1,10 @@
+{
+  "suite": "libero_spatial",
+  "condition": "swap",
+  "task_id": 7,
+  "task_name": "pick_up_the_black_bowl_on_the_stove_and_place_it_on_the_plate",
+  "seed": 0,
+  "init_state_id": 0,
+  "sha256": "316a96df692445e3275c2f95517d84be1cf9bfb74189ed486ff61a4e273c6006",
+  "state_dim": 92
+}

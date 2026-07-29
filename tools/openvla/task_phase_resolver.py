@@ -300,9 +300,13 @@ class TaskPhaseResolver:
             and closure_from_open >= t.min_gripper_closure_from_open_m
             and opening_delta is not None
             and abs(opening_delta) <= t.gripper_stall_qpos_delta
+            # Signed, not just stalled: a gripper whose fingers are creeping
+            # apart is releasing, not blocked by something it holds.
+            and opening_delta <= t.gripper_stall_qpos_delta / 2.0
         )
         gripper_closed_ok = gripper_state in ("closed", "closing") or fingers_blocked
-        lifted_ok = height_delta >= t.grasp_height_delta_m or displacement >= t.grasp_displacement_m
+        height_lifted_ok = height_delta >= t.grasp_height_delta_m
+        lifted_ok = height_lifted_ok or displacement >= t.grasp_displacement_m
 
         # Relative offset between the source object and the end-effector. A
         # rigidly held object keeps this vector ~constant while both bodies move.
@@ -352,7 +356,17 @@ class TaskPhaseResolver:
         if comovement_ok:
             grasp_confidence += EVIDENCE_WEIGHTS["comovement"]
 
-        grasp_like_now = contact_ok and gripper_closed_ok and (lifted_ok or comovement_ok)
+        # A grasp needs the object OFF the surface or moving rigidly with the
+        # gripper. Displacement alone is not enough: an object shoved sideways by
+        # a passing hand is displaced but not held. Allowing it let a failed
+        # libero_object y0.1 episode label 75 of 220 timesteps post_grasp -- the
+        # object had slid 3.1 cm, never rose above 0.4 cm, the gripper was 8.9 cm
+        # away and commanded open. `lifted_ok` still feeds the confidence score,
+        # where displacement is legitimate weak evidence; it just no longer
+        # triggers a transition on its own.
+        grasp_like_now = (
+            contact_ok and gripper_closed_ok and (height_lifted_ok or comovement_ok)
+        )
         self._grasp_evidence_streak = self._grasp_evidence_streak + 1 if grasp_like_now else 0
         grasp_detected = (
             self._grasp_evidence_streak >= t.min_consecutive_grasp_steps_for_transition
@@ -377,6 +391,7 @@ class TaskPhaseResolver:
             "gripper_opening_delta": opening_delta,
             "gripper_closure_from_open_m": closure_from_open,
             "fingers_blocked": fingers_blocked,
+            "height_lifted_ok": height_lifted_ok,
             "gripper_command": gripper_command,
             "proximity_ok": proximity_ok,
             "contact_ok_sustained": contact_ok,

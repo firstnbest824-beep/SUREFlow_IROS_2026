@@ -56,6 +56,13 @@ from changed_entity_detector import CHANGE_CLASSES  # noqa: E402
 VALID_PHASES = ("pre_grasp", "post_grasp", "uncertain")
 VALID_VISIBILITY = ("visible", "occluded", "out_of_view", "unknown")
 
+#: A visible entity's projected origin must land near its own mask. Tolerance is
+#: generous because a partly-occluded object's visible fragment is legitimately
+#: offset from its centre -- this is a frame check, not a precision check.
+UV_MASK_TOLERANCE = 0.05
+#: Fraction of visible labels allowed to miss before the frame is judged wrong.
+UV_MASK_MAX_MISS_RATE = 0.25
+
 #: Phase -> the entity the probe must be scored against at that phase.
 PHASE_TO_ROLE = {"pre_grasp": "source", "post_grasp": "destination", "uncertain": None}
 
@@ -363,6 +370,8 @@ class EpisodeValidator:
             return
         problems: List[Dict[str, Any]] = []
         labelled = 0
+        checked: Dict[str, int] = {}
+        missed: Dict[str, int] = {}
 
         for record in self.records:
             segmentation = record.get("segmentation") or {}
@@ -381,6 +390,19 @@ class EpisodeValidator:
                             problems.append({"t": record["timestep"], "entity": entity, "camera": camera, "why": f"uv {uv} outside [0,1] while in_frame"})
                     if visibility == "visible" and (count or 0) <= 0:
                         problems.append({"t": record["timestep"], "entity": entity, "camera": camera, "why": "visible with zero mask pixels"})
+                    # The one invariant that actually tests the frame convention:
+                    # a visible entity's projected origin and its own mask must
+                    # live in the same coordinate system. Range-checking uv alone
+                    # cannot fail -- robosuite clips into the image before we
+                    # normalise -- which is how a whole camera's projections
+                    # being frozen at t=0 passed validation.
+                    bbox = label.get("mask_bbox")
+                    if visibility == "visible" and uv is not None and bbox:
+                        checked[camera] = checked.get(camera, 0) + 1
+                        u_min, v_min, u_max, v_max = bbox
+                        if not (u_min - UV_MASK_TOLERANCE <= uv[0] <= u_max + UV_MASK_TOLERANCE
+                                and v_min - UV_MASK_TOLERANCE <= uv[1] <= v_max + UV_MASK_TOLERANCE):
+                            missed[camera] = missed.get(camera, 0) + 1
 
         if not labelled:
             self._add("J_segmentation", WARN, "no segmentation labels recorded")
@@ -388,6 +410,22 @@ class EpisodeValidator:
             self._add("J_segmentation", FAIL, "malformed segmentation labels", examples=problems[:5], count=len(problems))
         else:
             self._add("J_segmentation", PASS, f"{labelled} entity-camera labels well-formed")
+
+        bad_frames = {
+            camera: {"checked": total, "missed": missed.get(camera, 0),
+                     "miss_rate": round(missed.get(camera, 0) / total, 3)}
+            for camera, total in checked.items()
+            if total >= 20 and missed.get(camera, 0) / total > UV_MASK_MAX_MISS_RATE
+        }
+        if bad_frames:
+            self._add(
+                "J_uv_frame", FAIL,
+                "projected uv and its own mask do not share a frame",
+                cameras=bad_frames, tolerance=UV_MASK_TOLERANCE,
+            )
+        elif checked:
+            rates = {c: round(missed.get(c, 0) / t, 3) for c, t in checked.items()}
+            self._add("J_uv_frame", PASS, f"uv lands inside its own mask {rates}")
 
     # -- driver ---------------------------------------------------------------
     def run(self) -> Dict[str, Any]:

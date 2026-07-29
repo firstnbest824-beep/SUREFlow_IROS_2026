@@ -74,6 +74,30 @@ def upright_to_policy(row: float, col: float, height: int, width: int) -> Tuple[
     return float(row), float((width - 1) - col)
 
 
+def project_world_point(
+    xyz: Sequence[float], world_to_pixel: np.ndarray
+) -> Tuple[float, float, float]:
+    """Project one world point, WITHOUT clipping, returning (row, col, depth).
+
+    ``robosuite.project_points_from_world_to_camera`` clips row/col into the
+    image and rounds to int, and discards the homogeneous depth. That makes any
+    downstream ``0 <= row < height`` test a tautology: a point ten metres off the
+    left edge lands on column 0, and a point *behind* the camera lands on the
+    principal point -- dead centre. Both then read as "in frame". Keeping the
+    unclipped value and the depth is what lets out-of-view be told from occluded.
+
+    Coordinates are in robosuite's upright frame, matching what the clipped
+    helper returns for in-frame points.
+    """
+    homogeneous = np.array([float(xyz[0]), float(xyz[1]), float(xyz[2]), 1.0])
+    projected = np.asarray(world_to_pixel) @ homogeneous
+    depth = float(projected[2])
+    if abs(depth) < 1e-12:
+        return float("nan"), float("nan"), depth
+    # robosuite swaps axes: row comes from the second component, col from the first.
+    return float(projected[1] / depth), float(projected[0] / depth), depth
+
+
 def raw_to_policy_image(image: np.ndarray) -> np.ndarray:
     """Rotate a raw render into the policy frame (same op as get_libero_image)."""
     return np.asarray(image)[::-1, ::-1]
@@ -150,7 +174,6 @@ class SegmentationLabelProvider:
         self.width = int(width)
         self.min_visible_pixels = int(min_visible_pixels)
         self._geom_to_body: Dict[int, str] = {}
-        self._transforms: Dict[str, np.ndarray] = {}
         self.refresh_bindings()
 
     @property
@@ -174,16 +197,23 @@ class SegmentationLabelProvider:
             name = model.body_id2name(body_id)
             if name:
                 self._geom_to_body[geom_id] = name
-        self._transforms = {}
 
     def _transform(self, camera: str) -> np.ndarray:
-        if camera not in self._transforms:
-            from robosuite.utils import camera_utils
+        """World -> pixel matrix at the CURRENT simulator state. Never cached.
 
-            self._transforms[camera] = camera_utils.get_camera_transform_matrix(
-                sim=self.sim, camera_name=camera, camera_height=self.height, camera_width=self.width
-            )
-        return self._transforms[camera]
+        ``get_camera_transform_matrix`` reads ``sim.data.cam_xpos`` /
+        ``sim.data.cam_xmat``, which are live state. ``robot0_eye_in_hand`` is
+        mounted on the wrist, so the matrix changes every timestep. Caching it
+        per episode froze every wrist projection at the t=0 camera pose while the
+        wrist *mask* kept tracking the real camera -- the two stopped sharing a
+        frame, and a static object's wrist uv stayed bit-identical for a whole
+        episode while its mask swept 246 px across a 256 px image.
+        """
+        from robosuite.utils import camera_utils
+
+        return camera_utils.get_camera_transform_matrix(
+            sim=self.sim, camera_name=camera, camera_height=self.height, camera_width=self.width
+        )
 
     def geom_ids_for(self, entity: str) -> List[int]:
         """Geoms belonging to an entity, matched on body-name boundary.
@@ -267,18 +297,14 @@ class SegmentationLabelProvider:
         uv_pixel = uv_norm = uv_upright = None
         in_frame = False
 
+        depth = None
         if xyz is not None:
-            from robosuite.utils import camera_utils
-
-            projected = camera_utils.project_points_from_world_to_camera(
-                xyz.reshape(1, 3), self._transform(camera), height, width
-            )[0]
-            row_up, col_up = float(projected[0]), float(projected[1])
+            row_up, col_up, depth = project_world_point(xyz, self._transform(camera))
             uv_upright = [row_up, col_up]
             row, col = upright_to_policy(row_up, col_up, height, width)
             uv_pixel = [row, col]
             uv_norm = [col / max(width - 1, 1), row / max(height - 1, 1)]
-            in_frame = 0 <= row < height and 0 <= col < width
+            in_frame = depth > 0 and 0 <= row <= height - 1 and 0 <= col <= width - 1
 
         centroid = bbox = None
         if count >= self.min_visible_pixels:
@@ -299,7 +325,8 @@ class SegmentationLabelProvider:
         elif count >= self.min_visible_pixels:
             visibility = VISIBILITY_VISIBLE
         elif not in_frame:
-            # Projects outside the image: the camera simply cannot see it.
+            # Projects outside the image, or behind the camera: not visible, and
+            # not occluded either -- the camera is simply not pointed at it.
             visibility = VISIBILITY_OUT_OF_VIEW
         else:
             # Projects inside the image but contributes no pixels: something is
@@ -318,6 +345,7 @@ class SegmentationLabelProvider:
             mask_bbox=bbox,
             in_frame=in_frame,
             visibility=visibility,
+            depth_m=depth,
         )
 
 

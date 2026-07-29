@@ -31,8 +31,23 @@ from entity_role_resolver import (
 # *same* BDDL differ by up to the region size (2 cm on libero_spatial). The
 # default therefore has to sit above that sampling jitter, otherwise every reset
 # looks like a perturbation.
+# Measured over the 50 shipped .pruned_init states: libero_object placements
+# differ by at most 0.0396 m, but libero_spatial reaches 0.0890 m -- on the
+# wooden-cabinet and stove tasks the source bowl sits on a region declared with
+# no (:ranges ...), so it spans the whole cabinet top. A single global constant
+# is therefore not safe: 0.05 m sits *below* the jitter of the very entity the
+# swap condition leaves untouched, so ~12% of draws would report a source move
+# that never happened. Raising it globally is not the fix either -- the real
+# libero_object perturbation is only 0.070 m and would start to be masked.
+#
+# So this constant is the FLOOR, and `estimate_placement_jitter` raises it per
+# entity from the actual placement distribution of that task.
 DEFAULT_TRANSLATION_THRESHOLD_M = 0.05
 DEFAULT_ROTATION_THRESHOLD_RAD = 0.20
+
+#: Displacements between the jitter band and the threshold are not called either
+#: way; they are reported as indeterminate so a downstream filter can drop them.
+INDETERMINATE_BAND_FRACTION = 0.5
 
 # Distance beyond which an entity is considered removed from the scene rather
 # than relocated. LIBERO-PRO's position-offset assets push distractors to
@@ -124,6 +139,10 @@ class ChangeReport:
     translation_threshold_m: float
     rotation_threshold_rad: float
     unmeasurable_entities: List[str] = field(default_factory=list)
+    #: Per-entity thresholds actually applied (jitter-aware).
+    per_entity_threshold_m: Dict[str, float] = field(default_factory=dict)
+    #: Entities that moved measurably but not enough to be called changed.
+    indeterminate_entities: List[Dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> Dict[str, Any]:
         payload = asdict(self)
@@ -138,10 +157,20 @@ def detect_changed_entities(
     translation_threshold: float = DEFAULT_TRANSLATION_THRESHOLD_M,
     rotation_threshold: float = DEFAULT_ROTATION_THRESHOLD_RAD,
     scene_exit_threshold: float = SCENE_EXIT_THRESHOLD_M,
+    entity_jitter: Optional[Dict[str, float]] = None,
 ) -> ChangeReport:
-    """Diff two initial-pose maps and classify what the perturbation did."""
+    """Diff two initial-pose maps and classify what the perturbation did.
+
+    ``entity_jitter`` maps entity -> that entity's observed placement spread for
+    this task (see ``estimate_placement_jitter``). It raises the per-entity
+    threshold so an object the perturbation never touched is not called changed
+    just because it was re-sampled inside a large region.
+    """
     changed: List[ChangedEntity] = []
     unmeasurable: List[str] = []
+    indeterminate: List[Dict[str, Any]] = []
+    jitter = entity_jitter or {}
+    thresholds: Dict[str, float] = {}
 
     for name in sorted(set(vanilla_poses) | set(perturbed_poses)):
         van = vanilla_poses.get(name)
@@ -154,9 +183,17 @@ def detect_changed_entities(
         norm = float(math.sqrt(sum(d * d for d in delta)))
         rot = quaternion_distance(van.quat, per.quat)
 
-        moved = norm >= translation_threshold
+        entity_threshold = max(translation_threshold, float(jitter.get(name, 0.0)))
+        thresholds[name] = entity_threshold
+
+        moved = norm >= entity_threshold
         rotated = rot is not None and rot >= rotation_threshold
         if not (moved or rotated):
+            if norm >= entity_threshold * INDETERMINATE_BAND_FRACTION:
+                indeterminate.append({
+                    "name": name, "role": roles.role_of(name),
+                    "translation_norm": norm, "threshold": entity_threshold,
+                })
             continue
 
         changed.append(ChangedEntity(
@@ -189,6 +226,8 @@ def detect_changed_entities(
         translation_threshold_m=translation_threshold,
         rotation_threshold_rad=rotation_threshold,
         unmeasurable_entities=unmeasurable,
+        per_entity_threshold_m=thresholds,
+        indeterminate_entities=indeterminate,
     )
 
 
@@ -235,6 +274,96 @@ def summarise(report: ChangeReport) -> str:
             f"|d|={entity.translation_norm:.4f} m"
             f"{' [LEFT SCENE]' if entity.left_scene else ''}"
         )
+    for entry in report.indeterminate_entities:
+        lines.append(
+            f"  ? {entry['name']:34s} role={entry['role']:11s} "
+            f"|d|={entry['translation_norm']:.4f} m below threshold "
+            f"{entry['threshold']:.4f} -- indeterminate"
+        )
     if report.unmeasurable_entities:
         lines.append(f"  unmeasurable: {report.unmeasurable_entities}")
     return "\n".join(lines)
+
+
+# -----------------------------------------------------------------------------
+# Placement jitter
+# -----------------------------------------------------------------------------
+#: Jitter is a property of (task, entity), so it is computed once per BDDL.
+_JITTER_CACHE: Dict[str, Dict[str, float]] = {}
+
+
+def estimate_placement_jitter(
+    bddl_path: str,
+    entities: Sequence[str],
+    resolution: int = 256,
+    num_samples: int = 6,
+    make_env: Any = None,
+) -> Dict[str, float]:
+    """Max pairwise spread of each entity across several official placements.
+
+    LIBERO re-samples every object inside its declared region on each reset, and
+    the regions are not all small: most are a 2 cm box, but a region declared
+    with no ``(:ranges ...)`` spans its whole target surface. Comparing a vanilla
+    episode against a condition that drew its placement independently therefore
+    shows movement for objects nobody perturbed.
+
+    This measures that spread directly, through the same code path that reads
+    poses during collection, so the number used as a threshold is the number the
+    detector would actually see. Returns entity -> max pairwise displacement.
+    """
+    key = f"{bddl_path}|{num_samples}|{','.join(sorted(entities))}"
+    if key in _JITTER_CACHE:
+        return _JITTER_CACHE[key]
+
+    from init_state_freezer import load_init_states, official_init_state_path
+
+    official = official_init_state_path(bddl_path)
+    if official is None:
+        _JITTER_CACHE[key] = {}
+        return {}
+
+    states = load_init_states(official)
+    if len(states) < 2:
+        _JITTER_CACHE[key] = {}
+        return {}
+
+    if make_env is None:
+        from libero.libero.envs import OffScreenRenderEnv
+
+        def make_env(path):  # noqa: ANN001
+            env = OffScreenRenderEnv(
+                bddl_file_name=str(path), camera_heights=resolution, camera_widths=resolution
+            )
+            env.seed(0)
+            return env
+
+    # Evenly spaced samples so the estimate is not dominated by adjacent draws.
+    step = max(1, len(states) // num_samples)
+    indices = list(range(0, len(states), step))[:num_samples]
+
+    observed: Dict[str, List[List[float]]] = {name: [] for name in entities}
+    env = make_env(bddl_path)
+    try:
+        for index in indices:
+            env.reset()
+            env.set_init_state(states[index])
+            for name, pose in extract_object_poses(env, entities).items():
+                if pose.xyz is not None:
+                    observed[name].append([float(v) for v in pose.xyz])
+    finally:
+        try:
+            env.close()
+        except Exception:
+            pass
+
+    jitter: Dict[str, float] = {}
+    for name, positions in observed.items():
+        if len(positions) < 2:
+            continue
+        jitter[name] = max(
+            float(math.sqrt(sum((a - b) ** 2 for a, b in zip(first, second))))
+            for i, first in enumerate(positions)
+            for second in positions[i + 1:]
+        )
+    _JITTER_CACHE[key] = jitter
+    return jitter

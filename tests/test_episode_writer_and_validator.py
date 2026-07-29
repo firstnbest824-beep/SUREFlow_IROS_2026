@@ -391,3 +391,136 @@ def test_grasp_detected_for_a_thick_object():
 def test_open_gripper_resting_on_object_is_not_a_grasp():
     """Contact plus stalled fingers is not enough if the fingers never closed."""
     assert "post_grasp" not in _drive_grasp(0.0795)
+
+
+# -----------------------------------------------------------------------------
+# Regressions from the adversarial audit
+# -----------------------------------------------------------------------------
+def _drive(steps, lift_per_step, distance, opening, contact_from=5, opening_delta=0.0):
+    """Drive the resolver with an explicit geometry."""
+    resolver = TaskPhaseResolver("src", "dst", thresholds=DEFAULT_THRESHOLDS)
+    phases = []
+    for step in range(steps):
+        held = step >= contact_from
+        lift = lift_per_step * max(0, step - contact_from)
+        slide = 0.005 * max(0, step - contact_from)
+        gap = opening if held else 0.0795
+        gap += opening_delta * max(0, step - contact_from)
+        phases.append(
+            resolver.update(
+                timestep=step,
+                source_position=[slide, 0.0, 1.0 + lift],
+                destination_position=[0.4, 0.0, 1.0],
+                gripper_position=[slide, distance, 1.0 + lift],
+                gripper_qpos=[gap / 2, -gap / 2],
+                contact=held,
+            ).phase
+        )
+    return phases
+
+
+def test_slid_but_never_lifted_object_is_not_a_grasp():
+    """Regression: a nudged object 8.9 cm away was labelled post_grasp for 75 steps.
+
+    It had slid 3.1 cm (past grasp_displacement_m) but never rose above 0.4 cm,
+    and the gripper was commanded open. Displacement alone must not trigger a
+    transition.
+    """
+    phases = _drive(steps=30, lift_per_step=0.0, distance=0.089, opening=0.066)
+    assert "post_grasp" not in phases
+
+
+def test_genuinely_lifted_object_is_still_a_grasp():
+    phases = _drive(steps=30, lift_per_step=0.01, distance=0.03, opening=0.005)
+    assert "post_grasp" in phases
+
+
+def test_thick_object_lifted_is_still_a_grasp():
+    """The libero_object soup can: fingers stall at 0.063, object genuinely rises."""
+    phases = _drive(steps=30, lift_per_step=0.01, distance=0.03, opening=0.063)
+    assert "post_grasp" in phases
+
+
+def test_opening_fingers_are_not_blocked_fingers():
+    """A gripper whose fingers creep apart is releasing, not holding."""
+    phases = _drive(steps=30, lift_per_step=0.0, distance=0.03, opening=0.066,
+                    opening_delta=+2e-4)
+    assert "post_grasp" not in phases
+
+
+def test_validator_flags_uv_and_mask_in_different_frames(tmp_path):
+    """Regression: a whole camera's projections frozen at t=0 passed validation.
+
+    Range-checking uv cannot catch it -- robosuite clips into the image before
+    normalisation -- so the check has to compare uv against its own mask.
+    """
+    def mutate(timestep, activations, metrics):
+        label = metrics["segmentation"][SOURCE]["agentview"]
+        label["uv"] = [0.9, 0.9]                 # frozen far from the mask
+        label["mask_bbox"] = [0.1, 0.1, 0.2, 0.2]
+        return activations, metrics
+
+    final = write_episode(tmp_path / "episode_000", num_steps=30, mutate=mutate)
+    report = validate_episode(final)
+    assert FAIL in status_of(report, "J_uv_frame")
+    assert not report["passed"]
+
+
+def test_validator_accepts_uv_inside_its_mask(tmp_path):
+    def mutate(timestep, activations, metrics):
+        label = metrics["segmentation"][SOURCE]["agentview"]
+        label["uv"] = [0.15, 0.15]
+        label["mask_bbox"] = [0.1, 0.1, 0.2, 0.2]
+        return activations, metrics
+
+    final = write_episode(tmp_path / "episode_000", num_steps=30, mutate=mutate)
+    assert status_of(validate_episode(final), "J_uv_frame") == [PASS]
+
+
+def test_jitter_raises_the_threshold_for_a_widely_placed_entity():
+    """Regression: 0.05 m sits below libero_spatial's own placement spread.
+
+    On the cabinet tasks the source bowl's placements differ by up to 0.089 m
+    across the shipped init states, so a swap episode -- which draws its
+    placement independently -- reported the source as moved when nothing had
+    touched it.
+    """
+    from changed_entity_detector import ObjectPose, detect_changed_entities
+    from entity_role_resolver import EntityRoles
+
+    roles = EntityRoles(
+        source="bowl_1", destination="plate_1", goal_predicate="On",
+        destination_goal_argument="plate_1", destination_was_region=False,
+        distractors=[], fixtures=[], movable_objects=["bowl_1", "plate_1"],
+    )
+    vanilla = {"bowl_1": ObjectPose("bowl_1", [0.0, 0.0, 1.0]),
+               "plate_1": ObjectPose("plate_1", [0.5, 0.0, 1.0])}
+    perturbed = {"bowl_1": ObjectPose("bowl_1", [0.06, 0.0, 1.0]),   # jitter, not a move
+                 "plate_1": ObjectPose("plate_1", [0.5, 0.0, 1.0])}
+
+    naive = detect_changed_entities(vanilla, perturbed, roles)
+    assert naive.source_changed, "without a jitter allowance this reads as a real move"
+
+    aware = detect_changed_entities(vanilla, perturbed, roles, entity_jitter={"bowl_1": 0.089})
+    assert not aware.source_changed
+    assert aware.change_class == "no_detected_change"
+    assert [e["name"] for e in aware.indeterminate_entities] == ["bowl_1"]
+
+
+def test_jitter_allowance_does_not_mask_a_real_perturbation():
+    """libero_object's real 0.070 m offset must still register."""
+    from changed_entity_detector import ObjectPose, detect_changed_entities
+    from entity_role_resolver import EntityRoles
+
+    roles = EntityRoles(
+        source="soup_1", destination="basket_1", goal_predicate="In",
+        destination_goal_argument="basket_1_contain_region", destination_was_region=True,
+        distractors=[], fixtures=[], movable_objects=["soup_1", "basket_1"],
+    )
+    vanilla = {"soup_1": ObjectPose("soup_1", [0.0, 0.0, 1.0]),
+               "basket_1": ObjectPose("basket_1", [0.5, 0.0, 1.0])}
+    perturbed = {"soup_1": ObjectPose("soup_1", [0.070, 0.0, 1.0]),
+                 "basket_1": ObjectPose("basket_1", [0.5, 0.0, 1.0])}
+    report = detect_changed_entities(vanilla, perturbed, roles, entity_jitter={"soup_1": 0.0396})
+    assert report.source_changed
+    assert report.change_class == "clean_source_only"

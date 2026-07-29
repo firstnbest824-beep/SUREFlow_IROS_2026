@@ -51,6 +51,7 @@ from activation_episode_writer import (  # noqa: E402
 )
 from changed_entity_detector import (  # noqa: E402
     detect_changed_entities,
+    estimate_placement_jitter,
     extract_object_poses,
     is_clean,
     summarise,
@@ -185,7 +186,17 @@ def measure_change(
             seed, init_state_id,
         )
 
-    report = detect_changed_entities(vanilla_poses, perturbed_poses, roles)
+    # Only the independently-drawn case needs a jitter allowance; when both sides
+    # use the same official placement list the comparison is already paired.
+    jitter = {}
+    if vanilla_init.source != perturbed_init.source:
+        jitter = estimate_placement_jitter(
+            vanilla_bddl, roles.tracked_entities, resolution=resolution
+        )
+
+    report = detect_changed_entities(
+        vanilla_poses, perturbed_poses, roles, entity_jitter=jitter
+    )
     poses = {
         "vanilla": {k: v.to_dict() for k, v in vanilla_poses.items()},
         "perturbed": {k: v.to_dict() for k, v in perturbed_poses.items()},
@@ -195,6 +206,7 @@ def measure_change(
         # different sources, objects the perturbation never touched can still
         # differ, and the change report above is what quantifies that.
         "init_state_sources_match": vanilla_init.source == perturbed_init.source,
+        "placement_jitter_m": jitter,
     }
     return report, poses
 
@@ -263,6 +275,7 @@ def collect_episode(context: EpisodeContext, episode_index: int, final_dir: Path
 
     hook_manager = ProbeHookManager(context.vla)
     if hook_manager.missing:
+        hook_manager.remove_hooks()
         raise RuntimeError(f"probe hooks could not be registered: {hook_manager.missing}")
 
     phase_resolver = TaskPhaseResolver(
@@ -299,7 +312,8 @@ def collect_episode(context: EpisodeContext, episode_index: int, final_dir: Path
     success_flag: Optional[bool] = None
     termination = "max_steps"
 
-    with ActivationEpisodeWriter(final_dir, manifest) as writer:
+    try:
+      with ActivationEpisodeWriter(final_dir, manifest) as writer:
         for timestep in range(args.max_steps):
             record, obs, done, success_flag = _collect_one_timestep(
                 context=context,
@@ -324,6 +338,12 @@ def collect_episode(context: EpisodeContext, episode_index: int, final_dir: Path
             video_path=writer.add_video(frames) if args.save_video else None,
         )
         steps = writer.steps_written
+    finally:
+        # The vla object outlives the episode, so hooks registered here stay
+        # attached unless removed. Leaving them meant episode N ran with N sets
+        # of live hooks, every stale manager still accumulating ~14 MB of prefill
+        # tensors per timestep for the rest of the run.
+        hook_manager.remove_hooks()
 
     return {
         "episode_index": episode_index,
@@ -669,6 +689,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                     condition=pair.perturbation_name, task_id=pair.task_id,
                     task_name=pair.task_name, seed=seed,
                     init_state_id=episode_init_id, resolution=args.resolution,
+                )
+                # The change measurement belongs to the init state, not the run.
+                # Measuring once and stamping it into every manifest filed each
+                # episode under a displacement it never visited.
+                context.change_report, context.initial_poses = measure_change(
+                    vanilla_bddl=pair.vanilla_bddl_path,
+                    perturbed_bddl=pair.perturbed_bddl_path,
+                    roles=roles, resolution=args.resolution, suite=pair.suite,
+                    condition=pair.perturbation_name, task_id=pair.task_id,
+                    task_name=pair.task_name, seed=seed,
+                    init_state_id=episode_init_id,
                 )
             final_dir = episode_dir_for(
                 args.output_root, pair.suite, pair.perturbation_name,
