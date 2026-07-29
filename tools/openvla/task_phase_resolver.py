@@ -48,6 +48,14 @@ class PhaseThresholds:
     grasp_displacement_m: float = 0.03
     gripper_open_qpos_sum: float = 0.03
     gripper_closed_qpos_sum: float = 0.01
+    # The absolute threshold above only fires for thin objects. Measured: a
+    # libero_spatial bowl closes the fingers to 0.005, but a libero_object soup
+    # can blocks them at 0.063 -- held just as firmly, yet never "closed". These
+    # two make the test object-size independent: the fingers must have travelled
+    # measurably in from their fully-open position, and must then have stalled
+    # while in contact, which is what being blocked by a held object looks like.
+    min_gripper_closure_from_open_m: float = 0.010
+    gripper_stall_qpos_delta: float = 5e-4
     gripper_closing_qpos_delta: float = -0.0008
     release_height_drop_m: float = 0.015
 
@@ -179,6 +187,7 @@ class TaskPhaseResolver:
         self._initial_source_pos: Optional[List[float]] = None
         self._prev_gripper_qpos: Optional[List[float]] = None
         self._prev_relative: Optional[List[float]] = None
+        self._max_opening_seen: Optional[float] = None
         self._source_history: List[List[float]] = []
         self._eef_history: List[List[float]] = []
         self._relative_history: List[List[float]] = []
@@ -273,7 +282,26 @@ class TaskPhaseResolver:
 
         proximity_ok = distance is not None and distance <= t.grasp_distance_m
         contact_ok = self._contact_streak >= t.min_consecutive_contact_steps
-        gripper_closed_ok = gripper_state in ("closed", "closing")
+
+        # Fully-open finger separation is a robot property, not an object one, so
+        # it is learned from the episode instead of hard-coded per suite.
+        if opening is not None:
+            self._max_opening_seen = (
+                opening if self._max_opening_seen is None
+                else max(self._max_opening_seen, opening)
+            )
+        closure_from_open = (
+            None if opening is None or self._max_opening_seen is None
+            else self._max_opening_seen - opening
+        )
+        fingers_blocked = (
+            contact_ok
+            and closure_from_open is not None
+            and closure_from_open >= t.min_gripper_closure_from_open_m
+            and opening_delta is not None
+            and abs(opening_delta) <= t.gripper_stall_qpos_delta
+        )
+        gripper_closed_ok = gripper_state in ("closed", "closing") or fingers_blocked
         lifted_ok = height_delta >= t.grasp_height_delta_m or displacement >= t.grasp_displacement_m
 
         # Relative offset between the source object and the end-effector. A
@@ -347,6 +375,8 @@ class TaskPhaseResolver:
             "displacement_m": displacement,
             "gripper_opening": opening,
             "gripper_opening_delta": opening_delta,
+            "gripper_closure_from_open_m": closure_from_open,
+            "fingers_blocked": fingers_blocked,
             "gripper_command": gripper_command,
             "proximity_ok": proximity_ok,
             "contact_ok_sustained": contact_ok,

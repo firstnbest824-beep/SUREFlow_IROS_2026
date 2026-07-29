@@ -341,3 +341,53 @@ def test_schema_version_mismatch_is_fatal(tmp_path):
     report = validate_episode(final)
     assert not report["passed"]
     assert len(report["checks"]) == 1, "a schema mismatch must stop the run, not be one of many"
+
+
+# -----------------------------------------------------------------------------
+# Phase resolver: grasp detection must not depend on object thickness
+# -----------------------------------------------------------------------------
+from task_phase_resolver import DEFAULT_THRESHOLDS, TaskPhaseResolver  # noqa: E402
+
+
+def _drive_grasp(finger_opening: float, steps: int = 12):
+    """Approach, close on an object of the given thickness, then lift.
+
+    ``finger_opening`` is where the fingers stall: ~0.005 for a libero_spatial
+    bowl, ~0.063 for a libero_object soup can. Both are firm grasps.
+    """
+    resolver = TaskPhaseResolver("src", "dst", thresholds=DEFAULT_THRESHOLDS)
+    phases = []
+    for step in range(steps):
+        closing = step >= 3
+        holding = step >= 5
+        opening = 0.0795 if not closing else finger_opening
+        lift = 0.05 * max(0, step - 5)
+        phases.append(
+            resolver.update(
+                timestep=step,
+                source_position=[0.0, 0.0, 1.0 + lift],
+                destination_position=[0.4, 0.0, 1.0],
+                gripper_position=[0.0, 0.0, 1.01 + lift],
+                gripper_qpos=[opening / 2, -opening / 2],
+                contact=holding,
+            ).phase
+        )
+    return phases
+
+
+def test_grasp_detected_for_a_thin_object():
+    assert "post_grasp" in _drive_grasp(0.005)
+
+
+def test_grasp_detected_for_a_thick_object():
+    """Regression: an absolute qpos threshold missed every libero_object grasp.
+
+    The soup can blocks the fingers at 0.063, so "fingers nearly touching" never
+    became true and a successful episode was labelled pre_grasp end to end.
+    """
+    assert "post_grasp" in _drive_grasp(0.063)
+
+
+def test_open_gripper_resting_on_object_is_not_a_grasp():
+    """Contact plus stalled fingers is not enough if the fingers never closed."""
+    assert "post_grasp" not in _drive_grasp(0.0795)
