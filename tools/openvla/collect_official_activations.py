@@ -211,6 +211,22 @@ def measure_change(
     return report, poses
 
 
+def simulator_grasp(env: Any, entity: str) -> Optional[bool]:
+    """robosuite's own both-fingerpads grasp test for ``entity``, or None."""
+    try:
+        base_env = env.env
+        model = base_env.objects_dict.get(entity)
+        if model is None:
+            return None
+        return bool(
+            base_env._check_grasp(
+                gripper=base_env.robots[0].gripper, object_geoms=model.contact_geoms
+            )
+        )
+    except Exception:
+        return None
+
+
 # -----------------------------------------------------------------------------
 # Activations
 # -----------------------------------------------------------------------------
@@ -388,6 +404,11 @@ def _collect_one_timestep(
     # ---- 2. label_t (same simulator state, no stepping) ---------------------
     frame_inputs = compute_frame_inputs(env, obs, context.roles.source, context.roles.destination)
     phase_result = phase_resolver.update(timestep=timestep, **frame_inputs)
+    # The simulator's own grasp test, recorded alongside the heuristic phase so
+    # the label can be audited rather than trusted. _check_grasp requires a geom
+    # from BOTH finger pads to touch the object, which a palm bump cannot satisfy.
+    # It is a read of the current state -- no stepping, no state change.
+    sim_check_grasp = simulator_grasp(env, context.roles.source)
     segmentation = context.provider.labels_at_current_state(tracked)
     entity_poses = {
         name: (None if (xyz := context.provider.entity_world_xyz(name)) is None
@@ -464,6 +485,7 @@ def _collect_one_timestep(
         "grasp_detected": phase_result.grasp_detected,
         "grasp_confidence": phase_result.grasp_confidence,
         "contact": phase_result.contact,
+        "sim_check_grasp": sim_check_grasp,
         "source_to_gripper_distance": phase_result.source_to_gripper_distance,
         "phase_timeline_entry": phase_result_to_timeline_entry(phase_result),
         "action_model": [float(v) for v in action_model],
