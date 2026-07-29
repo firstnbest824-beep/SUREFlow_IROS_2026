@@ -140,8 +140,11 @@ def freeze_init_state(
             )
         state = np.asarray(env.sim.get_state().flatten(), dtype=np.float64)
         path.parent.mkdir(parents=True, exist_ok=True)
-        temporary = path.with_suffix(".npy.tmp")
-        np.save(temporary, state)
+        temporary = path.with_suffix(".tmp")
+        # np.save appends ".npy" unless the *handle* form is used, which would
+        # silently write a differently-named file and make the rename fail.
+        with open(temporary, "wb") as handle:
+            np.save(handle, state)
         os.replace(temporary, path)
         digest = sha256_array(state)
         path.with_suffix(".sha256").write_text(digest + "\n", encoding="utf-8")

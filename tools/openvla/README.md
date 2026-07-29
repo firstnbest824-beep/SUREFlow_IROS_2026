@@ -122,7 +122,131 @@ scripts must import them rather than reimplement their logic.
   max abs action difference, to verify phase logging never changes policy
   behavior.
 
-## Activation collection
+## Official LIBERO / LIBERO-PRO collection (schema v2)
+
+`collect_official_activations.py` is the current collection path. It replaces the
+pilot for anything that will be analysed, because it runs under the *official*
+evaluation conditions and records which entity each perturbation actually moved.
+
+    python tools/openvla/collect_official_activations.py \
+        --suite libero_object --task_id 0 --condition x0.1 \
+        --output_root outputs/<run> --num_episodes 2
+
+### What each suite is a test of
+
+The two suites answer different questions and must not be pooled:
+
+| Suite | Perturbation | What generalises | Measured change class |
+|---|---|---|---|
+| `libero_object` | `x0.1`, `y0.1` | **source / pick** — the object to be picked moves | `clean_source_only` |
+| `libero_object` | `x0.2` … `y0.5` | source moves **and a distractor is teleported out of the scene** | `source_and_distractor` |
+| `libero_spatial` | `swap` | **destination / place** — but the swap partner moves too | `destination_and_distractor` |
+
+Only `libero_object` `x0.1` / `y0.1` are single-role changes. `libero_spatial swap`
+is **not** a clean destination-only condition and must never be described as one:
+the destination and its swap partner both move (0.2683 m each on task 0).
+Everything above `x0.1`/`y0.1` pushes a distractor to roughly x = +10 m, which is
+a scene edit rather than a spatial perturbation.
+
+`is_clean(change_class)` is the gate for causal-attribution analysis; confounded
+conditions are still collected, just labelled so they can be analysed separately.
+
+### The condition name is not the measurement
+
+Two traps that the pipeline handles explicitly:
+
+- **`x0.1` is a level, not a displacement.** Measured on the shipped assets,
+  displacement = level × 0.7, so `x0.1` moves the source **7 cm**. The manifest
+  stores `requested_level` and `measured_translation_m` as separate fields and the
+  validator fails an episode that records one without the other.
+- **The profile differs per task.** Static analysis over all ten `libero_object`
+  tasks said `y0.4`/`y0.5` move the basket; on task 0 they do not. So the changed
+  entity is measured **per episode**, by resetting the vanilla and perturbed BDDL
+  and diffing every entity pose — never inferred from the suite or condition name.
+
+### Modules
+
+- `entity_role_resolver.py` — source / destination / distractor / fixture from the
+  BDDL goal, with region → owner normalisation (`basket_1_contain_region` →
+  `basket_1`, whose pose is what actually moves).
+- `changed_entity_detector.py` — pose diff of two resets into one of eight
+  `change_class` values. Threshold 0.05 m sits above LIBERO's per-reset placement
+  jitter; anything beyond 5 m is flagged as having left the scene.
+- `official_task_pair_resolver.py` — binds each suite to its checkpoint revision
+  and enumerates the conditions it genuinely supports. Rejects a non-integer seed
+  (the official config's `configs.get("seed", int)` defaults to the *type object*).
+- `init_state_freezer.py` — uses the shipped `.pruned_init` when one exists;
+  otherwise captures the state **once** under a fixed seed into
+  `assets/frozen_init_states/` and refuses to regenerate it.
+- `segmentation_label_provider.py` — analysis ground truth only, never a policy
+  input. See below.
+- `activation_episode_writer.py` / `validate_activation_episode.py` — see below.
+
+### Segmentation labels without touching the rollout
+
+Segmentation is obtained as an **extra read-only render at the same simulator
+state** on the existing `OffScreenRenderEnv`. No `SegmentationRenderEnv`, no extra
+`env.step()`, no state write. `verify_segmentation_equivalence` runs at the start
+of every episode and the episode aborts if it fails; measured on both suites, RGB
+before and after the segmentation renders is **bit-identical** and the full sim
+state vector is unchanged.
+
+Per entity, per camera (`agentview` + `robot0_eye_in_hand`): mask pixel count and
+fraction, normalised UV of the object origin, mask centroid and bbox, `in_frame`,
+and a visibility label that distinguishes `occluded` (projects inside the image
+but contributes no pixels) from `out_of_view` (projects outside it).
+
+**Three pixel frames exist and confusing them silently corrupts every label:**
+
+    raw     = sim.render(...)      # what obs["agentview_image"] is
+    upright = raw[::-1]            # what robosuite's projection returns
+    policy  = raw[::-1, ::-1]      # what get_libero_image feeds OpenVLA
+
+`policy` is a 180° rotation, so it differs from `upright` by a *horizontal* flip
+as well. All `uv` fields are in the **policy** frame; `uv_pixel_upright` is kept
+alongside so the transform stays auditable.
+
+### Timestep contract
+
+Enforced by the structure of `_collect_one_timestep`, not by a comment:
+
+    obs_t → label_t → model forward / activation_t → action_t → env.step(action_t)
+
+Every field at index `t` describes the same simulator state — the one before
+`action_t` was applied. Each record carries `sim_state_sha` (state observed) and
+`next_sim_state_sha` (state after the step), so the validator can **prove** that
+`record[t].next_sim_state_sha == record[t+1].sim_state_sha` rather than trust the
+declaration. A label taken from `obs_{t+1}` breaks that chain and fails check F.
+
+### Episode layout and validation
+
+    <root>/<suite>/<condition>/task_NN/seed_NNN/episode_NNN/
+        manifest.json  per_step_metrics.jsonl  COMPLETE
+        activations/step_NNNNNN.npz     images/  overlays/  rollout.mp4
+
+Written into a sibling `.partial` directory and moved into place with a single
+`os.rename` only after the manifest and `COMPLETE` marker exist, so a reader never
+sees a half-written episode and an interrupted run is never silently reused.
+Activations are cast to fp16 **on the storage copy only**; the model's tensors are
+untouched.
+
+    python tools/openvla/validate_activation_episode.py <root> --recursive
+
+Checks **A** manifest/schema, **B** COMPLETE, **C** counts and contiguity,
+**D** all 8 stages with stable shapes, **E** NaN/Inf and magnitude, **F** the
+state-hash chain above, **G** BDDL / init-state / checkpoint hashes, **H** roles,
+`change_class` and level-vs-measured separation, **I** phase ↔ relevant-entity
+consistency, **J** segmentation label well-formedness.
+
+### Cost
+
+Measured on `libero_spatial` task 0 vanilla (81 steps, success):
+**10.97 MB/timestep**, ~484 ms/timestep of inference. Per stage, compressed:
+`llm_early` / `llm_middle` / `llm_late` / `pre_action_hidden` ≈ 1.83 MB each,
+`projector_output` 1.62 MB, `projector_input` 0.87 MB, SigLIP 0.45 MB,
+DINOv2 0.40 MB. The four LLM stages are ~68% of the bytes.
+
+## Activation collection (pilot — superseded)
 
 - `collect_activation_pilot.py` — runs a real LIBERO rollout and saves, for every
   control step, the activations together with the observation, action,
