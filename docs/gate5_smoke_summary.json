@@ -1,0 +1,1108 @@
+{
+  "root": "/home/HDD/hwkim/openvla_activations/gate5_smoke",
+  "num_episodes": 30,
+  "groups": [
+    {
+      "suite": "libero_object",
+      "condition": "vanilla",
+      "episodes": 6,
+      "tasks": [
+        0,
+        1,
+        2
+      ],
+      "success_rate": 0.5,
+      "successes": 3,
+      "mean_steps": 179.33333333333334,
+      "change_classes": {
+        "no_detected_change": 6
+      },
+      "change_class_consistent": true,
+      "is_clean": false,
+      "requested_levels": [],
+      "measured_translation_m": null,
+      "init_state_sources": [
+        "official_pruned_init"
+      ],
+      "distinct_init_states": 6,
+      "phase_steps": {
+        "pre_grasp": 609,
+        "uncertain": 52,
+        "post_grasp": 415
+      },
+      "post_grasp_fraction": 0.3856877323420074,
+      "segmentation_equivalence_all_passed": true,
+      "all_chains_closed": true,
+      "all_contiguous": true,
+      "total_violations": 0
+    },
+    {
+      "suite": "libero_object",
+      "condition": "x0.1",
+      "episodes": 6,
+      "tasks": [
+        0,
+        1,
+        2
+      ],
+      "success_rate": 0.0,
+      "successes": 0,
+      "mean_steps": 220,
+      "change_classes": {
+        "clean_source_only": 6
+      },
+      "change_class_consistent": true,
+      "is_clean": true,
+      "requested_levels": [
+        0.1
+      ],
+      "measured_translation_m": {
+        "min": 0.06671328047408587,
+        "max": 0.06999999999999999,
+        "mean": 0.06890442682469529
+      },
+      "init_state_sources": [
+        "official_pruned_init"
+      ],
+      "distinct_init_states": 6,
+      "phase_steps": {
+        "pre_grasp": 1310,
+        "uncertain": 10
+      },
+      "post_grasp_fraction": 0.0,
+      "segmentation_equivalence_all_passed": true,
+      "all_chains_closed": true,
+      "all_contiguous": true,
+      "total_violations": 0
+    },
+    {
+      "suite": "libero_object",
+      "condition": "y0.1",
+      "episodes": 6,
+      "tasks": [
+        0,
+        1,
+        2
+      ],
+      "success_rate": 0.0,
+      "successes": 0,
+      "mean_steps": 220,
+      "change_classes": {
+        "clean_source_only": 6
+      },
+      "change_class_consistent": true,
+      "is_clean": true,
+      "requested_levels": [
+        0.1
+      ],
+      "measured_translation_m": {
+        "min": 0.07,
+        "max": 0.07369963312210846,
+        "mean": 0.07123321104070282
+      },
+      "init_state_sources": [
+        "official_pruned_init"
+      ],
+      "distinct_init_states": 6,
+      "phase_steps": {
+        "pre_grasp": 776,
+        "uncertain": 427,
+        "post_grasp": 117
+      },
+      "post_grasp_fraction": 0.08863636363636364,
+      "segmentation_equivalence_all_passed": true,
+      "all_chains_closed": true,
+      "all_contiguous": true,
+      "total_violations": 0
+    },
+    {
+      "suite": "libero_spatial",
+      "condition": "swap",
+      "episodes": 6,
+      "tasks": [
+        0,
+        1,
+        2
+      ],
+      "success_rate": 0.0,
+      "successes": 0,
+      "mean_steps": 220,
+      "change_classes": {
+        "destination_and_distractor": 6
+      },
+      "change_class_consistent": true,
+      "is_clean": false,
+      "requested_levels": [],
+      "measured_translation_m": {
+        "min": 0.14637613587408194,
+        "max": 0.25459537307791946,
+        "mean": 0.18645991377763288
+      },
+      "init_state_sources": [
+        "frozen_locally"
+      ],
+      "distinct_init_states": 6,
+      "phase_steps": {
+        "pre_grasp": 468,
+        "uncertain": 51,
+        "post_grasp": 801
+      },
+      "post_grasp_fraction": 0.6068181818181818,
+      "segmentation_equivalence_all_passed": true,
+      "all_chains_closed": true,
+      "all_contiguous": true,
+      "total_violations": 0
+    },
+    {
+      "suite": "libero_spatial",
+      "condition": "vanilla",
+      "episodes": 6,
+      "tasks": [
+        0,
+        1,
+        2
+      ],
+      "success_rate": 1.0,
+      "successes": 6,
+      "mean_steps": 106.66666666666667,
+      "change_classes": {
+        "no_detected_change": 6
+      },
+      "change_class_consistent": true,
+      "is_clean": false,
+      "requested_levels": [],
+      "measured_translation_m": null,
+      "init_state_sources": [
+        "official_pruned_init"
+      ],
+      "distinct_init_states": 6,
+      "phase_steps": {
+        "pre_grasp": 386,
+        "uncertain": 50,
+        "post_grasp": 204
+      },
+      "post_grasp_fraction": 0.31875,
+      "segmentation_equivalence_all_passed": true,
+      "all_chains_closed": true,
+      "all_contiguous": true,
+      "total_violations": 0
+    }
+  ],
+  "episodes": [
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_00/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "vanilla",
+      "task_id": 0,
+      "episode_index": 0,
+      "steps": 134,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "6cd4976519943bdc84677396a6e2942e9816ae87e56fc72943914e147f9b6e1e",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 48,
+        "uncertain": 4,
+        "post_grasp": 82
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 134,
+        "dst:visible": 134
+      },
+      "source": "alphabet_soup_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_00/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "vanilla",
+      "task_id": 0,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "2fe669827623c130cb212d851d2ac5189aa22d888856b2c056ee744b2b698bcc",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 177,
+        "uncertain": 26,
+        "post_grasp": 17
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "alphabet_soup_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_01/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "vanilla",
+      "task_id": 1,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "4404ff0ecec75d07dbe02cdb0a6284fb3b24c79f2c164987433f00d3b885948c",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 194,
+        "uncertain": 3,
+        "post_grasp": 23
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "cream_cheese_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_01/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "vanilla",
+      "task_id": 1,
+      "episode_index": 1,
+      "steps": 138,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "33644d67933758f98da6287e62ed0fa79250d398107872e297d7db728895fdbe",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 67,
+        "uncertain": 3,
+        "post_grasp": 68
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 138,
+        "dst:visible": 138
+      },
+      "source": "cream_cheese_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_02/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "vanilla",
+      "task_id": 2,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "02feb7104ff3af12f1247c461997f1113686f704fb702cd3280d6bfba56e6f71",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 54,
+        "uncertain": 6,
+        "post_grasp": 160
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "salad_dressing_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_02/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "vanilla",
+      "task_id": 2,
+      "episode_index": 1,
+      "steps": 144,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "add76fa3d08f814a7d0386ffc26809a576a23aa066136e5b2401e8a3d0cb2cb6",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 69,
+        "uncertain": 10,
+        "post_grasp": 65
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 144,
+        "dst:visible": 144
+      },
+      "source": "salad_dressing_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_00/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "x0.1",
+      "task_id": 0,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.06999999999999999,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "0305d0270f6e1b799f159b70d5f9e907fdaaa211fada826cef0c61f9f37eae45",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 220
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "alphabet_soup_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_00/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "x0.1",
+      "task_id": 0,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.06999999999999999,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "e777cf30ed3ef93edcc8d06b28b25c71d4025cad0be73fa145ef6b35e55d28cf",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 211,
+        "uncertain": 9
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "alphabet_soup_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_01/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "x0.1",
+      "task_id": 1,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.06671328047408587,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "4cb4a56c6ea034d3884d1cdb503df17785c583f506384fca8e5e17259bdcddb6",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 220
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "cream_cheese_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_01/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "x0.1",
+      "task_id": 1,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.06671328047408587,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "a32ece4149224c2852109ebbb8828d2c4198d378a0f2ff41a5d26c20b144fe81",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 220
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "cream_cheese_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_02/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "x0.1",
+      "task_id": 2,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.06999999999999999,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "dae5acf548a090eba4ef7f3f2e4d0a0ede1329873405f5915919b4dce8c755a0",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 220
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "salad_dressing_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_02/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "x0.1",
+      "task_id": 2,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.06999999999999999,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "2ecccacd5de5a982b6eb8ea146c3647d378df4b77c482a7b077e164ca684b034",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 219,
+        "uncertain": 1
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "salad_dressing_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_00/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "y0.1",
+      "task_id": 0,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.07,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "b68b8fb08bc660e0c9347ef9a8cd94905ac2c1cd1cfc7ebf65030f5a25a915f5",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 85,
+        "uncertain": 60,
+        "post_grasp": 75
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "alphabet_soup_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_00/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "y0.1",
+      "task_id": 0,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.07,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "98bcc14c8d47152186c28d1908049a28d7bc4c00a2f8e06978bb44791078c183",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 208,
+        "uncertain": 12
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "alphabet_soup_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_01/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "y0.1",
+      "task_id": 1,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.07369963312210846,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "8b4c285a79951cab37969325cbde0afc9bb9f9fc11c71fc93803cb5381a2f1e6",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 49,
+        "uncertain": 129,
+        "post_grasp": 42
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "cream_cheese_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_01/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "y0.1",
+      "task_id": 1,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.07369963312210846,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "906a451ca652700bbbb78994e71fc66f113ffe4a1b0eaf695d1d4658488b7f24",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 45,
+        "uncertain": 175
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "cream_cheese_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_02/seed_000/episode_000",
+      "suite": "libero_object",
+      "condition": "y0.1",
+      "task_id": 2,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.07,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "96e8c80fd24bbc99c94fd34a57465e153778e7b1254dc74157dd7d094ad64408",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 220
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "salad_dressing_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_02/seed_000/episode_001",
+      "suite": "libero_object",
+      "condition": "y0.1",
+      "task_id": 2,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "clean_source_only",
+      "is_clean": true,
+      "requested_level": 0.1,
+      "measured_translation_m": 0.07,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "0d8524a0c25b1a90ceee07f40b69fc16d202a8f99133a66e22da9cf98af5207a",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 169,
+        "uncertain": 51
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "salad_dressing_1",
+      "destination": "basket_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_00/seed_000/episode_000",
+      "suite": "libero_spatial",
+      "condition": "swap",
+      "task_id": 0,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "destination_and_distractor",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": 0.25459537307791946,
+      "init_state_source": "frozen_locally",
+      "init_state_sha": "38c19c865e55d6016e3989b392530ba89ebdf77daaa4f86d5f8ec6274b1c905c",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 213,
+        "uncertain": 7
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 212,
+        "dst:visible": 220,
+        "src:occluded": 8
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_00/seed_000/episode_001",
+      "suite": "libero_spatial",
+      "condition": "swap",
+      "task_id": 0,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "destination_and_distractor",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": 0.25459537307791946,
+      "init_state_source": "frozen_locally",
+      "init_state_sha": "6c14b3f906f19995a7218c724ecc07406040fbe8c77ec5cecf27563fbcfea89d",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 45,
+        "uncertain": 2,
+        "post_grasp": 173
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_01/seed_000/episode_000",
+      "suite": "libero_spatial",
+      "condition": "swap",
+      "task_id": 1,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "destination_and_distractor",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": 0.14637613587408194,
+      "init_state_source": "frozen_locally",
+      "init_state_sha": "7821832ae9594bb30763eb88ed01a7321b86eb19746419450e90602bfe365516",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 56,
+        "uncertain": 10,
+        "post_grasp": 154
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_01/seed_000/episode_001",
+      "suite": "libero_spatial",
+      "condition": "swap",
+      "task_id": 1,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "destination_and_distractor",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": 0.14637613587408194,
+      "init_state_source": "frozen_locally",
+      "init_state_sha": "48552ad984638b5b7c4dc2d03245480b602bc8db352020805e4f76247d51de6b",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 59,
+        "uncertain": 11,
+        "post_grasp": 150
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_02/seed_000/episode_000",
+      "suite": "libero_spatial",
+      "condition": "swap",
+      "task_id": 2,
+      "episode_index": 0,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "destination_and_distractor",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": 0.1584082323808972,
+      "init_state_source": "frozen_locally",
+      "init_state_sha": "dc414e84a262c080a1e71ed0cff6347177eb3c8fc18eddbd16dd91aaa8c60929",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 48,
+        "uncertain": 8,
+        "post_grasp": 164
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_02/seed_000/episode_001",
+      "suite": "libero_spatial",
+      "condition": "swap",
+      "task_id": 2,
+      "episode_index": 1,
+      "steps": 220,
+      "success": false,
+      "termination": "max_steps",
+      "change_class": "destination_and_distractor",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": 0.1584082323808972,
+      "init_state_source": "frozen_locally",
+      "init_state_sha": "f3773b0f12a51fd4cc78da8d50f7f6280be60af98e96b4fd610736b85a11a5a1",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 47,
+        "uncertain": 13,
+        "post_grasp": 160
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 220,
+        "dst:visible": 220
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_00/seed_000/episode_000",
+      "suite": "libero_spatial",
+      "condition": "vanilla",
+      "task_id": 0,
+      "episode_index": 0,
+      "steps": 81,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "4e3eaf7a315bc3bafb6db4837c8eef0e5f8aea717782a2a3ea33139392d966ed",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 53,
+        "uncertain": 9,
+        "post_grasp": 19
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 81,
+        "dst:visible": 81
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_00/seed_000/episode_001",
+      "suite": "libero_spatial",
+      "condition": "vanilla",
+      "task_id": 0,
+      "episode_index": 1,
+      "steps": 105,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "6c2936dc25a97728b811f9db579687d011cbd231d5472e985775a67ca9892cf8",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 74,
+        "uncertain": 5,
+        "post_grasp": 26
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 105,
+        "dst:visible": 105
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_01/seed_000/episode_000",
+      "suite": "libero_spatial",
+      "condition": "vanilla",
+      "task_id": 1,
+      "episode_index": 0,
+      "steps": 112,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "d116842e01703fbea595511db813a3816c8d9f2302b4e979ebec4f15b7a750a2",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 61,
+        "uncertain": 8,
+        "post_grasp": 43
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 112,
+        "dst:visible": 112
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_01/seed_000/episode_001",
+      "suite": "libero_spatial",
+      "condition": "vanilla",
+      "task_id": 1,
+      "episode_index": 1,
+      "steps": 93,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "b8757ca36fc25bb010af8934ff98b8d3a221cbd3a5e38e7b07cc8055c3108a0b",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 56,
+        "uncertain": 7,
+        "post_grasp": 30
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 93,
+        "dst:visible": 93
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_02/seed_000/episode_000",
+      "suite": "libero_spatial",
+      "condition": "vanilla",
+      "task_id": 2,
+      "episode_index": 0,
+      "steps": 128,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "408c455fb617e5320060d643ef80ec2035d4e98600659cc3deb5a1e85482bf76",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 77,
+        "uncertain": 7,
+        "post_grasp": 44
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 128,
+        "dst:visible": 128
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    },
+    {
+      "dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_02/seed_000/episode_001",
+      "suite": "libero_spatial",
+      "condition": "vanilla",
+      "task_id": 2,
+      "episode_index": 1,
+      "steps": 121,
+      "success": true,
+      "termination": "success",
+      "change_class": "no_detected_change",
+      "is_clean": false,
+      "requested_level": null,
+      "measured_translation_m": null,
+      "init_state_source": "official_pruned_init",
+      "init_state_sha": "05962fe9baf173d80806225d32a331fa8eedcdb5c14a085ee5354715380c0f8f",
+      "segmentation_equivalence": true,
+      "phases": {
+        "pre_grasp": 65,
+        "uncertain": 14,
+        "post_grasp": 42
+      },
+      "chain_ok": true,
+      "contiguous": true,
+      "violations": 0,
+      "visibility": {
+        "src:visible": 121,
+        "dst:visible": 121
+      },
+      "source": "akita_black_bowl_1",
+      "destination": "plate_1"
+    }
+  ]
+}

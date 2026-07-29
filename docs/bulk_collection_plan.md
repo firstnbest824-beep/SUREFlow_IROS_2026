@@ -77,9 +77,9 @@ representational coverage, which is not recoverable without re-running.
 - [x] Gate 1 static audit
 - [x] Gate 2 unit tests
 - [x] Gate 6 changed-entity verification against the real simulator
-- [ ] Gate 3 `libero_spatial` vanilla + swap dry-run
-- [ ] Gate 4 `libero_object` vanilla + x0.1 + y0.1 dry-run
-- [ ] Gate 5 smoke test
+- [x] Gate 3 `libero_spatial` vanilla + swap dry-run — 2/2 episodes PASS
+- [x] Gate 4 `libero_object` vanilla + x0.1 + y0.1 dry-run — 3/3 episodes PASS
+- [x] Gate 5 smoke test — **30/30 episodes collected, 30/30 PASS (360 checks, 0 FAIL, 0 WARN)**
 - [ ] Storage target agreed (`/home/HDD`, not `/`)
 - [ ] Explicit go-ahead
 
@@ -121,6 +121,34 @@ Each episode is sealed by an atomic rename, so an interrupted run leaves
 refuses to silently reuse. Re-running the same command skips nothing — it will
 fail on an existing episode directory rather than overwrite it, which is
 deliberate.
+
+## 4a. Gate 5 measured outcome (3 tasks x 2 episodes per condition)
+
+| suite | condition | success | change_class | measured displacement | pre/post/uncertain steps |
+|---|---|---|---|---|---|
+| `libero_spatial` | vanilla | **6/6** | `no_detected_change` | - | 386 / 204 / 50 |
+| `libero_spatial` | swap | **0/6** | `destination_and_distractor` | 0.146-0.255 m | 468 / **801** / 51 |
+| `libero_object` | vanilla | **3/6** | `no_detected_change` | - | 609 / 415 / 52 |
+| `libero_object` | x0.1 | **0/6** | `clean_source_only` | 0.067-0.070 m | 1310 / **0** / 10 |
+| `libero_object` | y0.1 | **0/6** | `clean_source_only` | 0.070-0.074 m | 776 / 117 / 427 |
+
+Three things this settles for the analysis design:
+
+- **The two suites fail at different stages.** Under `x0.1` the policy never
+  reaches `post_grasp` in any of the six episodes across three tasks -- it fails
+  at *picking*. Under `swap` it reaches `post_grasp` in five of six (150-173
+  steps) -- the source did not move, so it picks fine and fails at *placing*.
+  Pooling the two would average away exactly the distinction the study is about.
+- **The baselines are not equal.** `libero_object` vanilla succeeds 3/6, so
+  `x0.1`'s 0/6 is a drop from ~50%, not from 100%. `libero_spatial` is 6/6 -> 0/6.
+  Any reported degradation has to be stated against its own baseline.
+- **Displacement varies per task, substantially.** `swap` moved the destination
+  0.146 m on one task and 0.255 m on another. A pipeline that recorded the
+  condition name instead of the measurement would have collapsed these into one
+  number.
+
+Cost actually observed: 58 GB for 30 episodes (mean 1.93 GB/episode; perturbed
+conditions run to the 220-step cap, baselines terminate on success).
 
 ## 5. Known limitation to carry into analysis
 

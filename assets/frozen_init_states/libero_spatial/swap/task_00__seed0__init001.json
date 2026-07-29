@@ -1,0 +1,10 @@
+{
+  "suite": "libero_spatial",
+  "condition": "swap",
+  "task_id": 0,
+  "task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+  "seed": 0,
+  "init_state_id": 1,
+  "sha256": "6c14b3f906f19995a7218c724ecc07406040fbe8c77ec5cecf27563fbcfea89d",
+  "state_dim": 92
+}

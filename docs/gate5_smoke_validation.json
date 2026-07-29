@@ -1,0 +1,2402 @@
+[
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_00/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "134 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 133 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 48, 'post_grasp': 82, 'uncertain': 4}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "2144 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_00/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 177, 'post_grasp': 17, 'uncertain': 26}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_01/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 194, 'post_grasp': 23, 'uncertain': 3}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_01/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "138 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 137 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 67, 'post_grasp': 68, 'uncertain': 3}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "2208 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_02/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 54, 'post_grasp': 160, 'uncertain': 6}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/vanilla/task_02/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "144 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 143 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 69, 'post_grasp': 65, 'uncertain': 10}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "2304 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_00/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_00/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 211, 'post_grasp': 0, 'uncertain': 9}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_01/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_01/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_02/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/x0.1/task_02/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 219, 'post_grasp': 0, 'uncertain': 1}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_00/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 85, 'post_grasp': 75, 'uncertain': 60}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_00/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 208, 'post_grasp': 0, 'uncertain': 12}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_01/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 49, 'post_grasp': 42, 'uncertain': 129}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_01/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 45, 'post_grasp': 0, 'uncertain': 175}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_02/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_object/y0.1/task_02/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 169, 'post_grasp': 0, 'uncertain': 51}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_00/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 213, 'post_grasp': 0, 'uncertain': 7}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_00/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 45, 'post_grasp': 173, 'uncertain': 2}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_01/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 56, 'post_grasp': 154, 'uncertain': 10}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_01/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 59, 'post_grasp': 150, 'uncertain': 11}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_02/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 48, 'post_grasp': 164, 'uncertain': 8}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/swap/task_02/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 47, 'post_grasp': 160, 'uncertain': 13}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_00/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "81 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 80 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 53, 'post_grasp': 19, 'uncertain': 9}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1296 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_00/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "105 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 104 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 74, 'post_grasp': 26, 'uncertain': 5}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1680 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_01/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "112 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 111 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 61, 'post_grasp': 43, 'uncertain': 8}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1792 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_01/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "93 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 92 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 56, 'post_grasp': 30, 'uncertain': 7}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1488 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_02/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "128 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 127 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 77, 'post_grasp': 44, 'uncertain': 7}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "2048 entity-camera labels well-formed"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/gate5_smoke/libero_spatial/vanilla/task_02/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "121 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 120 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 65, 'post_grasp': 42, 'uncertain': 14}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1936 entity-camera labels well-formed"
+      }
+    ]
+  }
+]
