@@ -61,6 +61,7 @@ from init_state_freezer import resolve_init_state  # noqa: E402
 from model_input_transform import get_libero_image  # noqa: E402
 from official_task_pair_resolver import (  # noqa: E402
     assert_checkpoint_matches_suite,
+    episode_seed,
     resolve_official_task_pair,
     seed_everything,
     validate_seed,
@@ -145,7 +146,7 @@ def _poses_under_applied_init(
     """
     env = make_env(bddl, resolution)
     try:
-        env.reset()
+        seeded_reset(env, episode_seed(seed, suite, task_id, init_state_id))
         state, record = resolve_init_state(
             env=env, bddl_path=bddl, suite=suite, condition=condition,
             task_id=task_id, task_name=task_name, seed=seed,
@@ -209,6 +210,31 @@ def measure_change(
         "placement_jitter_m": jitter,
     }
     return report, poses
+
+
+def scene_body_snapshot(env: Any) -> Tuple[np.ndarray, np.ndarray]:
+    """Fixture placements, which live in the MODEL rather than in the state.
+
+    ``sim.get_state()`` is ``[time, qpos, qvel]``; a welded fixture has no joint,
+    so its pose sits in ``model.body_pos`` / ``model.body_quat``, invisible to both
+    the state hash and ``set_init_state``.
+    """
+    sim = env.env.sim
+    return np.array(sim.model.body_pos, copy=True), np.array(sim.model.body_quat, copy=True)
+
+
+def scene_body_sha(env: Any) -> str:
+    positions, quaternions = scene_body_snapshot(env)
+    return hashlib.sha256(
+        np.ascontiguousarray(positions, dtype=np.float64).tobytes()
+        + np.ascontiguousarray(quaternions, dtype=np.float64).tobytes()
+    ).hexdigest()
+
+
+def seeded_reset(env: Any, seed: int) -> Any:
+    """``env.reset()`` with the fixture-placement RNG pinned."""
+    np.random.seed(seed)
+    return env.reset()
 
 
 def simulator_grasp(env: Any, entity: str) -> Optional[bool]:
@@ -279,6 +305,7 @@ class EpisodeContext:
     provider: SegmentationLabelProvider
     init_state: np.ndarray
     init_record: Any
+    episode_reset_seed: int
     saved_stages: List[str]
     args: argparse.Namespace
     dtype: torch.dtype
@@ -308,7 +335,7 @@ def collect_episode(context: EpisodeContext, episode_index: int, final_dir: Path
     frames: List[np.ndarray] = []
     violations: List[str] = []
 
-    env.reset()
+    seeded_reset(env, context.episode_reset_seed)
     obs = env.set_init_state(context.init_state)
     context.provider.refresh_bindings()
 
@@ -316,6 +343,9 @@ def collect_episode(context: EpisodeContext, episode_index: int, final_dir: Path
         env, height=args.resolution, width=args.resolution
     )
     manifest["segmentation_equivalence"] = equivalence
+    # Pins the part of the scene that init_state_sha256 cannot: fixture poses.
+    manifest["scene_body_sha256"] = scene_body_sha(env)
+    manifest["episode_reset_seed"] = context.episode_reset_seed
     if not equivalence["passed"]:
         raise RuntimeError(
             f"segmentation render perturbed the rollout: {json.dumps(equivalence)}"
@@ -695,6 +725,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 env, height=args.resolution, width=args.resolution
             ),
             init_state=init_state, init_record=init_record,
+            episode_reset_seed=episode_seed(
+                seed, pair.suite, pair.task_id, args.init_state_id
+            ),
             saved_stages=saved_stages, args=args, dtype=torch.bfloat16,
         )
 
@@ -711,6 +744,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                     condition=pair.perturbation_name, task_id=pair.task_id,
                     task_name=pair.task_name, seed=seed,
                     init_state_id=episode_init_id, resolution=args.resolution,
+                )
+                context.episode_reset_seed = episode_seed(
+                    seed, pair.suite, pair.task_id, episode_init_id
                 )
                 # The change measurement belongs to the init state, not the run.
                 # Measuring once and stamping it into every manifest filed each

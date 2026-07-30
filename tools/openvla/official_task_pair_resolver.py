@@ -108,6 +108,38 @@ def validate_seed(seed: Any) -> int:
     return int(seed)
 
 
+def episode_seed(
+    base_seed: int, suite: str, task_id: int, init_state_id: int
+) -> int:
+    """A deterministic seed for one episode's environment reset.
+
+    Needed because LIBERO re-samples FIXTURE placements on every ``reset()``, and
+    those live in ``sim.model.body_pos`` / ``body_quat`` -- not in ``qpos`` -- so
+    they are neither captured by ``sim.get_state()`` nor restored by
+    ``set_init_state``. Measured on libero_spatial task 0: successive resets of the
+    same env move fixtures by up to 1.5 cm and rotate them by up to 0.011 in
+    quaternion distance. Two episodes with a byte-identical ``init_state_sha256``
+    differed in 27% of the pixels the policy sees, and the trajectory diverged
+    (105 steps and success, versus 177 steps).
+
+    Seeding the global RNG immediately before ``reset()`` makes the placement a
+    pure function of these four values, so it no longer depends on how many other
+    environments happened to be constructed earlier in the process.
+
+    The condition is deliberately NOT part of the seed. A vanilla episode and its
+    perturbed counterpart at the same (suite, task, init_state_id) must draw the
+    same fixture placement, otherwise the contrast the study rests on differs in
+    two things at once -- the perturbation and where the cabinet happens to be.
+
+    Note this pins something the official evaluation leaves free: official LIBERO
+    also re-samples fixtures per reset, so there is no "official" placement to
+    match. Pinning it is a deliberate, recorded deviation that buys
+    reproducibility and paired comparison.
+    """
+    payload = f"{base_seed}|{suite}|{task_id}|{init_state_id}".encode()
+    return int(hashlib.sha256(payload).hexdigest()[:8], 16)
+
+
 def seed_everything(seed: int) -> int:
     """Seed every RNG the perturbation and placement samplers actually use."""
     seed = validate_seed(seed)
