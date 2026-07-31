@@ -1,0 +1,2802 @@
+[
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/vanilla/task_00/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "134 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 133 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 48, 'post_grasp': 82, 'uncertain': 4}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "2144 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "PASS",
+        "message": "uv lands inside its own mask {'agentview': 0.0, 'robot0_eye_in_hand': 0.219}"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/vanilla/task_00/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 183, 'post_grasp': 13, 'uncertain': 24}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 966,
+              "missed": 479,
+              "miss_rate": 0.496
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/vanilla/task_01/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 194, 'post_grasp': 23, 'uncertain': 3}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1051,
+              "missed": 535,
+              "miss_rate": 0.509
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/vanilla/task_01/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "133 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 132 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 67, 'post_grasp': 63, 'uncertain': 3}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "2128 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 867,
+              "missed": 340,
+              "miss_rate": 0.392
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/vanilla/task_02/seed_000/episode_000",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 54, 'post_grasp': 160, 'uncertain': 6}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "PASS",
+        "message": "uv lands inside its own mask {'agentview': 0.0, 'robot0_eye_in_hand': 0.207}"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/vanilla/task_02/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "144 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 143 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 69, 'post_grasp': 65, 'uncertain': 10}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "2304 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "PASS",
+        "message": "uv lands inside its own mask {'agentview': 0.0, 'robot0_eye_in_hand': 0.171}"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/x0.1/task_00/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 865,
+              "missed": 354,
+              "miss_rate": 0.409
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/x0.1/task_00/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 211, 'post_grasp': 0, 'uncertain': 9}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1367,
+              "missed": 397,
+              "miss_rate": 0.29
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/x0.1/task_01/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1089,
+              "missed": 299,
+              "miss_rate": 0.275
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/x0.1/task_01/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "PASS",
+        "message": "uv lands inside its own mask {'agentview': 0.0, 'robot0_eye_in_hand': 0.164}"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/x0.1/task_02/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1091,
+              "missed": 379,
+              "miss_rate": 0.347
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/x0.1/task_02/seed_000/episode_001",
+    "passed": true,
+    "num_failed": 0,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 219, 'post_grasp': 0, 'uncertain': 1}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "PASS",
+        "message": "uv lands inside its own mask {'agentview': 0.001, 'robot0_eye_in_hand': 0.239}"
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/y0.1/task_00/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 154, 'post_grasp': 0, 'uncertain': 66}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 552,
+              "missed": 257,
+              "miss_rate": 0.466
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/y0.1/task_00/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=alphabet_soup_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 208, 'post_grasp': 0, 'uncertain': 12}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1251,
+              "missed": 388,
+              "miss_rate": 0.31
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/y0.1/task_01/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 65, 'post_grasp': 0, 'uncertain': 155}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 884,
+              "missed": 600,
+              "miss_rate": 0.679
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/y0.1/task_01/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=cream_cheese_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 45, 'post_grasp': 0, 'uncertain': 175}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 623,
+              "missed": 399,
+              "miss_rate": 0.64
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/y0.1/task_02/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 220, 'post_grasp': 0, 'uncertain': 0}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1228,
+              "missed": 611,
+              "miss_rate": 0.498
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_object/y0.1/task_02/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 287d6cfdf12d"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=salad_dressing_1 destination=basket_1 change_class=clean_source_only"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 166, 'post_grasp': 0, 'uncertain': 54}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 933,
+              "missed": 313,
+              "miss_rate": 0.335
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/swap/task_00/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 99, 'post_grasp': 100, 'uncertain': 21}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1012,
+              "missed": 486,
+              "miss_rate": 0.48
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/swap/task_00/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 110, 'post_grasp': 84, 'uncertain': 26}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 964,
+              "missed": 284,
+              "miss_rate": 0.295
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/swap/task_01/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 76, 'post_grasp': 126, 'uncertain': 18}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1123,
+              "missed": 694,
+              "miss_rate": 0.618
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/swap/task_01/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 58, 'post_grasp': 146, 'uncertain': 16}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1170,
+              "missed": 727,
+              "miss_rate": 0.621
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/swap/task_02/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 64, 'post_grasp': 142, 'uncertain': 14}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 955,
+              "missed": 470,
+              "miss_rate": 0.492
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/swap/task_02/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "220 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 219 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=destination_and_distractor"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 46, 'post_grasp': 159, 'uncertain': 15}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "3520 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 1078,
+              "missed": 554,
+              "miss_rate": 0.514
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/vanilla/task_00/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "83 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 82 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 50, 'post_grasp': 24, 'uncertain': 9}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1328 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 443,
+              "missed": 158,
+              "miss_rate": 0.357
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/vanilla/task_00/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "98 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 97 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 65, 'post_grasp': 25, 'uncertain': 8}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1568 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 496,
+              "missed": 136,
+              "miss_rate": 0.274
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/vanilla/task_01/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "115 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 114 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 57, 'post_grasp': 46, 'uncertain': 12}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1840 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 643,
+              "missed": 266,
+              "miss_rate": 0.414
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/vanilla/task_01/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "91 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 90 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 60, 'post_grasp': 29, 'uncertain': 2}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1456 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 489,
+              "missed": 216,
+              "miss_rate": 0.442
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/vanilla/task_02/seed_000/episode_000",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "99 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 98 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 50, 'post_grasp': 30, 'uncertain': 19}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1584 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 545,
+              "missed": 224,
+              "miss_rate": 0.411
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  },
+  {
+    "episode_dir": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0/libero_spatial/vanilla/task_02/seed_000/episode_001",
+    "passed": false,
+    "num_failed": 1,
+    "num_warned": 0,
+    "checks": [
+      {
+        "check": "A_manifest",
+        "status": "PASS",
+        "message": "schema v2"
+      },
+      {
+        "check": "B_complete",
+        "status": "PASS",
+        "message": "COMPLETE marker present"
+      },
+      {
+        "check": "C_counts",
+        "status": "PASS",
+        "message": "111 timesteps, contiguous, all artefacts present"
+      },
+      {
+        "check": "D_stages",
+        "status": "PASS",
+        "message": "all 8 stages present with stable shapes",
+        "detail": {
+          "stages": [
+            "final_vision_dinov2",
+            "final_vision_siglip",
+            "llm_early",
+            "llm_late",
+            "llm_middle",
+            "pre_action_hidden",
+            "projector_input",
+            "projector_output"
+          ]
+        }
+      },
+      {
+        "check": "E_finite",
+        "status": "PASS",
+        "message": "all activations finite and within plausible magnitude"
+      },
+      {
+        "check": "F_sync",
+        "status": "PASS",
+        "message": "state chain closes across 110 consecutive timesteps"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "BDDL hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "init state hash recorded"
+      },
+      {
+        "check": "G_hashes",
+        "status": "PASS",
+        "message": "checkpoint pinned at 962318cec55a"
+      },
+      {
+        "check": "H_entities",
+        "status": "PASS",
+        "message": "source=akita_black_bowl_1 destination=plate_1 change_class=no_detected_change"
+      },
+      {
+        "check": "I_phase",
+        "status": "PASS",
+        "message": "phase labels valid and role-consistent {'pre_grasp': 47, 'post_grasp': 40, 'uncertain': 24}"
+      },
+      {
+        "check": "J_segmentation",
+        "status": "PASS",
+        "message": "1776 entity-camera labels well-formed"
+      },
+      {
+        "check": "J_uv_frame",
+        "status": "FAIL",
+        "message": "projected uv and its own mask do not share a frame",
+        "detail": {
+          "cameras": {
+            "robot0_eye_in_hand": {
+              "checked": 571,
+              "missed": 251,
+              "miss_rate": 0.44
+            }
+          },
+          "tolerance": 0.05
+        }
+      }
+    ]
+  }
+]

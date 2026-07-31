@@ -61,6 +61,7 @@ from activation_episode_writer import (  # noqa: E402
     SCHEMA_VERSION,
 )
 from changed_entity_detector import CHANGE_CLASSES  # noqa: E402
+from segmentation_label_provider import POLICY_CAMERA  # noqa: E402
 
 VALID_PHASES = ("pre_grasp", "post_grasp", "uncertain")
 VALID_VISIBILITY = ("visible", "occluded", "out_of_view", "unknown")
@@ -406,7 +407,14 @@ class EpisodeValidator:
                     # normalise -- which is how a whole camera's projections
                     # being frozen at t=0 passed validation.
                     bbox = label.get("mask_bbox")
-                    if visibility == "visible" and uv is not None and bbox:
+                    # Only the policy camera. The wrist camera sits centimetres
+                    # from the objects, so an entity routinely has a few pixels at
+                    # the frame edge while its centre projects far outside the
+                    # image -- correct geometry that this test would call a frame
+                    # error. Measured after the extrinsic fix: agentview median
+                    # uv-to-mask-centroid distance 1.66 px, wrist 19.76 px with a
+                    # p90 of 215 px. The wrist gets its own check below.
+                    if camera == POLICY_CAMERA and visibility == "visible" and uv is not None and bbox:
                         checked[camera] = checked.get(camera, 0) + 1
                         u_min, v_min, u_max, v_max = bbox
                         if not (u_min - UV_MASK_TOLERANCE <= uv[0] <= u_max + UV_MASK_TOLERANCE
@@ -419,6 +427,42 @@ class EpisodeValidator:
             self._add("J_segmentation", FAIL, "malformed segmentation labels", examples=problems[:5], count=len(problems))
         else:
             self._add("J_segmentation", PASS, f"{labelled} entity-camera labels well-formed")
+
+        # A wrist-mounted camera moves every step, so a STATIC entity's projection
+        # into it must change. A single distinct value across a whole episode is
+        # the signature of a camera matrix cached at t=0 -- the defect that made
+        # 120/120 static entity-episodes in the first pilot unusable while every
+        # other check passed.
+        moving_cameras = [c for c in (self.manifest.get("cameras") or []) if c != POLICY_CAMERA]
+        frozen: List[Dict[str, Any]] = []
+        tracked = 0
+        for camera in moving_cameras:
+            per_entity: Dict[str, set] = {}
+            positions: Dict[str, set] = {}
+            for record in self.records:
+                for entity, cams in (record.get("segmentation") or {}).items():
+                    label = cams.get(camera)
+                    if label and label.get("uv"):
+                        per_entity.setdefault(entity, set()).add(tuple(round(v, 6) for v in label["uv"]))
+                    xyz = (record.get("entity_world_xyz") or {}).get(entity)
+                    if xyz:
+                        positions.setdefault(entity, set()).add(tuple(round(v, 6) for v in xyz))
+            for entity, uvs in per_entity.items():
+                # Only entities that never moved in the world can test the camera.
+                if len(positions.get(entity, set())) != 1 or len(self.records) < 20:
+                    continue
+                tracked += 1
+                if len(uvs) <= 1:
+                    frozen.append({"camera": camera, "entity": entity, "distinct_uv": len(uvs),
+                                   "timesteps": len(self.records)})
+        if frozen:
+            self._add("J_camera_tracking", FAIL,
+                      "a moving camera's projection is frozen: static entities keep one uv "
+                      "for the whole episode",
+                      examples=frozen[:5], count=len(frozen))
+        elif tracked:
+            self._add("J_camera_tracking", PASS,
+                      f"{tracked} static entity-camera pairs track the moving camera")
 
         bad_frames = {
             camera: {"checked": total, "missed": missed.get(camera, 0),
@@ -434,7 +478,7 @@ class EpisodeValidator:
             )
         elif checked:
             rates = {c: round(missed.get(c, 0) / t, 3) for c, t in checked.items()}
-            self._add("J_uv_frame", PASS, f"uv lands inside its own mask {rates}")
+            self._add("J_uv_frame", PASS, f"policy-camera uv lands inside its own mask {rates}")
 
     # -- driver ---------------------------------------------------------------
     def run(self) -> Dict[str, Any]:

@@ -1,0 +1,1958 @@
+{
+  "v1_root": "/home/HDD/hwkim/openvla_activations/gate5_smoke",
+  "v2_root": "/home/HDD/hwkim/openvla_activations/pilot_v2_9e381f0",
+  "v1_episodes": 30,
+  "v2_episodes": 30,
+  "paired": 30,
+  "only_in_v1": [],
+  "only_in_v2": [],
+  "episodes": [
+    {
+      "key": [
+        "libero_object",
+        "vanilla",
+        0,
+        0
+      ],
+      "v1": {
+        "steps": 134,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 48,
+          "uncertain": 4,
+          "post_grasp": 82
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 134,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 48,
+          "uncertain": 4,
+          "post_grasp": 82
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "salad_dressing_1": 134,
+          "cream_cheese_1": 134,
+          "milk_1": 134,
+          "tomato_sauce_1": 134
+        },
+        "agentview_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "sim_grasp_steps": 87,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "vanilla",
+        0,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 177,
+          "uncertain": 26,
+          "post_grasp": 17
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 183,
+          "uncertain": 24,
+          "post_grasp": 13
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "salad_dressing_1": 220,
+          "cream_cheese_1": 220,
+          "milk_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": 7,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "vanilla",
+        1,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 194,
+          "uncertain": 3,
+          "post_grasp": 23
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 194,
+          "uncertain": 3,
+          "post_grasp": 23
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "alphabet_soup_1": 220,
+          "milk_1": 220,
+          "tomato_sauce_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "sim_grasp_steps": 29,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "vanilla",
+        1,
+        1
+      ],
+      "v1": {
+        "steps": 138,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 67,
+          "uncertain": 3,
+          "post_grasp": 68
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 133,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 67,
+          "uncertain": 3,
+          "post_grasp": 63
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 133,
+          "alphabet_soup_1": 133,
+          "milk_1": 133,
+          "tomato_sauce_1": 133
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "sim_grasp_steps": 68,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "vanilla",
+        2,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 54,
+          "uncertain": 6,
+          "post_grasp": 160
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 54,
+          "uncertain": 6,
+          "post_grasp": 160
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "ketchup_1": 220,
+          "alphabet_soup_1": 220,
+          "cream_cheese_1": 220,
+          "milk_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": 163,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "vanilla",
+        2,
+        1
+      ],
+      "v1": {
+        "steps": 144,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 69,
+          "uncertain": 10,
+          "post_grasp": 65
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 144,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 69,
+          "uncertain": 10,
+          "post_grasp": 65
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 144,
+          "ketchup_1": 144,
+          "alphabet_soup_1": 144,
+          "cream_cheese_1": 144
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "sim_grasp_steps": 72,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "x0.1",
+        0,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06999999999999999,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "alphabet_soup_1": 1,
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "alphabet_soup_1": 1,
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.07770642209387016,
+          "to_old": 0.02102279218382916,
+          "along_axis": 0.06538226610055102,
+          "perturbation_m": 0.06999999999999999
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06999999999999999,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "alphabet_soup_1": 220,
+          "basket_1": 220,
+          "salad_dressing_1": 220,
+          "cream_cheese_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "alphabet_soup_1": 1,
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.07770642209387016,
+          "to_old": 0.02102279218382916,
+          "along_axis": 0.06538226610055102,
+          "perturbation_m": 0.06999999999999999
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "x0.1",
+        0,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06999999999999999,
+        "phases": {
+          "pre_grasp": 211,
+          "uncertain": 9
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.057872697322492735,
+          "to_old": 0.025728049074454706,
+          "along_axis": -0.027686470549237212,
+          "perturbation_m": 0.06999999999999999
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 211,
+          "uncertain": 9
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "salad_dressing_1": 220,
+          "cream_cheese_1": 220,
+          "milk_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.05787269732249127,
+          "to_old": 0.025728049074454706,
+          "along_axis": -0.027686470549235797,
+          "perturbation_m": 0.07
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "x0.1",
+        1,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06671328047408587,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "cream_cheese_1": 1,
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "cream_cheese_1": 1,
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.10970417068978815,
+          "to_old": 0.07629235614518694,
+          "along_axis": 0.0799326848895322,
+          "perturbation_m": 0.06671328047408587
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06671328047408587,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "cream_cheese_1": 220,
+          "basket_1": 220,
+          "alphabet_soup_1": 220,
+          "milk_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "cream_cheese_1": 1,
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.10970417068978815,
+          "to_old": 0.07629235614518694,
+          "along_axis": 0.0799326848895322,
+          "perturbation_m": 0.06671328047408587
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "x0.1",
+        1,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06671328047408587,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "cream_cheese_1": 1,
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "cream_cheese_1": 1,
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.10383707424972012,
+          "to_old": 0.06572442662833519,
+          "along_axis": 0.08098017394003229,
+          "perturbation_m": 0.06671328047408587
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07169046814572483,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "cream_cheese_1": 220,
+          "basket_1": 220,
+          "alphabet_soup_1": 220,
+          "milk_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "cream_cheese_1": 1,
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.10074265568412387,
+          "to_old": 0.06426501378207071,
+          "along_axis": 0.0768929943533854,
+          "perturbation_m": 0.07169046814572483
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "x0.1",
+        2,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06999999999999999,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.08782268855967695,
+          "to_old": 0.04067672270356591,
+          "along_axis": 0.07358907699578893,
+          "perturbation_m": 0.06999999999999999
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06999999999999999,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "salad_dressing_1": 220,
+          "basket_1": 220,
+          "ketchup_1": 220,
+          "alphabet_soup_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.08782268855967695,
+          "to_old": 0.04067672270356591,
+          "along_axis": 0.07358907699578893,
+          "perturbation_m": 0.06999999999999999
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "x0.1",
+        2,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.06999999999999999,
+        "phases": {
+          "pre_grasp": 219,
+          "uncertain": 1
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.07067598042622787,
+          "to_old": 0.053361075602738804,
+          "along_axis": 0.0499314991608919,
+          "perturbation_m": 0.06999999999999999
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 219,
+          "uncertain": 1
+        },
+        "static_entities": 8,
+        "wrist_uv_distinct_for_static": {
+          "salad_dressing_1": 220,
+          "basket_1": 220,
+          "ketchup_1": 220,
+          "alphabet_soup_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "salad_dressing_1": 1,
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.07067598042622847,
+          "to_old": 0.05336107560273915,
+          "along_axis": 0.04993149916089219,
+          "perturbation_m": 0.07
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "y0.1",
+        0,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 85,
+          "uncertain": 60,
+          "post_grasp": 75
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.060877329678825066,
+          "to_old": 0.0014219945708950554,
+          "along_axis": 0.05699501035060431,
+          "perturbation_m": 0.07
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 154,
+          "uncertain": 66
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "salad_dressing_1": 220,
+          "cream_cheese_1": 220,
+          "milk_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.060877329670383055,
+          "to_old": 0.02062945140499442,
+          "along_axis": 0.05699501034062024,
+          "perturbation_m": 0.07
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "y0.1",
+        0,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 208,
+          "uncertain": 12
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.0946285816436514,
+          "to_old": 0.06426059284420536,
+          "along_axis": 0.06388855297035864,
+          "perturbation_m": 0.07
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 208,
+          "uncertain": 12
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "salad_dressing_1": 220,
+          "cream_cheese_1": 220,
+          "milk_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "salad_dressing_1": 1,
+          "cream_cheese_1": 1,
+          "milk_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.09462858164365137,
+          "to_old": 0.06244904604346457,
+          "along_axis": 0.06388855297035864,
+          "perturbation_m": 0.07
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "y0.1",
+        1,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07369963312210846,
+        "phases": {
+          "pre_grasp": 49,
+          "uncertain": 129,
+          "post_grasp": 42
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "butter_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "butter_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.05382007875041422,
+          "to_old": 0.02396468998837777,
+          "along_axis": 0.05231944307768323,
+          "perturbation_m": 0.07369963312210846
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07369963312210846,
+        "phases": {
+          "pre_grasp": 65,
+          "uncertain": 155
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "alphabet_soup_1": 220,
+          "milk_1": 220,
+          "tomato_sauce_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "tomato_sauce_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.05382160929515611,
+          "to_old": 0.02396452975357419,
+          "along_axis": 0.05231866472969548,
+          "perturbation_m": 0.07369963312210846
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "y0.1",
+        1,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07369963312210846,
+        "phases": {
+          "pre_grasp": 45,
+          "uncertain": 175
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "butter_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "butter_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.05973538452502471,
+          "to_old": 0.03866450684640361,
+          "along_axis": 0.04978636259020793,
+          "perturbation_m": 0.07369963312210846
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07745210689168881,
+        "phases": {
+          "pre_grasp": 45,
+          "uncertain": 175
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "alphabet_soup_1": 220,
+          "milk_1": 220,
+          "butter_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "alphabet_soup_1": 1,
+          "milk_1": 1,
+          "butter_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.05893145657362938,
+          "to_old": 0.022358590929404443,
+          "along_axis": 0.05415754430198912,
+          "perturbation_m": 0.07745210689168881
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "y0.1",
+        2,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.03587146482754695,
+          "to_old": 0.01712369250183755,
+          "along_axis": 0.026613802951458137,
+          "perturbation_m": 0.07
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 220
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "ketchup_1": 220,
+          "alphabet_soup_1": 220,
+          "cream_cheese_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.03587146483627035,
+          "to_old": 0.017123692501832592,
+          "along_axis": 0.026613802962889805,
+          "perturbation_m": 0.07
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_object",
+        "y0.1",
+        2,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 169,
+          "uncertain": 51
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": {
+          "to_new": 0.10644751502183793,
+          "to_old": 0.07342836230596343,
+          "along_axis": 0.07324991186217185,
+          "perturbation_m": 0.07
+        }
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "clean_source_only",
+        "measured_translation_m": 0.07,
+        "phases": {
+          "pre_grasp": 166,
+          "uncertain": 54
+        },
+        "static_entities": 7,
+        "wrist_uv_distinct_for_static": {
+          "basket_1": 220,
+          "ketchup_1": 220,
+          "alphabet_soup_1": 220,
+          "cream_cheese_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "basket_1": 1,
+          "ketchup_1": 1,
+          "alphabet_soup_1": 1,
+          "cream_cheese_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": {
+          "to_new": 0.10644751502183994,
+          "to_old": 0.0736709719184818,
+          "along_axis": 0.07324991186217278,
+          "perturbation_m": 0.07
+        }
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "swap",
+        0,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.25459537307791946,
+        "phases": {
+          "pre_grasp": 213,
+          "uncertain": 7
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.25459537307791946,
+        "phases": {
+          "pre_grasp": 99,
+          "uncertain": 21,
+          "post_grasp": 100
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 220,
+          "cookies_1": 220,
+          "glazed_rim_porcelain_ramekin_1": 220,
+          "wooden_cabinet_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 2,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": 53,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "swap",
+        0,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.25459537307791946,
+        "phases": {
+          "pre_grasp": 45,
+          "uncertain": 2,
+          "post_grasp": 173
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.2673557993606202,
+        "phases": {
+          "pre_grasp": 110,
+          "uncertain": 26,
+          "post_grasp": 84
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 220,
+          "cookies_1": 220,
+          "glazed_rim_porcelain_ramekin_1": 220,
+          "wooden_cabinet_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 2,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": 29,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "swap",
+        1,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.14637613587408194,
+        "phases": {
+          "pre_grasp": 56,
+          "uncertain": 10,
+          "post_grasp": 154
+        },
+        "static_entities": 4,
+        "wrist_uv_distinct_for_static": {
+          "akita_black_bowl_2": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1,
+          "flat_stove_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "akita_black_bowl_2": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1,
+          "flat_stove_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.14637613587408194,
+        "phases": {
+          "pre_grasp": 76,
+          "uncertain": 18,
+          "post_grasp": 126
+        },
+        "static_entities": 4,
+        "wrist_uv_distinct_for_static": {
+          "akita_black_bowl_2": 220,
+          "glazed_rim_porcelain_ramekin_1": 220,
+          "wooden_cabinet_1": 220,
+          "flat_stove_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "akita_black_bowl_2": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1,
+          "flat_stove_1": 1
+        },
+        "sim_grasp_steps": 113,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "swap",
+        1,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.14637613587408194,
+        "phases": {
+          "pre_grasp": 59,
+          "uncertain": 11,
+          "post_grasp": 150
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.1742351094378757,
+        "phases": {
+          "pre_grasp": 58,
+          "uncertain": 16,
+          "post_grasp": 146
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 220,
+          "akita_black_bowl_2": 220,
+          "glazed_rim_porcelain_ramekin_1": 220,
+          "wooden_cabinet_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 2,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": 55,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "swap",
+        2,
+        0
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.1584082323808972,
+        "phases": {
+          "pre_grasp": 48,
+          "uncertain": 8,
+          "post_grasp": 164
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.1584082323808972,
+        "phases": {
+          "pre_grasp": 64,
+          "uncertain": 14,
+          "post_grasp": 142
+        },
+        "static_entities": 4,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 220,
+          "glazed_rim_porcelain_ramekin_1": 220,
+          "wooden_cabinet_1": 220,
+          "flat_stove_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1,
+          "flat_stove_1": 1
+        },
+        "sim_grasp_steps": 69,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "swap",
+        2,
+        1
+      ],
+      "v1": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.1584082323808972,
+        "phases": {
+          "pre_grasp": 47,
+          "uncertain": 13,
+          "post_grasp": 160
+        },
+        "static_entities": 4,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1,
+          "flat_stove_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1,
+          "flat_stove_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 220,
+        "success": false,
+        "termination": "max_steps",
+        "change_class": "destination_and_distractor",
+        "measured_translation_m": 0.1629214110797887,
+        "phases": {
+          "pre_grasp": 46,
+          "uncertain": 15,
+          "post_grasp": 159
+        },
+        "static_entities": 4,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 220,
+          "glazed_rim_porcelain_ramekin_1": 220,
+          "wooden_cabinet_1": 220,
+          "flat_stove_1": 220
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 2,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1,
+          "flat_stove_1": 1
+        },
+        "sim_grasp_steps": 81,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "vanilla",
+        0,
+        0
+      ],
+      "v1": {
+        "steps": 81,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 53,
+          "uncertain": 9,
+          "post_grasp": 19
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 83,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 50,
+          "uncertain": 9,
+          "post_grasp": 24
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 83,
+          "akita_black_bowl_2": 83,
+          "cookies_1": 83,
+          "glazed_rim_porcelain_ramekin_1": 83
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 2,
+          "cookies_1": 2,
+          "glazed_rim_porcelain_ramekin_1": 1
+        },
+        "sim_grasp_steps": 27,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "vanilla",
+        0,
+        1
+      ],
+      "v1": {
+        "steps": 105,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 74,
+          "uncertain": 5,
+          "post_grasp": 26
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 98,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 65,
+          "uncertain": 8,
+          "post_grasp": 25
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 98,
+          "akita_black_bowl_2": 98,
+          "cookies_1": 98,
+          "glazed_rim_porcelain_ramekin_1": 98
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 2,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 2,
+          "glazed_rim_porcelain_ramekin_1": 1
+        },
+        "sim_grasp_steps": 0,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "vanilla",
+        1,
+        0
+      ],
+      "v1": {
+        "steps": 112,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 61,
+          "uncertain": 8,
+          "post_grasp": 43
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 115,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 57,
+          "uncertain": 12,
+          "post_grasp": 46
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "akita_black_bowl_2": 115,
+          "cookies_1": 115,
+          "glazed_rim_porcelain_ramekin_1": 115,
+          "wooden_cabinet_1": 115
+        },
+        "agentview_uv_distinct_for_static": {
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": 49,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "vanilla",
+        1,
+        1
+      ],
+      "v1": {
+        "steps": 93,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 56,
+          "uncertain": 7,
+          "post_grasp": 30
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 91,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 60,
+          "uncertain": 2,
+          "post_grasp": 29
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 91,
+          "akita_black_bowl_2": 91,
+          "cookies_1": 91,
+          "wooden_cabinet_1": 91
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 2,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": 34,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "vanilla",
+        2,
+        0
+      ],
+      "v1": {
+        "steps": 128,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 77,
+          "uncertain": 7,
+          "post_grasp": 44
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 99,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 50,
+          "uncertain": 19,
+          "post_grasp": 30
+        },
+        "static_entities": 6,
+        "wrist_uv_distinct_for_static": {
+          "plate_1": 99,
+          "akita_black_bowl_2": 99,
+          "cookies_1": 99,
+          "glazed_rim_porcelain_ramekin_1": 99
+        },
+        "agentview_uv_distinct_for_static": {
+          "plate_1": 1,
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 2
+        },
+        "sim_grasp_steps": 50,
+        "bias": null
+      }
+    },
+    {
+      "key": [
+        "libero_spatial",
+        "vanilla",
+        2,
+        1
+      ],
+      "v1": {
+        "steps": 121,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 65,
+          "uncertain": 14,
+          "post_grasp": 42
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "agentview_uv_distinct_for_static": {
+          "akita_black_bowl_2": 1,
+          "cookies_1": 1,
+          "glazed_rim_porcelain_ramekin_1": 1,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": null,
+        "bias": null
+      },
+      "v2": {
+        "steps": 111,
+        "success": true,
+        "termination": "success",
+        "change_class": "no_detected_change",
+        "measured_translation_m": null,
+        "phases": {
+          "pre_grasp": 47,
+          "uncertain": 24,
+          "post_grasp": 40
+        },
+        "static_entities": 5,
+        "wrist_uv_distinct_for_static": {
+          "akita_black_bowl_2": 111,
+          "cookies_1": 111,
+          "glazed_rim_porcelain_ramekin_1": 111,
+          "wooden_cabinet_1": 111
+        },
+        "agentview_uv_distinct_for_static": {
+          "akita_black_bowl_2": 2,
+          "cookies_1": 2,
+          "glazed_rim_porcelain_ramekin_1": 2,
+          "wooden_cabinet_1": 1
+        },
+        "sim_grasp_steps": 44,
+        "bias": null
+      }
+    }
+  ]
+}
