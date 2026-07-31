@@ -214,6 +214,7 @@ class TaskPhaseResolver:
         gripper_qpos: Optional[Sequence[float]],
         contact: Optional[bool],
         gripper_command: Optional[float] = None,
+        supported_by_other: Optional[bool] = None,
     ) -> TaskPhaseResult:
         t = self.thresholds
         previous_phase = self.phase
@@ -396,7 +397,35 @@ class TaskPhaseResolver:
         # episode. All six successful episodes -- where the object IS set down --
         # ended their post_grasp interval on exactly the right timestep either
         # way, so nothing is lost by dropping the height requirement.
-        release_like_now = previous_phase == PHASE_POST_GRASP and not proximity_ok
+        # Two ways a grasp ends, and the second one is what swap failures do.
+        #
+        #   (a) the object is left behind  -> it leaves grasp_distance
+        #   (b) the object is dropped in place, and the gripper stays right above
+        #       it. Distance never grows, so (a) alone never fires. Measured on
+        #       the swap condition: all six episodes kept post_grasp for 27-96
+        #       timesteps after the simulator had stopped reporting a grasp.
+        #
+        # (b) is caught by the inverse of the comovement test: a held object keeps
+        # a rigid offset to the gripper, so once the gripper travels and that
+        # offset breaks, the two are no longer connected. Requiring the gripper to
+        # have actually moved is what keeps this from firing while the robot holds
+        # still.
+        offset_broken = (
+            eef_window_motion is not None
+            and eef_window_motion >= t.min_comovement_motion_m
+            and relative_window_drift is not None
+            and relative_window_drift > t.comovement_relative_drift_m
+        )
+        # The decisive one, and it is a physical fact rather than a threshold:
+        # if anything other than the gripper is holding the object up, the robot
+        # has let go. Traced on a swap failure -- at the exact timestep the
+        # simulator stopped reporting a grasp (t=124), the bowl began contacting
+        # cookies_1 and stayed on it for the rest of the episode, while the
+        # gripper kept touching it, stayed 4.7 cm away and barely moved. Distance
+        # and comovement rules cannot see that; support contact can.
+        release_like_now = previous_phase == PHASE_POST_GRASP and (
+            bool(supported_by_other) or not proximity_ok or offset_broken
+        )
         self._release_evidence_streak = (
             self._release_evidence_streak + 1 if release_like_now else 0
         )
@@ -427,6 +456,8 @@ class TaskPhaseResolver:
             "release_evidence_streak": self._release_evidence_streak,
             "grasp_like_now": grasp_like_now,
             "release_like_now": release_like_now,
+            "offset_broken": offset_broken,
+            "supported_by_other": supported_by_other,
         }
 
         reason: str
@@ -559,7 +590,43 @@ def compute_frame_inputs(
         "gripper_position": gripper_position,
         "gripper_qpos": gripper_qpos,
         "contact": get_contact(env, source_entity),
+        "supported_by_other": get_supported_by_other(env, source_entity),
     }
+
+
+def get_supported_by_other(env: Any, entity: Optional[str]) -> Optional[bool]:
+    """Is anything other than the robot touching this object?
+
+    "Let go" means something else is bearing the object's weight. Reading the
+    MuJoCo contact list for that is object-independent and needs no threshold,
+    unlike distance or comovement rules, which cannot distinguish a carried
+    object from one set down under a hovering gripper.
+    """
+    if not entity:
+        return None
+    try:
+        base_env = env.env if hasattr(env, "env") else env
+        model = base_env.objects_dict.get(entity)
+        if model is None:
+            return None
+        object_geoms = set(model.contact_geoms)
+        robot_geoms = set(base_env.robots[0].gripper.contact_geoms)
+        for link in getattr(base_env.robots[0], "robot_model", None).contact_geoms if getattr(
+            base_env.robots[0], "robot_model", None
+        ) else []:
+            robot_geoms.add(link)
+        sim = base_env.sim
+        for index in range(sim.data.ncon):
+            contact = sim.data.contact[index]
+            first = sim.model.geom_id2name(contact.geom1)
+            second = sim.model.geom_id2name(contact.geom2)
+            if first in object_geoms and second and second not in robot_geoms:
+                return True
+            if second in object_geoms and first and first not in robot_geoms:
+                return True
+        return False
+    except Exception:
+        return None
 
 
 # -----------------------------------------------------------------------------

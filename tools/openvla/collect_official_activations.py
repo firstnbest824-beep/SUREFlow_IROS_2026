@@ -306,6 +306,7 @@ class EpisodeContext:
     init_state: np.ndarray
     init_record: Any
     episode_reset_seed: int
+    output_root: str
     saved_stages: List[str]
     args: argparse.Namespace
     dtype: torch.dtype
@@ -560,8 +561,20 @@ def build_manifest(
     )
     measured = None if primary is None else primary.translation_norm
 
+    change = context.change_report
+    changed_by_name = {c.name: c for c in change.changed_entities}
+    source_change = changed_by_name.get(context.roles.source)
+    poses = context.initial_poses or {}
+
     return {
         "episode_index": episode_index,
+        # Groups the vanilla episode and its perturbed counterparts that share a
+        # task, seed and initial state, so a displacement curve can be built from
+        # matched comparisons rather than from pooled averages.
+        "comparison_group": (
+            f"{pair.suite}|task{pair.task_id:02d}|seed{pair.seed}"
+            f"|init{context.init_record.init_state_id:03d}"
+        ),
         "suite": pair.suite,
         "condition": pair.perturbation_name,
         "perturbation_family": pair.perturbation_family,
@@ -582,10 +595,30 @@ def build_manifest(
         "init_state_source": context.init_record.source,
         "init_state_path": context.init_record.path,
         "init_state_id": context.init_record.init_state_id,
-        # "x0.1" is a level, not a displacement. Both are stored, never conflated.
+        # "x0.1" is a level, not a displacement. Both are stored, never conflated:
+        # measured on the shipped assets, displacement = level * 0.7, so y0.1 is
+        # 7 cm and y0.3 is 21 cm.
         "requested_axis": pair.requested_axis,
         "requested_level": pair.requested_level,
+        "nominal_perturbation": (
+            None if pair.requested_level is None
+            else f"{pair.requested_axis}{pair.requested_level}"
+        ),
         "measured_translation_m": measured,
+        "source_position_vanilla": (poses.get("vanilla") or {}).get(
+            context.roles.source, {}).get("xyz"),
+        "source_position_perturbed": (poses.get("perturbed") or {}).get(
+            context.roles.source, {}).get("xyz"),
+        "destination_position": (poses.get("perturbed") or {}).get(
+            context.roles.destination, {}).get("xyz"),
+        "source_moved": context.roles.source in changed_by_name,
+        "destination_moved": context.roles.destination in changed_by_name,
+        "other_moved_objects": [
+            {"name": c.name, "role": c.role,
+             "displacement_m": c.translation_norm, "left_scene": bool(c.left_scene)}
+            for c in change.changed_entities if c.name != context.roles.source
+        ],
+        "episode_output_path": str(context.output_root),
         "entity_roles": context.roles.to_dict(),
         "change_report": report.to_dict(),
         "initial_pose_measurement": context.initial_poses,
@@ -725,6 +758,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 env, height=args.resolution, width=args.resolution
             ),
             init_state=init_state, init_record=init_record,
+            output_root=args.output_root,
             episode_reset_seed=episode_seed(
                 seed, pair.suite, pair.task_id, args.init_state_id
             ),
