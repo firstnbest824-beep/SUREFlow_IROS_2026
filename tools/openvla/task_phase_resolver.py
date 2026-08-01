@@ -56,6 +56,10 @@ class PhaseThresholds:
     # while in contact, which is what being blocked by a held object looks like.
     min_gripper_closure_from_open_m: float = 0.010
     gripper_stall_qpos_delta: float = 5e-4
+    #: How much outward finger motion still counts as "blocked". An order of
+    #: magnitude below the stall band, because opening and stalling are different
+    #: states and only the latter means an object is wedged between the pads.
+    gripper_opening_creep_max: float = 5e-5
     gripper_closing_qpos_delta: float = -0.0008
     #: Retained for the evidence record only; the release decision no longer
     #: requires the object to return to its initial height (see release_like_now).
@@ -72,13 +76,21 @@ class PhaseThresholds:
     # Temporal continuity (all in units of timesteps).
     min_consecutive_contact_steps: int = 3
     min_consecutive_comovement_steps: int = 3
-    min_consecutive_grasp_steps_for_transition: int = 3
+    # 1, not 3: `grasp_like_now` already requires contact_ok, which itself needs
+    # min_consecutive_contact_steps of sustained contact, so the temporal
+    # filtering happens upstream and a second layer only delays the transition.
+    # Scored against the simulator's own grasp test over 29 replayed episodes,
+    # 1 recovers 85 timesteps that a 3-step wait was losing at the onset.
+    min_consecutive_grasp_steps_for_transition: int = 1
     # Symmetric with the grasp rule above. Measured against the simulator's own
     # grasp test over 29 replayed episodes, values 1..12 move post_grasp label
     # accuracy only between 0.889 and 0.863 and pre_grasp between 0.971 and
     # 0.984, with coverage flat at ~89%, so nothing is bought by tuning it --
     # matching the grasp hysteresis is the defensible choice.
-    min_consecutive_release_steps_for_transition: int = 3
+    # 5, chosen by measurement over a 3x3 grid of (grasp, release) hysteresis:
+    # it maximised F1 at 0.882 with recall 0.928, and left 2 single-frame holes
+    # against 79 before the `not grasp_like_now` clause was added.
+    min_consecutive_release_steps_for_transition: int = 5
     distance_history_window: int = 5
 
     grasp_confidence_threshold: float = 0.6
@@ -308,9 +320,11 @@ class TaskPhaseResolver:
             and closure_from_open >= t.min_gripper_closure_from_open_m
             and opening_delta is not None
             and abs(opening_delta) <= t.gripper_stall_qpos_delta
-            # Signed, not just stalled: a gripper whose fingers are creeping
-            # apart is releasing, not blocked by something it holds.
-            and opening_delta <= t.gripper_stall_qpos_delta / 2.0
+            # Signed, and tight. A gripper whose fingers are creeping apart is
+            # releasing, not blocked by something it holds, so the tolerance for
+            # *outward* motion has to be far below the stall band -- half the
+            # stall threshold still admitted a clear +2e-4 creep.
+            and opening_delta <= t.gripper_opening_creep_max
         )
         gripper_closed_ok = gripper_state in ("closed", "closing") or fingers_blocked
         height_lifted_ok = height_delta >= t.grasp_height_delta_m
@@ -423,7 +437,18 @@ class TaskPhaseResolver:
         # cookies_1 and stayed on it for the rest of the episode, while the
         # gripper kept touching it, stayed 4.7 cm away and barely moved. Distance
         # and comovement rules cannot see that; support contact can.
-        release_like_now = previous_phase == PHASE_POST_GRASP and (
+        # `not grasp_like_now` is the load-bearing clause, and it was missing for
+        # five revisions of this rule.
+        #
+        # Without it, release evidence accumulated *while the object was firmly
+        # held*: the streak reached its threshold, the phase dropped to
+        # uncertain, the still-strong grasp evidence immediately pulled it back,
+        # and the cycle repeated -- a 3-frame periodic flicker. Measured, that
+        # produced 79 single-frame holes inside otherwise correct post_grasp
+        # intervals, and those holes were 65% of all false negatives. Every
+        # earlier fix targeted *when* release fires, which was 1% of the error.
+        # A release can only mean something if the grasp evidence has stopped.
+        release_like_now = previous_phase == PHASE_POST_GRASP and not grasp_like_now and (
             bool(supported_by_other) or not proximity_ok or offset_broken
         )
         self._release_evidence_streak = (
@@ -594,13 +619,24 @@ def compute_frame_inputs(
     }
 
 
-def get_supported_by_other(env: Any, entity: Optional[str]) -> Optional[bool]:
-    """Is anything other than the robot touching this object?
+#: A contact counts as *supporting* only if it pushes the object upward by at
+#: least this much (cosine against world +z). Measured: an object resting on the
+#: floor gives +1.000. Anything sideways is the object brushing something while
+#: being carried, which is not being set down -- treating those as release cost
+#: 141 extra false negatives when the direction was ignored.
+SUPPORT_NORMAL_MIN_Z = 0.5
 
-    "Let go" means something else is bearing the object's weight. Reading the
-    MuJoCo contact list for that is object-independent and needs no threshold,
-    unlike distance or comovement rules, which cannot distinguish a carried
-    object from one set down under a hovering gripper.
+
+def get_supported_by_other(env: Any, entity: Optional[str]) -> Optional[bool]:
+    """Is something other than the robot bearing this object's weight?
+
+    "Let go" means something else is holding the object up. Any-contact is not
+    enough: a carried object brushes the basket rim or a neighbour without being
+    released. So each contact's normal is checked -- only a contact that pushes
+    the object *upward* is support. MuJoCo's contact frame gives the normal from
+    geom1 to geom2, so it is flipped when the object is geom1.
+
+    Object-independent and needs no distance or velocity threshold.
     """
     if not entity:
         return None
@@ -620,9 +656,17 @@ def get_supported_by_other(env: Any, entity: Optional[str]) -> Optional[bool]:
             contact = sim.data.contact[index]
             first = sim.model.geom_id2name(contact.geom1)
             second = sim.model.geom_id2name(contact.geom2)
-            if first in object_geoms and second and second not in robot_geoms:
-                return True
-            if second in object_geoms and first and first not in robot_geoms:
+            object_is_first = first in object_geoms
+            object_is_second = second in object_geoms
+            if not (object_is_first or object_is_second):
+                continue
+            other = second if object_is_first else first
+            if not other or other in robot_geoms:
+                continue
+            # frame[:3] is the normal from geom1 towards geom2.
+            normal_z = float(contact.frame[2])
+            push_z = normal_z if object_is_second else -normal_z
+            if push_z >= SUPPORT_NORMAL_MIN_Z:
                 return True
         return False
     except Exception:

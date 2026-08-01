@@ -88,6 +88,10 @@ class ReplayResult:
     source_height: List[float] = field(default_factory=list)
     #: Per timestep, as stored by the collector.
     stored_phase: List[str] = field(default_factory=list)
+    #: Per timestep, recomputed live during replay so the CURRENT resolver can be
+    #: scored on episodes collected before supported_by_other existed.
+    replayed_phase: List[str] = field(default_factory=list)
+    supported_by_other: List[Optional[bool]] = field(default_factory=list)
 
 
 def replay_episode(episode_dir: Path, resolution: int = 64) -> ReplayResult:
@@ -146,6 +150,10 @@ def replay_episode(episode_dir: Path, resolution: int = 64) -> ReplayResult:
         object_model = base_env.objects_dict.get(source)
         object_geoms = None if object_model is None else object_model.contact_geoms
 
+        from task_phase_resolver import get_supported_by_other
+        destination = manifest["entity_roles"]["destination"]
+        live_resolver = TaskPhaseResolver(source, destination, thresholds=DEFAULT_THRESHOLDS)
+
         for record in records:
             observed_eef = np.asarray(base_env._get_observations()["robot0_eef_pos"], dtype=float)
             expected_eef = np.asarray(record["eef_pos"], dtype=float)
@@ -169,6 +177,20 @@ def replay_episode(episode_dir: Path, resolution: int = 64) -> ReplayResult:
                 result.sim_contact_any.append(False)
             result.source_height.append(float(record["entity_world_xyz"][source][2]))
             result.stored_phase.append(record["phase"])
+
+            supported = get_supported_by_other(env, source)
+            result.supported_by_other.append(supported)
+            result.replayed_phase.append(
+                live_resolver.update(
+                    timestep=record["timestep"],
+                    source_position=record["entity_world_xyz"][source],
+                    destination_position=record["entity_world_xyz"][destination],
+                    gripper_position=record["eef_pos"],
+                    gripper_qpos=record["gripper_qpos"],
+                    contact=record["contact"],
+                    supported_by_other=supported,
+                ).phase
+            )
 
             env.step(record["action_applied"])
     finally:
@@ -326,8 +348,10 @@ def main() -> int:
             continue
 
         ground = sim_grasp_phase(replay.sim_grasp, min_run=args.min_grasp_run)
-        predicted = [p == "post_grasp" for p in replay.stored_phase]
+        stored = [p == "post_grasp" for p in replay.stored_phase]
+        predicted = [p == "post_grasp" for p in replay.replayed_phase]
         metrics = score(predicted, ground)
+        metrics["stored_rule"] = score(stored, ground)
         metrics.update(
             episode=str(episode_dir.relative_to(args.root)),
             suite=replay.suite, condition=replay.condition,
@@ -342,6 +366,8 @@ def main() -> int:
             else metrics["predicted_onset"] - metrics["sim_grasp_onset"]
         )
         metrics["onset_error_steps"] = onset_error
+        metrics["replayed_phase"] = list(replay.replayed_phase)
+        metrics["supported_by_other"] = [None if v is None else int(v) for v in replay.supported_by_other]
         metrics["sim_grasp_raw"] = [int(x) for x in replay.sim_grasp]
         metrics["sim_grasp_interval"] = [int(x) for x in ground]
         metrics["stored_phase"] = list(replay.stored_phase)
@@ -363,7 +389,7 @@ def main() -> int:
     pooled_pred: List[bool] = []
     pooled_truth: List[bool] = []
     for (manifest, records, ground), replay in zip(scored, [r for r in replays if r.replay_exact]):
-        pooled_pred.extend(p == "post_grasp" for p in replay.stored_phase)
+        pooled_pred.extend(p == "post_grasp" for p in replay.replayed_phase)
         pooled_truth.extend(ground)
     pooled = score(pooled_pred, pooled_truth)
     print(f"\nPOOLED over {len(per_episode)} episodes, {pooled['steps']} timesteps:")
