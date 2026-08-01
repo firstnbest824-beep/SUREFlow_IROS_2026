@@ -1,0 +1,1653 @@
+{
+  "rows": [
+    {
+      "suite": "libero_object",
+      "task_id": 0,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_alphabet_soup_and_place_it_in_the_basket",
+      "instruction": "pick up the alphabet soup and place it in the basket",
+      "source": "alphabet_soup_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.07,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24,
+        0.015
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.16999999999999998,
+        0.015
+      ],
+      "destination_position": [
+        -0.00559272639159575,
+        0.24657360327582872,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 0,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_alphabet_soup_and_place_it_in_the_basket",
+      "instruction": "pick up the alphabet soup and place it in the basket",
+      "source": "alphabet_soup_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.14,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24,
+        0.015
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.1,
+        0.015
+      ],
+      "destination_position": [
+        0.009567297998377484,
+        0.2610790855460567,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 0,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_alphabet_soup_and_place_it_in_the_basket",
+      "instruction": "pick up the alphabet soup and place it in the basket",
+      "source": "alphabet_soup_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.21,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24,
+        0.015
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.030000000000000002,
+        0.015
+      ],
+      "destination_position": [
+        0.004874838322863414,
+        0.25542167977716684,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 1,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+      "instruction": "pick up the cream cheese and place it in the basket",
+      "source": "cream_cheese_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.067,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.053607840889344,
+        -0.10149700854647638,
+        0.0
+      ],
+      "source_position_perturbed": [
+        0.05098532623201575,
+        -0.03452485876452563,
+        0.0
+      ],
+      "destination_position": [
+        -0.0055582362855893085,
+        0.2646319974284798,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 1,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+      "instruction": "pick up the cream cheese and place it in the basket",
+      "source": "cream_cheese_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.1386,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.053607840889344,
+        -0.10149700854647638,
+        0.0
+      ],
+      "source_position_perturbed": [
+        0.05085411827039601,
+        0.037027637675778706,
+        0.0
+      ],
+      "destination_position": [
+        0.004959068069362563,
+        0.25936849836904896,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 1,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_cream_cheese_and_place_it_in_the_basket",
+      "instruction": "pick up the cream cheese and place it in the basket",
+      "source": "cream_cheese_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.2157,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.053607840889344,
+        -0.10149700854647638,
+        0.0
+      ],
+      "source_position_perturbed": [
+        0.046300735348646704,
+        0.11404428609926738,
+        0.0
+      ],
+      "destination_position": [
+        0.010706790225817938,
+        0.25919221010391374,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": [
+        "basket_1"
+      ]
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 2,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_salad_dressing_and_place_it_in_the_basket",
+      "instruction": "pick up the salad dressing and place it in the basket",
+      "source": "salad_dressing_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.07,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05000000000000001,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05,
+        -0.030000000000000006,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.010170586527739877,
+        0.27377832305008104,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 2,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_salad_dressing_and_place_it_in_the_basket",
+      "instruction": "pick up the salad dressing and place it in the basket",
+      "source": "salad_dressing_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.14,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05000000000000001,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05,
+        0.04000000000000001,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.010714294024148413,
+        0.24693091853646984,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 2,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_salad_dressing_and_place_it_in_the_basket",
+      "instruction": "pick up the salad dressing and place it in the basket",
+      "source": "salad_dressing_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.21,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05000000000000001,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05000000000000001,
+        0.11000000000000001,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.00883500253815911,
+        0.25463967090595196,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 3,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_bbq_sauce_and_place_it_in_the_basket",
+      "instruction": "pick up the bbq sauce and place it in the basket",
+      "source": "bbq_sauce_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.0753,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05333998784791568,
+        -0.10204214938910428,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.04867054538652818,
+        -0.026878447216060877,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.010082920959115766,
+        0.25392158463652237,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 3,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_bbq_sauce_and_place_it_in_the_basket",
+      "instruction": "pick up the bbq sauce and place it in the basket",
+      "source": "bbq_sauce_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.1339,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05333998784791568,
+        -0.10204214938910428,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05535258446332676,
+        0.03186771555290158,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.01056746874601571,
+        0.25845952426325813,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 3,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_bbq_sauce_and_place_it_in_the_basket",
+      "instruction": "pick up the bbq sauce and place it in the basket",
+      "source": "bbq_sauce_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.2144,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05333998784791568,
+        -0.10204214938910428,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05581262027038192,
+        0.11239023199290983,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        0.0016947400565171383,
+        0.2620398778855557,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 4,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_ketchup_and_place_it_in_the_basket",
+      "instruction": "pick up the ketchup and place it in the basket",
+      "source": "ketchup_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.07,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24000000000000002,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.16999999999999998,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        0.00818809394775383,
+        0.25834582083512125,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 4,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_ketchup_and_place_it_in_the_basket",
+      "instruction": "pick up the ketchup and place it in the basket",
+      "source": "ketchup_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.14,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24000000000000002,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.1,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.009028088880263739,
+        0.250462744188208,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 4,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_ketchup_and_place_it_in_the_basket",
+      "instruction": "pick up the ketchup and place it in the basket",
+      "source": "ketchup_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.21,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24000000000000002,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.03,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.002901470253346231,
+        0.26359893095621634,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "milk_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 5,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_tomato_sauce_and_place_it_in_the_basket",
+      "instruction": "pick up the tomato sauce and place it in the basket",
+      "source": "tomato_sauce_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.07,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05000000000000001,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05,
+        -0.030000000000000002,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        0.0088774333277656,
+        0.254650505362227,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 5,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_tomato_sauce_and_place_it_in_the_basket",
+      "instruction": "pick up the tomato sauce and place it in the basket",
+      "source": "tomato_sauce_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.14,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [
+        "chocolate_pudding_1"
+      ],
+      "other_moved_detail": [
+        {
+          "name": "chocolate_pudding_1",
+          "role": "distractor",
+          "displacement_m": 10.0,
+          "left_scene": true
+        }
+      ],
+      "left_scene": [
+        "chocolate_pudding_1"
+      ],
+      "change_class": "source_and_distractor",
+      "clean": false,
+      "source_position_vanilla": [
+        0.05000000000000001,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05,
+        0.040000000000000015,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.012200355451707211,
+        0.2479389624104708,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": [
+        "basket_1"
+      ]
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 5,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_tomato_sauce_and_place_it_in_the_basket",
+      "instruction": "pick up the tomato sauce and place it in the basket",
+      "source": "tomato_sauce_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.21,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [
+        "chocolate_pudding_1"
+      ],
+      "other_moved_detail": [
+        {
+          "name": "chocolate_pudding_1",
+          "role": "distractor",
+          "displacement_m": 10.0,
+          "left_scene": true
+        }
+      ],
+      "left_scene": [
+        "chocolate_pudding_1"
+      ],
+      "change_class": "source_and_distractor",
+      "clean": false,
+      "source_position_vanilla": [
+        0.05000000000000001,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05000000000000001,
+        0.11000000000000001,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.012612529596959078,
+        0.26735455739290687,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": [
+        "basket_1"
+      ]
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 6,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_butter_and_place_it_in_the_basket",
+      "instruction": "pick up the butter and place it in the basket",
+      "source": "butter_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.0716,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12107835404792085,
+        -0.24021813390637647,
+        -0.005000000000000001
+      ],
+      "source_position_perturbed": [
+        -0.11578615708608028,
+        -0.16880001734631309,
+        -0.005000000000000001
+      ],
+      "destination_position": [
+        -0.0036922742828148034,
+        0.2632467757250997,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 6,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_butter_and_place_it_in_the_basket",
+      "instruction": "pick up the butter and place it in the basket",
+      "source": "butter_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.1369,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12107835404792085,
+        -0.24021813390637647,
+        -0.005000000000000001
+      ],
+      "source_position_perturbed": [
+        -0.11666546707661742,
+        -0.1034032352243216,
+        -0.005000000000000001
+      ],
+      "destination_position": [
+        0.011963358386777164,
+        0.24806952043123012,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 6,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_butter_and_place_it_in_the_basket",
+      "instruction": "pick up the butter and place it in the basket",
+      "source": "butter_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.2123,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12107835404792085,
+        -0.24021813390637647,
+        -0.005000000000000001
+      ],
+      "source_position_perturbed": [
+        -0.120010815833864,
+        -0.02792995073361362,
+        -0.005000000000000001
+      ],
+      "destination_position": [
+        -0.00789452951763383,
+        0.248983878198299,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 7,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_milk_and_place_it_in_the_basket",
+      "instruction": "pick up the milk and place it in the basket",
+      "source": "milk_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.0764,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12126259062544056,
+        -0.24270549282921766,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.1184004490427959,
+        -0.1663324442405257,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.006597237732282083,
+        0.2741589425851054,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 7,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_milk_and_place_it_in_the_basket",
+      "instruction": "pick up the milk and place it in the basket",
+      "source": "milk_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.1458,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12126259062544056,
+        -0.24270549282921766,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.11631068575276887,
+        -0.09701707343013634,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.002442531276965738,
+        0.246386568527481,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 7,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_milk_and_place_it_in_the_basket",
+      "instruction": "pick up the milk and place it in the basket",
+      "source": "milk_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.2155,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12126259062544056,
+        -0.24270549282921766,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.1234434238212186,
+        -0.027217775587191434,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        0.009637492561875786,
+        0.24907543214113312,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "cream_cheese_1": 0.05,
+        "floor": 0.05,
+        "milk_1": 0.05,
+        "orange_juice_1": 0.05,
+        "tomato_sauce_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 8,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_chocolate_pudding_and_place_it_in_the_basket",
+      "instruction": "pick up the chocolate pudding and place it in the basket",
+      "source": "chocolate_pudding_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.07,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24000000000000002,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.16999999999999998,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.012543007404091285,
+        0.24625139403877266,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": [
+        "basket_1"
+      ]
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 8,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_chocolate_pudding_and_place_it_in_the_basket",
+      "instruction": "pick up the chocolate pudding and place it in the basket",
+      "source": "chocolate_pudding_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.14,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24000000000000002,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.1,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.012239175028499414,
+        0.2484406944050957,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": [
+        "basket_1"
+      ]
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 8,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_chocolate_pudding_and_place_it_in_the_basket",
+      "instruction": "pick up the chocolate pudding and place it in the basket",
+      "source": "chocolate_pudding_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.21,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        -0.12,
+        -0.24000000000000002,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        -0.12,
+        -0.03,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        0.010087391572916963,
+        0.25413944475109035,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "alphabet_soup_1": 0.05,
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 9,
+      "condition": "y0.1",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_orange_juice_and_place_it_in_the_basket",
+      "instruction": "pick up the orange juice and place it in the basket",
+      "source": "orange_juice_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.1,
+      "source_displacement_m": 0.07,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05000000000000001,
+        -0.030000000000000006,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        0.014934327453901256,
+        0.24957606525737225,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 9,
+      "condition": "y0.2",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_orange_juice_and_place_it_in_the_basket",
+      "instruction": "pick up the orange juice and place it in the basket",
+      "source": "orange_juice_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.2,
+      "source_displacement_m": 0.14,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05,
+        0.040000000000000015,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        0.014375852254448743,
+        0.27099908497133385,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": [
+        "basket_1"
+      ]
+    },
+    {
+      "suite": "libero_object",
+      "task_id": 9,
+      "condition": "y0.3",
+      "seed": 0,
+      "init_state_id": 3,
+      "init_state_ok": true,
+      "error": null,
+      "task_name": "pick_up_the_orange_juice_and_place_it_in_the_basket",
+      "instruction": "pick up the orange juice and place it in the basket",
+      "source": "orange_juice_1",
+      "destination": "basket_1",
+      "requested_axis": "y",
+      "requested_level": 0.3,
+      "source_displacement_m": 0.21,
+      "source_moved": true,
+      "destination_moved": false,
+      "destination_displacement_m": null,
+      "other_moved_objects": [],
+      "other_moved_detail": [],
+      "left_scene": [],
+      "change_class": "clean_source_only",
+      "clean": true,
+      "source_position_vanilla": [
+        0.05,
+        -0.1,
+        0.034999999999999996
+      ],
+      "source_position_perturbed": [
+        0.05000000000000001,
+        0.11000000000000001,
+        0.034999999999999996
+      ],
+      "destination_position": [
+        -0.004971706741272357,
+        0.2546961131557826,
+        0.034999999999999996
+      ],
+      "init_state_sources_match": true,
+      "per_entity_threshold_m": {
+        "basket_1": 0.05,
+        "bbq_sauce_1": 0.05,
+        "butter_1": 0.05,
+        "chocolate_pudding_1": 0.05,
+        "floor": 0.05,
+        "ketchup_1": 0.05,
+        "orange_juice_1": 0.05,
+        "salad_dressing_1": 0.05
+      },
+      "indeterminate_entities": []
+    }
+  ],
+  "summary": {
+    "y0.1": {
+      "tasks": 10,
+      "clean_tasks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "dirty_tasks": [],
+      "failed_tasks": [],
+      "clean_count": 10,
+      "all_clean": true,
+      "source_displacement_m": {
+        "min": 0.067,
+        "max": 0.0764,
+        "mean": 0.071
+      }
+    },
+    "y0.2": {
+      "tasks": 10,
+      "clean_tasks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ],
+      "dirty_tasks": [
+        5
+      ],
+      "failed_tasks": [],
+      "clean_count": 9,
+      "all_clean": false,
+      "source_displacement_m": {
+        "min": 0.1339,
+        "max": 0.1458,
+        "mean": 0.1395
+      }
+    },
+    "y0.3": {
+      "tasks": 10,
+      "clean_tasks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9
+      ],
+      "dirty_tasks": [
+        5
+      ],
+      "failed_tasks": [],
+      "clean_count": 9,
+      "all_clean": false,
+      "source_displacement_m": {
+        "min": 0.21,
+        "max": 0.2157,
+        "mean": 0.212
+      }
+    }
+  },
+  "args": {
+    "suite": "libero_object",
+    "conditions": "y0.1,y0.2,y0.3",
+    "tasks": "0-9",
+    "seed": 0,
+    "init_state_id": 3,
+    "resolution": 64,
+    "out_dir": "/home/hwkim/research/VLA-Spatial-Diagnostics/docs/condition_verification/init_3"
+  }
+}

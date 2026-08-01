@@ -671,6 +671,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--no_fail_fast", dest="fail_fast", action="store_false")
     parser.add_argument("--require_clean_condition", action="store_true",
                         help="abort unless the measured change is a single-role change")
+    parser.add_argument("--skip_existing", action="store_true",
+                        help="skip episodes already sealed with a COMPLETE marker, so an "
+                             "interrupted bulk run can be restarted without re-doing work")
     parser.add_argument("--dry_run", action="store_true",
                         help="resolve, measure the change and report; collect nothing")
     parser.add_argument("--device", default="cuda:0")
@@ -797,6 +800,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 args.output_root, pair.suite, pair.perturbation_name,
                 pair.task_id, seed, episode_index,
             )
+            if args.skip_existing and (final_dir / "COMPLETE").is_file():
+                print(f"-- episode {episode_index} already complete, skipping: {final_dir}")
+                continue
             print(f"\n-- episode {episode_index} (init {episode_init_id}, "
                   f"{context.init_record.source}) -> {final_dir}")
             summaries.append(collect_episode(context, episode_index, final_dir))
