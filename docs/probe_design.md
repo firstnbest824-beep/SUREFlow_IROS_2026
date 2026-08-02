@@ -84,16 +84,34 @@ training samples" is really a few hundred.
 
 ## Label quality gating
 
-Phase labels are a validated heuristic, not ground truth: measured against
-robosuite's own `_check_grasp` over 29 replayed episodes, post_grasp precision is
-**0.856** pooled (1.000 on successful `libero_spatial` episodes, 0.734 on `swap`).
-Every episode now records `sim_check_grasp` per timestep, so:
+Phase labels are a validated heuristic, not ground truth. Measured against
+robosuite's own `_check_grasp` over 29 replayed episodes, the rule finalised at
+commit `01fef2e` scores **precision 0.841, recall 0.928** (F1 0.882), with 2
+single-frame holes inside otherwise correct intervals — down from 79 before the
+release condition was required to coexist with the absence of grasp evidence.
+
+Two things about that precision. First, it is a **lower bound**: `_check_grasp`
+demands contact from *both* finger pads, so an episode carried on the finger
+sides scores our correct labels as false positives — one `libero_spatial`
+episode that demonstrably succeeded registered zero grasp frames. Second, the
+per-condition spread matters more than the pooled figure: `libero_object`
+vanilla 0.964, `libero_spatial` vanilla 0.861, `swap` 0.753. The `swap` arm's
+post-grasp labels are the weakest and should carry the least weight.
+
+Every episode records `sim_check_grasp` per timestep, so:
 
 * P7 (post_grasp, destination target) uses only timesteps where the heuristic phase
   and `sim_check_grasp` **agree**. Disagreements are dropped, not guessed.
 * The dropped fraction is reported per condition. If it is large for a condition,
   that condition's post-grasp probes are not reportable.
 * `uncertain` timesteps are excluded throughout (~11% of steps).
+
+Labels can be recomputed offline at any time: the collector stores every input
+the resolver consumes, and `relabel_phases.py` writes a sidecar stamped with the
+rule's commit rather than touching the original. Verified on collected episodes —
+recomputing the current rule from stored inputs reproduces the collected labels
+on 3428/3428 timesteps, so any future difference is attributable to the rule
+change and not to the recomputation path.
 
 ## Controls that must be run, not optional
 
@@ -109,15 +127,25 @@ Every episode now records `sim_check_grasp` per timestep, so:
 
 ## What this design cannot settle
 
-* **One perturbation magnitude.** The official assets jump from 0.070 m to 0.140 m,
-  and everything above 0.070 m also teleports a distractor out of the scene. With
-  one usable magnitude per axis, "the policy ignores position" cannot be separated
-  from "the policy has a spatial prior that pulls toward the training mean". A
-  magnitude sweep would need custom BDDLs, which is out of scope here — the
-  limitation gets stated, not worked around.
+* ~~**One perturbation magnitude.**~~ **Resolved for the y axis.** The earlier
+  claim that everything above `x0.1`/`y0.1` is contaminated came from checking the
+  x axis and generalising. Measured per (task, condition, init state) over 150
+  pairs, `y0.2` and `y0.3` are `clean_source_only` on 9 of 10 tasks — only
+  `libero_object` task 5 is contaminated, in every init state, and it is excluded
+  (see `task5_exclusion.md`). The main curve therefore has four points on one axis
+  with identical task composition: **0 / ~7 / ~14 / ~21 cm** over tasks
+  0,1,2,3,4,6,7,8,9. `y0.4` (4/10 clean) and `y0.5` (1/10) remain unusable, so the
+  curve stops at 21 cm.
+  The x axis is still single-magnitude: `x0.2` and above do teleport a distractor.
 * **Correlation, not mechanism.** A probe finding position decodable does not show
   the policy could have used it. Causal claims would need intervention
   (activation patching), which is a separate experiment this collection makes
   possible but does not perform.
 * **`libero_spatial swap` is confounded** (`destination_and_distractor`). Its probes
   are reportable only as a confounded arm, never pooled with the clean conditions.
+* **Axes are not interchangeable, and this is not yet settled.** Over the six
+  pilot episodes per axis the mean bias ratio is nearly identical (x 0.762,
+  y 0.760) but the spread is not: ±0.590 against ±0.227, with one x episode biased
+  in the *opposite* direction (−0.396) and three past 1.0. Treat "the bias is
+  direction-invariant" as **provisional** until the axes are matched in sample
+  size; the y curve brings y0.1 to 45 episodes while x0.1 stays at 6.

@@ -66,11 +66,15 @@ Reported per episode, aggregated per condition:
 * the same three for the **vanilla** episode, as the scale calibration for
   "reached it"
 
-The v1 pilot gave along_axis ≈ +0.054 m against a 0.069 m perturbation (78%), with
-11 of 12 episodes positive — but perpendicular error was 0.040–0.055 m, i.e. the
-trajectory is also just worse, not purely translated. Both numbers get reported;
-quoting only the first would overstate the result. **These figures came from the
-unpinned-fixture pilot and must be recomputed on v3.**
+Recomputed on the fixture-pinned pilot v3: bias ratio 0.762 (x0.1) and 0.760
+(y0.1), 6 of 6 episodes each with the old location closer than the object. The
+perpendicular residual is 0.055 / 0.038 m, i.e. the trajectory is also worse, not
+purely translated — both numbers get reported, and quoting only the first would
+overstate the result.
+
+**Provisional.** The per-episode spread is ±0.590 on x against ±0.227 on y, and
+one x episode is biased in the opposite direction. n = 6 per axis is too small to
+claim the bias is direction-invariant.
 
 ## Cost
 
