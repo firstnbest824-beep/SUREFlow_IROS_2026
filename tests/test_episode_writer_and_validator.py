@@ -524,3 +524,77 @@ def test_jitter_allowance_does_not_mask_a_real_perturbation():
     report = detect_changed_entities(vanilla, perturbed, roles, entity_jitter={"soup_1": 0.0396})
     assert report.source_changed
     assert report.change_class == "clean_source_only"
+
+
+# -----------------------------------------------------------------------------
+# probe_control mode: it must equalise the robot and change nothing else
+# -----------------------------------------------------------------------------
+from probe_control_mode import (  # noqa: E402
+    MODE_OFFICIAL,
+    MODE_PROBE_CONTROL,
+    ROBOT_QPOS_DOF,
+    splice_robot_pose,
+)
+
+NQ, NV = 58, 51
+
+
+def _state(robot_val: float, object_val: float, time: float = 1.5) -> np.ndarray:
+    """[time, qpos(58), qvel(51)] with distinguishable robot and object blocks."""
+    state = np.zeros(1 + NQ + NV, dtype=np.float64)
+    state[0] = time
+    state[1:1 + ROBOT_QPOS_DOF] = robot_val
+    state[1 + ROBOT_QPOS_DOF:1 + NQ] = object_val
+    state[1 + NQ:1 + NQ + ROBOT_QPOS_DOF] = robot_val * 10
+    state[1 + NQ + ROBOT_QPOS_DOF:] = object_val * 10
+    return state
+
+
+def test_probe_control_takes_the_robot_from_vanilla():
+    spliced = splice_robot_pose(_state(2.0, 7.0), _state(1.0, 3.0), nq=NQ)
+    assert np.allclose(spliced[1:1 + ROBOT_QPOS_DOF], 1.0), "robot must come from vanilla"
+    assert np.allclose(spliced[1 + NQ:1 + NQ + ROBOT_QPOS_DOF], 10.0), "robot qvel too"
+
+
+def test_probe_control_leaves_the_perturbation_alone():
+    """The whole point: objects keep the perturbed placement."""
+    spliced = splice_robot_pose(_state(2.0, 7.0), _state(1.0, 3.0), nq=NQ)
+    assert np.allclose(spliced[1 + ROBOT_QPOS_DOF:1 + NQ], 7.0), "object qpos must be perturbed"
+    assert np.allclose(spliced[1 + NQ + ROBOT_QPOS_DOF:], 70.0), "object qvel must be perturbed"
+    assert spliced[0] == 1.5, "simulator time comes from the perturbed state"
+
+
+def test_probe_control_does_not_mutate_its_inputs():
+    perturbed, vanilla = _state(2.0, 7.0), _state(1.0, 3.0)
+    before_p, before_v = perturbed.copy(), vanilla.copy()
+    splice_robot_pose(perturbed, vanilla, nq=NQ)
+    assert np.array_equal(perturbed, before_p), "caller's perturbed state must be untouched"
+    assert np.array_equal(vanilla, before_v), "caller's vanilla state must be untouched"
+
+
+def test_probe_control_rejects_mismatched_states():
+    with pytest.raises(ValueError, match="state shapes differ"):
+        splice_robot_pose(_state(2.0, 7.0), np.zeros(10), nq=NQ)
+
+
+def test_official_mode_is_the_default_and_splices_nothing():
+    """Regression: the official pipeline must be unchanged by this feature."""
+    import collect_official_activations as collector
+
+    parser = collector.build_parser()
+    args = parser.parse_args([
+        "--suite", "libero_object", "--task_id", "0",
+        "--condition", "y0.2", "--output_root", "/tmp/unused",
+    ])
+    assert args.evaluation_mode == MODE_OFFICIAL
+
+    source = Path(collector.__file__).read_text(encoding="utf-8")
+    # The splice is reachable only behind the explicit mode check.
+    assert "splice_robot_pose(" in source
+    for line in source.splitlines():
+        if "init_state = splice_robot_pose(" in line:
+            break
+    else:
+        raise AssertionError("splice call not found")
+    guard = f'args.evaluation_mode == MODE_PROBE_CONTROL'
+    assert guard in source, "the splice must be guarded by an explicit mode check"

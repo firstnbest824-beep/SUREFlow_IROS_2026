@@ -1,0 +1,2947 @@
+{
+  "rule_commit": "b4c70fd",
+  "results": [
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 134,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 48,
+        "uncertain": 4,
+        "post_grasp": 82
+      },
+      "phases_after": {
+        "pre_grasp": 46,
+        "uncertain": 4,
+        "post_grasp": 84
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 5,
+      "phases_before": {
+        "pre_grasp": 183,
+        "uncertain": 24,
+        "post_grasp": 13
+      },
+      "phases_after": {
+        "pre_grasp": 179,
+        "uncertain": 24,
+        "post_grasp": 17
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 146,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 64,
+        "uncertain": 1,
+        "post_grasp": 81
+      },
+      "phases_after": {
+        "pre_grasp": 62,
+        "uncertain": 1,
+        "post_grasp": 83
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 130,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 54,
+        "uncertain": 5,
+        "post_grasp": 71
+      },
+      "phases_after": {
+        "pre_grasp": 52,
+        "uncertain": 5,
+        "post_grasp": 73
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 158,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 58,
+        "uncertain": 8,
+        "post_grasp": 92
+      },
+      "phases_after": {
+        "pre_grasp": 56,
+        "uncertain": 8,
+        "post_grasp": 94
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_00/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 194,
+        "uncertain": 3,
+        "post_grasp": 23
+      },
+      "phases_after": {
+        "pre_grasp": 192,
+        "uncertain": 3,
+        "post_grasp": 25
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 133,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 67,
+        "uncertain": 3,
+        "post_grasp": 63
+      },
+      "phases_after": {
+        "pre_grasp": 65,
+        "uncertain": 3,
+        "post_grasp": 65
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 147,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 57,
+        "uncertain": 28,
+        "post_grasp": 62
+      },
+      "phases_after": {
+        "pre_grasp": 55,
+        "uncertain": 28,
+        "post_grasp": 64
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 211,
+        "uncertain": 9
+      },
+      "phases_after": {
+        "pre_grasp": 211,
+        "uncertain": 9
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 164,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 93,
+        "uncertain": 13,
+        "post_grasp": 58
+      },
+      "phases_after": {
+        "pre_grasp": 91,
+        "uncertain": 13,
+        "post_grasp": 60
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_01/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 29,
+      "phases_before": {
+        "pre_grasp": 61,
+        "uncertain": 26,
+        "post_grasp": 133
+      },
+      "phases_after": {
+        "pre_grasp": 52,
+        "uncertain": 7,
+        "post_grasp": 161
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 144,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 69,
+        "uncertain": 10,
+        "post_grasp": 65
+      },
+      "phases_after": {
+        "pre_grasp": 67,
+        "uncertain": 10,
+        "post_grasp": 67
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 99,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 37,
+        "uncertain": 8,
+        "post_grasp": 54
+      },
+      "phases_after": {
+        "pre_grasp": 35,
+        "uncertain": 8,
+        "post_grasp": 56
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 119,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 54,
+        "uncertain": 6,
+        "post_grasp": 59
+      },
+      "phases_after": {
+        "pre_grasp": 52,
+        "uncertain": 6,
+        "post_grasp": 61
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 119,
+      "changed": 2,
+      "phases_before": {
+        "pre_grasp": 46,
+        "uncertain": 17,
+        "post_grasp": 56
+      },
+      "phases_after": {
+        "pre_grasp": 44,
+        "uncertain": 17,
+        "post_grasp": 58
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_02/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 134,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 62,
+        "uncertain": 8,
+        "post_grasp": 64
+      },
+      "phases_after": {
+        "pre_grasp": 62,
+        "uncertain": 8,
+        "post_grasp": 64
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 216,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 133,
+        "uncertain": 29,
+        "post_grasp": 54
+      },
+      "phases_after": {
+        "pre_grasp": 133,
+        "uncertain": 29,
+        "post_grasp": 54
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 87,
+        "uncertain": 133
+      },
+      "phases_after": {
+        "pre_grasp": 87,
+        "uncertain": 133
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 187,
+        "uncertain": 33
+      },
+      "phases_after": {
+        "pre_grasp": 187,
+        "uncertain": 33
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 118,
+        "uncertain": 102
+      },
+      "phases_after": {
+        "pre_grasp": 118,
+        "uncertain": 102
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_03/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 133,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 52,
+        "uncertain": 11,
+        "post_grasp": 70
+      },
+      "phases_after": {
+        "pre_grasp": 52,
+        "uncertain": 11,
+        "post_grasp": 70
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 147,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 58,
+        "uncertain": 15,
+        "post_grasp": 74
+      },
+      "phases_after": {
+        "pre_grasp": 58,
+        "uncertain": 15,
+        "post_grasp": 74
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 148,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 50,
+        "uncertain": 16,
+        "post_grasp": 82
+      },
+      "phases_after": {
+        "pre_grasp": 50,
+        "uncertain": 16,
+        "post_grasp": 82
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 131,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 47,
+        "uncertain": 12,
+        "post_grasp": 72
+      },
+      "phases_after": {
+        "pre_grasp": 47,
+        "uncertain": 12,
+        "post_grasp": 72
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 156,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 56,
+        "uncertain": 16,
+        "post_grasp": 84
+      },
+      "phases_after": {
+        "pre_grasp": 56,
+        "uncertain": 16,
+        "post_grasp": 84
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_04/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 143,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 68,
+        "uncertain": 1,
+        "post_grasp": 74
+      },
+      "phases_after": {
+        "pre_grasp": 68,
+        "uncertain": 1,
+        "post_grasp": 74
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 175,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 60,
+        "uncertain": 4,
+        "post_grasp": 111
+      },
+      "phases_after": {
+        "pre_grasp": 60,
+        "uncertain": 4,
+        "post_grasp": 111
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 179,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 82,
+        "uncertain": 8,
+        "post_grasp": 89
+      },
+      "phases_after": {
+        "pre_grasp": 82,
+        "uncertain": 8,
+        "post_grasp": 89
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 139,
+        "uncertain": 2,
+        "post_grasp": 79
+      },
+      "phases_after": {
+        "pre_grasp": 139,
+        "uncertain": 2,
+        "post_grasp": 79
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_06/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 139,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 49,
+        "uncertain": 7,
+        "post_grasp": 83
+      },
+      "phases_after": {
+        "pre_grasp": 49,
+        "uncertain": 7,
+        "post_grasp": 83
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 125,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 49,
+        "uncertain": 6,
+        "post_grasp": 70
+      },
+      "phases_after": {
+        "pre_grasp": 49,
+        "uncertain": 6,
+        "post_grasp": 70
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 184,
+        "uncertain": 6,
+        "post_grasp": 30
+      },
+      "phases_after": {
+        "pre_grasp": 184,
+        "uncertain": 6,
+        "post_grasp": 30
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 141,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 49,
+        "uncertain": 8,
+        "post_grasp": 84
+      },
+      "phases_after": {
+        "pre_grasp": 49,
+        "uncertain": 8,
+        "post_grasp": 84
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 125,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 53,
+        "uncertain": 5,
+        "post_grasp": 67
+      },
+      "phases_after": {
+        "pre_grasp": 53,
+        "uncertain": 5,
+        "post_grasp": 67
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_07/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 209,
+        "post_grasp": 11
+      },
+      "phases_after": {
+        "pre_grasp": 209,
+        "post_grasp": 11
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 163,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 64,
+        "uncertain": 1,
+        "post_grasp": 98
+      },
+      "phases_after": {
+        "pre_grasp": 64,
+        "uncertain": 1,
+        "post_grasp": 98
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 154,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 54,
+        "uncertain": 16,
+        "post_grasp": 84
+      },
+      "phases_after": {
+        "pre_grasp": 54,
+        "uncertain": 16,
+        "post_grasp": 84
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 166,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 59,
+        "uncertain": 11,
+        "post_grasp": 96
+      },
+      "phases_after": {
+        "pre_grasp": 59,
+        "uncertain": 11,
+        "post_grasp": 96
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 213,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 56,
+        "uncertain": 7,
+        "post_grasp": 150
+      },
+      "phases_after": {
+        "pre_grasp": 56,
+        "uncertain": 7,
+        "post_grasp": 150
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_08/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 199,
+        "uncertain": 21
+      },
+      "phases_after": {
+        "pre_grasp": 199,
+        "uncertain": 21
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 131,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 43,
+        "uncertain": 10,
+        "post_grasp": 78
+      },
+      "phases_after": {
+        "pre_grasp": 43,
+        "uncertain": 10,
+        "post_grasp": 78
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 118,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 46,
+        "uncertain": 10,
+        "post_grasp": 62
+      },
+      "phases_after": {
+        "pre_grasp": 46,
+        "uncertain": 10,
+        "post_grasp": 62
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 182,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 43,
+        "uncertain": 10,
+        "post_grasp": 129
+      },
+      "phases_after": {
+        "pre_grasp": 43,
+        "uncertain": 10,
+        "post_grasp": 129
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 122,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 58,
+        "uncertain": 6,
+        "post_grasp": 58
+      },
+      "phases_after": {
+        "pre_grasp": 58,
+        "uncertain": 6,
+        "post_grasp": 58
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/vanilla/task_09/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 154,
+        "uncertain": 66
+      },
+      "phases_after": {
+        "pre_grasp": 154,
+        "uncertain": 66
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 208,
+        "uncertain": 12
+      },
+      "phases_after": {
+        "pre_grasp": 208,
+        "uncertain": 12
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 169,
+        "uncertain": 51
+      },
+      "phases_after": {
+        "pre_grasp": 169,
+        "uncertain": 51
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 125,
+        "uncertain": 95
+      },
+      "phases_after": {
+        "pre_grasp": 125,
+        "uncertain": 95
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 207,
+        "uncertain": 13
+      },
+      "phases_after": {
+        "pre_grasp": 207,
+        "uncertain": 13
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_00/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 65,
+        "uncertain": 155
+      },
+      "phases_after": {
+        "pre_grasp": 65,
+        "uncertain": 155
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 45,
+        "uncertain": 175
+      },
+      "phases_after": {
+        "pre_grasp": 45,
+        "uncertain": 175
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 125,
+        "uncertain": 95
+      },
+      "phases_after": {
+        "pre_grasp": 125,
+        "uncertain": 95
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 208,
+        "uncertain": 12
+      },
+      "phases_after": {
+        "pre_grasp": 208,
+        "uncertain": 12
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 46,
+        "uncertain": 174
+      },
+      "phases_after": {
+        "pre_grasp": 46,
+        "uncertain": 174
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_01/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 166,
+        "uncertain": 54
+      },
+      "phases_after": {
+        "pre_grasp": 166,
+        "uncertain": 54
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_02/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 192,
+        "uncertain": 28
+      },
+      "phases_after": {
+        "pre_grasp": 192,
+        "uncertain": 28
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 216,
+        "uncertain": 4
+      },
+      "phases_after": {
+        "pre_grasp": 216,
+        "uncertain": 4
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 169,
+        "uncertain": 51
+      },
+      "phases_after": {
+        "pre_grasp": 169,
+        "uncertain": 51
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 174,
+        "uncertain": 46
+      },
+      "phases_after": {
+        "pre_grasp": 174,
+        "uncertain": 46
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 163,
+        "uncertain": 57
+      },
+      "phases_after": {
+        "pre_grasp": 163,
+        "uncertain": 57
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_03/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 202,
+        "uncertain": 18
+      },
+      "phases_after": {
+        "pre_grasp": 202,
+        "uncertain": 18
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 204,
+        "uncertain": 16
+      },
+      "phases_after": {
+        "pre_grasp": 204,
+        "uncertain": 16
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 219,
+        "uncertain": 1
+      },
+      "phases_after": {
+        "pre_grasp": 219,
+        "uncertain": 1
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 207,
+        "uncertain": 13
+      },
+      "phases_after": {
+        "pre_grasp": 207,
+        "uncertain": 13
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_04/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 132,
+        "uncertain": 88
+      },
+      "phases_after": {
+        "pre_grasp": 132,
+        "uncertain": 88
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 202,
+        "uncertain": 18
+      },
+      "phases_after": {
+        "pre_grasp": 202,
+        "uncertain": 18
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 218,
+        "uncertain": 2
+      },
+      "phases_after": {
+        "pre_grasp": 218,
+        "uncertain": 2
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_06/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 177,
+        "uncertain": 43
+      },
+      "phases_after": {
+        "pre_grasp": 177,
+        "uncertain": 43
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 194,
+        "uncertain": 26
+      },
+      "phases_after": {
+        "pre_grasp": 194,
+        "uncertain": 26
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 151,
+        "uncertain": 69
+      },
+      "phases_after": {
+        "pre_grasp": 151,
+        "uncertain": 69
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 197,
+        "uncertain": 23
+      },
+      "phases_after": {
+        "pre_grasp": 197,
+        "uncertain": 23
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 57,
+        "uncertain": 163
+      },
+      "phases_after": {
+        "pre_grasp": 57,
+        "uncertain": 163
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_07/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 212,
+        "uncertain": 8
+      },
+      "phases_after": {
+        "pre_grasp": 212,
+        "uncertain": 8
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 213,
+        "uncertain": 7
+      },
+      "phases_after": {
+        "pre_grasp": 213,
+        "uncertain": 7
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 154,
+        "uncertain": 66
+      },
+      "phases_after": {
+        "pre_grasp": 154,
+        "uncertain": 66
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_08/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 213,
+        "uncertain": 7
+      },
+      "phases_after": {
+        "pre_grasp": 213,
+        "uncertain": 7
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 103,
+        "uncertain": 117
+      },
+      "phases_after": {
+        "pre_grasp": 103,
+        "uncertain": 117
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 159,
+        "uncertain": 61
+      },
+      "phases_after": {
+        "pre_grasp": 159,
+        "uncertain": 61
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 132,
+        "uncertain": 88
+      },
+      "phases_after": {
+        "pre_grasp": 132,
+        "uncertain": 88
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.1/task_09/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_00/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_01/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 212,
+        "uncertain": 8
+      },
+      "phases_after": {
+        "pre_grasp": 212,
+        "uncertain": 8
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_02/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 196,
+        "uncertain": 24
+      },
+      "phases_after": {
+        "pre_grasp": 196,
+        "uncertain": 24
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_03/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_04/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_06/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 118,
+        "uncertain": 102
+      },
+      "phases_after": {
+        "pre_grasp": 118,
+        "uncertain": 102
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_07/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_08/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.2/task_09/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_00/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_01/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_02/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 152,
+        "uncertain": 68
+      },
+      "phases_after": {
+        "pre_grasp": 152,
+        "uncertain": 68
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_03/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_04/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_06/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_07/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_08/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_000",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_000/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_001",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_001/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_002",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_002/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_003",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_003/phase_labels_b4c70fd.jsonl"
+    },
+    {
+      "episode": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_004",
+      "status": "relabelled",
+      "rule_commit": "b4c70fd",
+      "timesteps": 220,
+      "changed": 0,
+      "phases_before": {
+        "pre_grasp": 220
+      },
+      "phases_after": {
+        "pre_grasp": 220
+      },
+      "missing_support_steps": 0,
+      "sidecar": "/home/HDD/hwkim/openvla_activations/ycurve_main/libero_object/y0.3/task_09/seed_000/episode_004/phase_labels_b4c70fd.jsonl"
+    }
+  ]
+}

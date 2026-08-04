@@ -66,6 +66,13 @@ from official_task_pair_resolver import (  # noqa: E402
     seed_everything,
     validate_seed,
 )
+from probe_control_mode import (  # noqa: E402
+    MODE_OFFICIAL,
+    MODE_PROBE_CONTROL,
+    robot_slice_is_valid,
+    splice_robot_pose,
+    vanilla_init_state,
+)
 from probe_hooks import ProbeHookManager, SINGLE_CALL_STAGES  # noqa: E402
 from run_single_vanilla_rollout import (  # noqa: E402
     ACTION_DIM,
@@ -305,6 +312,8 @@ class EpisodeContext:
     provider: SegmentationLabelProvider
     init_state: np.ndarray
     init_record: Any
+    #: Only set in probe_control mode; the robot's DOF are taken from here.
+    vanilla_init_state: Optional[np.ndarray]
     episode_reset_seed: int
     output_root: str
     saved_stages: List[str]
@@ -337,7 +346,15 @@ def collect_episode(context: EpisodeContext, episode_index: int, final_dir: Path
     violations: List[str] = []
 
     seeded_reset(env, context.episode_reset_seed)
-    obs = env.set_init_state(context.init_state)
+    init_state = context.init_state
+    if args.evaluation_mode == MODE_PROBE_CONTROL and context.vanilla_init_state is not None:
+        valid, detail = robot_slice_is_valid(env)
+        if not valid:
+            raise RuntimeError(f"probe_control cannot splice the robot state: {detail}")
+        init_state = splice_robot_pose(
+            init_state, context.vanilla_init_state, nq=int(env.env.sim.model.nq)
+        )
+    obs = env.set_init_state(init_state)
     context.provider.refresh_bindings()
 
     equivalence = verify_segmentation_equivalence(
@@ -637,6 +654,11 @@ def build_manifest(
         "git_commit": git_commit(),
         "torch_version": torch.__version__,
         "segmentation_role": "analysis ground truth only; never a policy input",
+        "evaluation_mode": args.evaluation_mode,
+        "robot_pose_source": (
+            "vanilla init state of the same task and index"
+            if args.evaluation_mode == MODE_PROBE_CONTROL else "this condition's own init state"
+        ),
     }
 
 
@@ -671,6 +693,13 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--no_fail_fast", dest="fail_fast", action="store_false")
     parser.add_argument("--require_clean_condition", action="store_true",
                         help="abort unless the measured change is a single-role change")
+    parser.add_argument("--evaluation_mode", default=MODE_OFFICIAL,
+                        choices=[MODE_OFFICIAL, MODE_PROBE_CONTROL],
+                        help="official (default) reproduces the benchmark exactly. "
+                             "probe_control additionally overwrites the robot's 9 DOF "
+                             "from the vanilla init state of the same task and index, "
+                             "so a matched pair differs only in object placement. It is "
+                             "a control for probe reliability, not an official result.")
     parser.add_argument("--skip_existing", action="store_true",
                         help="skip episodes already sealed with a COMPLETE marker, so an "
                              "interrupted bulk run can be restarted without re-doing work")
@@ -761,6 +790,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 env, height=args.resolution, width=args.resolution
             ),
             init_state=init_state, init_record=init_record,
+            vanilla_init_state=(
+                vanilla_init_state(pair.vanilla_bddl_path, args.init_state_id)
+                if args.evaluation_mode == MODE_PROBE_CONTROL else None
+            ),
             output_root=args.output_root,
             episode_reset_seed=episode_seed(
                 seed, pair.suite, pair.task_id, args.init_state_id
@@ -785,6 +818,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 context.episode_reset_seed = episode_seed(
                     seed, pair.suite, pair.task_id, episode_init_id
                 )
+                if args.evaluation_mode == MODE_PROBE_CONTROL:
+                    context.vanilla_init_state = vanilla_init_state(
+                        pair.vanilla_bddl_path, episode_init_id
+                    )
                 # The change measurement belongs to the init state, not the run.
                 # Measuring once and stamping it into every manifest filed each
                 # episode under a displacement it never visited.
