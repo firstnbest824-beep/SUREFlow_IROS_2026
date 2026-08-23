@@ -26,6 +26,7 @@ for path in (str(_HERE), str(_COMMON)):
 from experiment import initial_metadata, prepare_experiment, write_json  # noqa: E402
 from run_internal_grounding_probe import _load_config, run_single_frame_probe  # noqa: E402
 from task_resolution import resolve_task_condition  # noqa: E402
+from target_pose_selection import scan_all_target_pose_candidates, select_distinct_target_poses  # noqa: E402
 
 
 REQUIRED_METRIC_FIELDS = (
@@ -34,25 +35,27 @@ REQUIRED_METRIC_FIELDS = (
 )
 
 
-def _validate_repeat_samples(samples: Any) -> List[Dict[str, int]]:
-    if not isinstance(samples, list) or len(samples) < 2:
-        raise ValueError("repeat_samples must contain at least two seed/init_state pairs")
-    normalized = []
-    for index, sample in enumerate(samples):
-        if not isinstance(sample, dict) or set(sample) != {"seed", "init_state_id"}:
-            raise ValueError(f"repeat_samples[{index}] must contain exactly seed and init_state_id")
-        normalized.append({"seed": int(sample["seed"]), "init_state_id": int(sample["init_state_id"])})
-    if len({sample["seed"] for sample in normalized}) < 2:
-        raise ValueError("repeat_samples must include multiple seeds")
-    if len({sample["init_state_id"] for sample in normalized}) < 2:
-        raise ValueError("repeat_samples must include multiple init_state_id values")
-    if len({(sample["seed"], sample["init_state_id"]) for sample in normalized}) != len(normalized):
-        raise ValueError("repeat_samples contains duplicate seed/init_state pairs")
-    return normalized
+def _select_repeat_samples(config: Dict[str, Any]) -> tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
+    settings = dict(config.get("target_pose_selection") or {})
+    seeds = settings.get("seeds")
+    if not isinstance(seeds, list) or len(seeds) < 2:
+        raise ValueError("target_pose_selection.seeds must contain at least two seeds")
+    max_samples = int(settings.get("max_samples", len(seeds)))
+    if max_samples > len(seeds):
+        raise ValueError("target_pose_selection.max_samples cannot exceed supplied seeds")
+    candidates = scan_all_target_pose_candidates(config)
+    selected = select_distinct_target_poses(candidates, float(settings.get("tolerance_m", 1e-6)), max_samples)
+    if len(selected) < max_samples:
+        raise RuntimeError("target pose scan found fewer distinct target positions than requested samples")
+    samples = [
+        {"seed": int(seeds[index]), "init_state_id": candidate.init_state_id, "target_xyz": list(candidate.target_xyz)}
+        for index, candidate in enumerate(selected)
+    ]
+    return samples, [candidate.to_dict() for candidate in candidates]
 
 
 def metric_rows_from_artifacts(
-    sample_id: str, seed: int, init_state_id: int,
+    sample_id: str, seed: int, init_state_id: int, target_xyz: List[float],
     prediction: Dict[str, Any], evaluation: Dict[str, Any],
 ) -> List[Dict[str, Any]]:
     """Join already-completed prediction and EVAL ONLY records into CSV rows."""
@@ -68,6 +71,7 @@ def metric_rows_from_artifacts(
             "sample_id": sample_id,
             "seed": int(seed),
             "init_state_id": int(init_state_id),
+            "target_x": float(target_xyz[0]), "target_y": float(target_xyz[1]), "target_z": float(target_xyz[2]),
             "layer": stage,
             "gt_centroid_u": None if metrics["gt_centroid_uv"] is None else metrics["gt_centroid_uv"][0],
             "gt_centroid_v": None if metrics["gt_centroid_uv"] is None else metrics["gt_centroid_uv"][1],
@@ -120,13 +124,14 @@ def run_repeated_probe(
     output_dir: str | None = None,
 ) -> Dict[str, Any]:
     """Run configured sample pairs through the existing single-snapshot path."""
-    samples = _validate_repeat_samples(config.get("repeat_samples"))
+    samples, all_candidates = _select_repeat_samples(config)
     parent_layout = prepare_experiment(config, source_config_path, experiment_id, output_dir)
     resolution = resolve_task_condition(config["suite"], int(config["task_id"]), config["condition"])
     parent_metadata = initial_metadata(config, source_config_path, "delegated-per-sample", config.get("dtype", "bfloat16"), resolution.to_dict())
     parent_metadata.update({
         "runner_scope": "repeat of single-frame probes; each action is recorded and never applied",
         "sample_pairs": samples,
+        "all_target_pose_candidates": all_candidates,
         "single_probe_reused": "run_internal_grounding_probe.run_single_frame_probe",
     })
     write_json(parent_layout.metadata_path, parent_metadata)
@@ -139,7 +144,7 @@ def run_repeated_probe(
         if sample_dir.exists():
             raise FileExistsError(f"refusing to overwrite sample directory: {sample_dir}")
         sample_config = dict(config)
-        sample_config.pop("repeat_samples", None)
+        sample_config.pop("target_pose_selection", None)
         sample_config["method"] = "internal_grounding_probe"
         sample_config.update(sample)
         sample_summary = run_single_frame_probe(
@@ -147,10 +152,15 @@ def run_repeated_probe(
         )
         prediction = json.loads((sample_dir / "eval" / "prediction.json").read_text(encoding="utf-8"))
         evaluation = json.loads((sample_dir / "eval" / "evaluation.json").read_text(encoding="utf-8"))
-        rows.extend(metric_rows_from_artifacts(sample_id, sample["seed"], sample["init_state_id"], prediction, evaluation))
+        rows.extend(metric_rows_from_artifacts(
+            sample_id, sample["seed"], sample["init_state_id"], sample["target_xyz"], prediction, evaluation,
+        ))
         sample_summaries.append(sample_summary)
 
     aggregate = aggregate_metric_rows(rows)
+    write_json(parent_layout.eval_dir / "target_pose_scan.json", {
+        "target_object": config["evaluation_target_object"], "candidates": all_candidates, "selected_samples": samples,
+    })
     _write_rows_csv(parent_layout.eval_dir / "repeat_sample_metrics.csv", rows)
     write_json(parent_layout.eval_dir / "repeat_sample_metrics.json", {"rows": rows})
     write_json(parent_layout.eval_dir / "repeat_layer_summary.json", {"layers": aggregate})

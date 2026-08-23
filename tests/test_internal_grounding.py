@@ -25,7 +25,10 @@ from openvla_model import (  # noqa: E402
 )
 from perception.target_localizer import extract_source_phrase as detector_extract_source_phrase  # noqa: E402
 from run_internal_grounding_repeat import (  # noqa: E402
-    _validate_repeat_samples, aggregate_metric_rows, metric_rows_from_artifacts,
+    aggregate_metric_rows, metric_rows_from_artifacts,
+)
+from target_pose_selection import (  # noqa: E402
+    TargetPoseCandidate, TargetPoseSelectionError, select_distinct_target_poses,
 )
 
 
@@ -211,8 +214,8 @@ def test_repeat_metrics_preserve_each_sample_and_aggregate_per_layer():
         "gt_overlapping_patch_rank": 5, "top1_patch_hit": False,
         "top_k_patch_hit": True, "valid": True,
     }}}
-    rows = metric_rows_from_artifacts("sample_a", 0, 0, prediction, evaluation_a)
-    rows += metric_rows_from_artifacts("sample_b", 1, 1, prediction, evaluation_b)
+    rows = metric_rows_from_artifacts("sample_a", 0, 0, [0.1, 0.2, 0.3], prediction, evaluation_a)
+    rows += metric_rows_from_artifacts("sample_b", 1, 1, [0.2, 0.2, 0.3], prediction, evaluation_b)
     summary = aggregate_metric_rows(rows)["llm_late"]
     assert [(row["seed"], row["init_state_id"]) for row in rows] == [(0, 0), (1, 1)]
     assert summary["pixel_l2_mean"] == pytest.approx(2.0)
@@ -220,6 +223,16 @@ def test_repeat_metrics_preserve_each_sample_and_aggregate_per_layer():
     assert summary["gt_overlapping_patch_rank_mean"] == pytest.approx(3.0)
     assert summary["top1_success_rate"] == pytest.approx(0.5)
     assert summary["top5_success_rate"] == pytest.approx(1.0)
-    assert _validate_repeat_samples([{"seed": 0, "init_state_id": 0}, {"seed": 1, "init_state_id": 1}])
-    with pytest.raises(ValueError, match="multiple seeds"):
-        _validate_repeat_samples([{"seed": 0, "init_state_id": 0}, {"seed": 0, "init_state_id": 1}])
+    assert rows[0]["target_x"] == pytest.approx(0.1)
+
+
+def test_target_pose_selector_keeps_only_distinct_target_xyz_and_fails_without_variation():
+    candidates = [
+        TargetPoseCandidate(0, (0.1, 0.2, 0.3)),
+        TargetPoseCandidate(1, (0.1 + 1e-8, 0.2, 0.3)),
+        TargetPoseCandidate(2, (0.2, 0.2, 0.3)),
+    ]
+    selected = select_distinct_target_poses(candidates, tolerance_m=1e-6, max_samples=2)
+    assert [candidate.init_state_id for candidate in selected] == [0, 2]
+    with pytest.raises(TargetPoseSelectionError, match="variation is absent"):
+        select_distinct_target_poses(candidates[:2], tolerance_m=1e-6, max_samples=2)
