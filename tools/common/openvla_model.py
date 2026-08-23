@@ -27,6 +27,7 @@ import json
 import math
 import os
 import sys
+from dataclasses import dataclass
 from typing import Any, Dict, List, Tuple
 
 import numpy as np
@@ -46,6 +47,67 @@ OPENVLA_V01_SYSTEM_PROMPT = (
     "A chat between a curious user and an artificial intelligence assistant. "
     "The assistant gives helpful, detailed, and polite answers to the user's questions."
 )
+
+
+@dataclass(frozen=True)
+class PreparedOpenVLAInputs:
+    """The exact prompt and tensors handed to ``vla.predict_action``.
+
+    Keeping this as a shared preparation result prevents an analysis script
+    from reconstructing a prompt or processor input with subtly different
+    special-token handling than the action path.
+    """
+
+    prompt: str
+    input_ids: torch.Tensor
+    attention_mask: torch.Tensor
+    pixel_values: torch.Tensor
+    model_input_image: np.ndarray
+
+
+def build_openvla_prompt(base_vla_name: str, task_label: str) -> str:
+    """Build the exact task prompt used by the action-generation helper."""
+    if "openvla-v01" in base_vla_name:
+        return (
+            f"{OPENVLA_V01_SYSTEM_PROMPT} USER: What action should the robot take to "
+            f"{task_label.lower()}? ASSISTANT:"
+        )
+    return f"In: What action should the robot take to {task_label.lower()}?\nOut:"
+
+
+def prepare_openvla_inputs(
+    vla: Any,
+    processor: Any,
+    base_vla_name: str,
+    obs: Dict[str, Any],
+    task_label: str,
+    center_crop: bool,
+    dtype: torch.dtype,
+) -> PreparedOpenVLAInputs:
+    """Prepare the exact image, prompt, and tensors for ``predict_action``."""
+    image = Image.fromarray(obs["full_image"]).convert("RGB")
+    if center_crop:
+        image = apply_center_crop(image)
+    prompt = build_openvla_prompt(base_vla_name, task_label)
+    inputs = processor(prompt, image)
+    input_ids = inputs["input_ids"].to(vla.device)
+    attention_mask = inputs["attention_mask"].to(vla.device)
+    pixel_values = inputs["pixel_values"].to(vla.device, dtype=dtype)
+
+    # The OpenVLA wrapper appends this empty token when absent. Append it here
+    # together with its attention entry so the causal-mask sequence is valid.
+    if input_ids[0, -1].item() != 29871:
+        empty_token = torch.tensor([[29871]], dtype=input_ids.dtype, device=vla.device)
+        attend_token = torch.tensor([[1]], dtype=attention_mask.dtype, device=vla.device)
+        input_ids = torch.cat([input_ids, empty_token], dim=1)
+        attention_mask = torch.cat([attention_mask, attend_token], dim=1)
+    return PreparedOpenVLAInputs(
+        prompt=prompt,
+        input_ids=input_ids,
+        attention_mask=attention_mask,
+        pixel_values=pixel_values,
+        model_input_image=np.array(image),
+    )
 
 
 # -----------------------------------------------------------------------------
@@ -127,6 +189,7 @@ def get_vla_action(
     center_crop: bool,
     dtype: torch.dtype,
     return_model_input_image: bool = False,
+    return_prepared_inputs: bool = False,
 ):
     """Generate a single action from OpenVLA given a preprocessed observation.
 
@@ -134,41 +197,23 @@ def get_vla_action(
     processor is returned alongside the action, so spatial labels can be checked
     against the image the model actually sees.
     """
-    image = Image.fromarray(obs["full_image"]).convert("RGB")
-    if center_crop:
-        image = apply_center_crop(image)
-
-    if "openvla-v01" in base_vla_name:
-        prompt = (
-            f"{OPENVLA_V01_SYSTEM_PROMPT} USER: What action should the robot take to "
-            f"{task_label.lower()}? ASSISTANT:"
-        )
-    else:
-        prompt = f"In: What action should the robot take to {task_label.lower()}?\nOut:"
-
-    # The OpenVLA `predict_action` wrapper appends an empty token (id 29871) to
-    # `input_ids` if it is not already the last token, but it does not update the
-    # `attention_mask`. With transformers 4.41.2 this creates a length mismatch in
-    # the language model's causal mask. We pre-append the token to both tensors.
-    inputs = processor(prompt, image)
-    input_ids = inputs["input_ids"].to(vla.device)
-    attention_mask = inputs["attention_mask"].to(vla.device)
-    pixel_values = inputs["pixel_values"].to(vla.device, dtype=dtype)
-    if input_ids[0, -1].item() != 29871:
-        empty_token = torch.tensor([[29871]], dtype=input_ids.dtype, device=vla.device)
-        attend_token = torch.tensor([[1]], dtype=attention_mask.dtype, device=vla.device)
-        input_ids = torch.cat([input_ids, empty_token], dim=1)
-        attention_mask = torch.cat([attention_mask, attend_token], dim=1)
-
+    prepared = prepare_openvla_inputs(
+        vla=vla, processor=processor, base_vla_name=base_vla_name, obs=obs,
+        task_label=task_label, center_crop=center_crop, dtype=dtype,
+    )
     action = vla.predict_action(
-        input_ids=input_ids,
-        attention_mask=attention_mask,
-        pixel_values=pixel_values,
+        input_ids=prepared.input_ids,
+        attention_mask=prepared.attention_mask,
+        pixel_values=prepared.pixel_values,
         unnorm_key=unnorm_key,
         do_sample=False,
     )
+    if return_model_input_image and return_prepared_inputs:
+        return action, prepared.model_input_image, prepared
     if return_model_input_image:
-        return action, np.array(image)
+        return action, prepared.model_input_image
+    if return_prepared_inputs:
+        return action, prepared
     return action
 
 

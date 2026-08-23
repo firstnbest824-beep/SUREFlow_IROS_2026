@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-import re
 from dataclasses import asdict, dataclass
 from typing import Any, Dict, Tuple
 
 import numpy as np
+
+from instruction_target import InstructionTargetError, extract_source_phrase
 
 
 class VisionLocalizationError(RuntimeError):
@@ -23,26 +24,6 @@ class LocalizationResult:
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
-
-
-def extract_source_phrase(instruction: str) -> str:
-    """Extract the picked source noun phrase, not the placement destination.
-
-    The initial POC supports LIBERO's ``pick up X and place it in Y`` wording.
-    It intentionally fails closed for unrelated instructions rather than
-    guessing a destination or a simulator entity name.
-    """
-    match = re.match(
-        r"^\s*(?:pick up|pick|grab)\s+(?:the\s+)?(.+?)\s+and\s+(?:place|put)\s+it\s+(?:in|on|into|onto)\s+.+\s*$",
-        instruction,
-        flags=re.IGNORECASE,
-    )
-    if match is None:
-        raise VisionLocalizationError(
-            "unsupported instruction for source extraction; expected 'pick up X and place it in/on Y': "
-            f"{instruction!r}"
-        )
-    return match.group(1).strip()
 
 
 class GroundingDinoTargetLocalizer:
@@ -86,7 +67,10 @@ class GroundingDinoTargetLocalizer:
         """Ground the source phrase in RGB; does not accept depth or environment data."""
         import torch
 
-        target_phrase = extract_source_phrase(instruction)
+        try:
+            target_phrase = extract_source_phrase(instruction)
+        except InstructionTargetError as exc:
+            raise VisionLocalizationError(str(exc)) from exc
         inputs = self.processor(images=np.asarray(rgb), text=target_phrase + ".", return_tensors="pt")
         inputs = {key: value.to(self.device) for key, value in inputs.items()}
         with torch.no_grad():

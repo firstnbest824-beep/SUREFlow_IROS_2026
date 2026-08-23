@@ -23,6 +23,14 @@ see `tools/common/README.md` for that contract.
   approach. It moves only to a configured target object's live simulator
   waypoint, then permanently hands off to vanilla OpenVLA for all grasp and
   local manipulation. It has no training path or trainable parameters.
+- Experimental probe (not executed by this repository change): a one-frame
+  **zero-shot hidden-state similarity grounding map** for frozen OpenVLA. It
+  asks whether a shifted instruction-relevant source has a recoverable 16x16
+  location readout before asking whether the robot action is correct. Its
+  prediction input is only OpenVLA RGB, instruction, and prompt-prefill hidden
+  representations. Simulator segmentation is strictly evaluation-only, read
+  after prediction; Grounding DINO, depth, 3-D XYZ, IK, rollouts, and training
+  are not part of this probe.
 - Primary model under test: `openvla/openvla-7b-finetuned-libero-spatial`
   (same checkpoint the diagnostics line uses — see
   `tools/common/checkpoints.py`).
@@ -59,6 +67,21 @@ see `tools/common/README.md` for that contract.
   and opens the Panda gripper (`-1`). At 5 cm from that waypoint it latches
   one-way to OpenVLA; it never returns to geometric control, so grasp, fine
   alignment, lifting, and placement remain unchanged vanilla behavior.
+
+  The future single-frame internal probe has a runnable example config but is
+  intentionally not run as part of implementation or tests:
+
+      python tools/openvla/run_internal_grounding_probe.py \
+          --config tools/action_generalization/configs/internal_grounding_probe_libero_object_y0.1.yaml
+
+  It performs only standard dummy stabilisation and one `get_vla_action()`
+  call. The action is saved as a diagnostic but is never passed to
+  `env.step()`. It resolves the visual slice from the measured projector output
+  and prefill sequence length, resolves the source phrase span with tokenizer
+  offsets (or a unique token-id fallback), and scores visual patch hidden states
+  against the target text hidden state with cosine similarity. This is not an
+  attention map and does not imply visual tokens can attend causally to later
+  text. The output is a patch-center-quantized 2-D readout.
 
   The default result root is fixed at
   `/home/user/4TB/hwkim/action_generalization/`. The default experiment id is
