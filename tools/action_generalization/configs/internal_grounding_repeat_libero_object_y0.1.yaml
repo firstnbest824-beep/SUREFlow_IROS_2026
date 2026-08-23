@@ -1,0 +1,30 @@
+# Two small, distinct single-frame samples. No action is ever applied.
+method: internal_grounding_repeat
+suite: libero_object
+task_id: 0
+condition: y0.1
+seed: 0
+init_state_id: 0
+
+checkpoint:
+  model_id: openvla/openvla-7b-finetuned-libero-object
+  revision: 287d6cfdf12d07b1449505f66d9bf3550257e9b3
+  unnorm_key: libero_object
+
+resolution: 256
+resize_size: 224
+center_crop: true
+num_steps_wait: 10
+attn_implementation: eager
+dtype: bfloat16
+gpu: 1
+evaluation_target_object: alphabet_soup_1
+min_mask_pixels: 10
+readout_stages: [llm_early, llm_middle, llm_late]
+top_k: 5
+
+repeat_samples:
+  - seed: 0
+    init_state_id: 0
+  - seed: 1
+    init_state_id: 1

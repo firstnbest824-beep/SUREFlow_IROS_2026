@@ -24,6 +24,9 @@ from openvla_model import (  # noqa: E402
     build_openvla_prompt, get_vla_action, prepare_openvla_inputs, tensor_to_numpy_for_artifact,
 )
 from perception.target_localizer import extract_source_phrase as detector_extract_source_phrase  # noqa: E402
+from run_internal_grounding_repeat import (  # noqa: E402
+    _validate_repeat_samples, aggregate_metric_rows, metric_rows_from_artifacts,
+)
 
 
 class _Tokenizer:
@@ -194,3 +197,29 @@ def test_tensor_artifact_conversion_handles_bfloat16_and_preserves_integer_dtype
     serialized_ids = tensor_to_numpy_for_artifact(ids)
     assert serialized_ids.dtype == np.int64
     assert np.array_equal(serialized_ids, [[1, 29871]])
+
+
+def test_repeat_metrics_preserve_each_sample_and_aggregate_per_layer():
+    prediction = {"stages": {"llm_late": {"predicted_uv_model_input": [91.0, 35.0]}}}
+    evaluation_a = {"stages": {"llm_late": {
+        "gt_centroid_uv": [90.0, 34.0], "pixel_l2_error": 1.0,
+        "gt_overlapping_patch_rank": 1, "top1_patch_hit": True,
+        "top_k_patch_hit": True, "valid": True,
+    }}}
+    evaluation_b = {"stages": {"llm_late": {
+        "gt_centroid_uv": [100.0, 50.0], "pixel_l2_error": 3.0,
+        "gt_overlapping_patch_rank": 5, "top1_patch_hit": False,
+        "top_k_patch_hit": True, "valid": True,
+    }}}
+    rows = metric_rows_from_artifacts("sample_a", 0, 0, prediction, evaluation_a)
+    rows += metric_rows_from_artifacts("sample_b", 1, 1, prediction, evaluation_b)
+    summary = aggregate_metric_rows(rows)["llm_late"]
+    assert [(row["seed"], row["init_state_id"]) for row in rows] == [(0, 0), (1, 1)]
+    assert summary["pixel_l2_mean"] == pytest.approx(2.0)
+    assert summary["pixel_l2_std"] == pytest.approx(1.0)
+    assert summary["gt_overlapping_patch_rank_mean"] == pytest.approx(3.0)
+    assert summary["top1_success_rate"] == pytest.approx(0.5)
+    assert summary["top5_success_rate"] == pytest.approx(1.0)
+    assert _validate_repeat_samples([{"seed": 0, "init_state_id": 0}, {"seed": 1, "init_state_id": 1}])
+    with pytest.raises(ValueError, match="multiple seeds"):
+        _validate_repeat_samples([{"seed": 0, "init_state_id": 0}, {"seed": 0, "init_state_id": 1}])
