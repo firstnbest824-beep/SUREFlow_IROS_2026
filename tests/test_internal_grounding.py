@@ -20,7 +20,9 @@ from internal_grounding import (  # noqa: E402
     patch_index_to_uv, resolve_multimodal_layout,
 )
 from internal_grounding_evaluation import evaluate_grounding_prediction  # noqa: E402
-from openvla_model import build_openvla_prompt, get_vla_action, prepare_openvla_inputs  # noqa: E402
+from openvla_model import (  # noqa: E402
+    build_openvla_prompt, get_vla_action, prepare_openvla_inputs, tensor_to_numpy_for_artifact,
+)
 from perception.target_localizer import extract_source_phrase as detector_extract_source_phrase  # noqa: E402
 
 
@@ -180,3 +182,15 @@ def test_openvla_prompt_preparation_refactor_preserves_action_path():
     assert np.array_equal(image, obs["full_image"])
     assert returned.prompt == expected_prompt
     assert vla.kwargs["input_ids"].tolist() == [[42, 43, 29871]]
+
+
+def test_tensor_artifact_conversion_handles_bfloat16_and_preserves_integer_dtype():
+    floating = torch.tensor([1.25, -2.5], dtype=torch.bfloat16)
+    serialized_floating = tensor_to_numpy_for_artifact(floating)
+    assert serialized_floating.dtype == np.float32
+    assert np.allclose(serialized_floating, [1.25, -2.5])
+
+    ids = torch.tensor([[1, 29871]], dtype=torch.int64)
+    serialized_ids = tensor_to_numpy_for_artifact(ids)
+    assert serialized_ids.dtype == np.int64
+    assert np.array_equal(serialized_ids, [[1, 29871]])

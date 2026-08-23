@@ -39,6 +39,7 @@ from instruction_target import extract_source_phrase  # noqa: E402
 from libero_env import configure_robosuite_logging  # noqa: E402
 from openvla_model import (  # noqa: E402
     ACTION_DIM, get_libero_dummy_action, get_vla_action, load_openvla, quat2axisangle,
+    tensor_to_numpy_for_artifact,
 )
 from seeding import episode_seed, seed_everything  # noqa: E402
 from task_resolution import resolve_task_condition  # noqa: E402
@@ -164,9 +165,9 @@ def run_single_frame_probe(config: Dict[str, Any], source_config_path: str, expe
         }
 
         Image.fromarray(model_input_rgb).save(layout.eval_dir / "model_input_rgb.png")
-        np.save(layout.eval_dir / "prepared_input_ids.npy", prepared.input_ids.detach().cpu().numpy())
-        np.save(layout.eval_dir / "prepared_attention_mask.npy", prepared.attention_mask.detach().cpu().numpy())
-        np.save(layout.eval_dir / "prepared_pixel_values.npy", prepared.pixel_values.detach().cpu().numpy())
+        np.save(layout.eval_dir / "prepared_input_ids.npy", tensor_to_numpy_for_artifact(prepared.input_ids))
+        np.save(layout.eval_dir / "prepared_attention_mask.npy", tensor_to_numpy_for_artifact(prepared.attention_mask))
+        np.save(layout.eval_dir / "prepared_pixel_values.npy", tensor_to_numpy_for_artifact(prepared.pixel_values))
         (layout.eval_dir / "prompt.txt").write_text(prepared.prompt + "\n", encoding="utf-8")
         write_json(layout.eval_dir / "token_layout.json", token_layout.to_dict())
         write_json(layout.eval_dir / "target_token_span.json", target_span.to_dict())

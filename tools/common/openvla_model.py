@@ -110,6 +110,22 @@ def prepare_openvla_inputs(
     )
 
 
+def tensor_to_numpy_for_artifact(tensor: torch.Tensor) -> np.ndarray:
+    """Safely serialize a Torch tensor without changing inference precision.
+
+    NumPy has no native ``bfloat16`` dtype.  Floating tensors are therefore
+    converted to float32 *only after inference*, while integer and boolean
+    tensors retain their original dtype.  CUDA tensors are always copied to CPU
+    before conversion.
+    """
+    if not isinstance(tensor, torch.Tensor):
+        raise TypeError(f"expected torch.Tensor, got {type(tensor).__name__}")
+    detached = tensor.detach()
+    if detached.is_floating_point():
+        detached = detached.to(torch.float32)
+    return detached.cpu().numpy()
+
+
 # -----------------------------------------------------------------------------
 # Action helpers (official OpenVLA convention)
 # -----------------------------------------------------------------------------
