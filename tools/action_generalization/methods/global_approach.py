@@ -20,12 +20,15 @@ class GlobalApproachMethod(ActionGeneralizationMethod):
     """Closed-loop geometric approach controller with a one-way OpenVLA latch."""
 
     name = "global_approach"
+    target_source = "oracle"
     trainable_parameter_count = 0
 
     def setup(self, config: Dict[str, Any]) -> None:
         settings = dict(config.get("global_approach") or {})
-        if settings.get("oracle_target") is not True:
-            raise ValueError("global_approach v1 requires global_approach.oracle_target: true")
+        if settings.get("target_source", "oracle") != self.target_source:
+            raise ValueError(
+                f"{self.name} requires global_approach.target_source: {self.target_source!r}"
+            )
         if settings.get("one_way_switch") is not True:
             raise ValueError("global_approach v1 requires one_way_switch: true")
         target_object = settings.get("target_object")
@@ -118,6 +121,7 @@ class GlobalApproachMethod(ActionGeneralizationMethod):
         timestep = int(kwargs["timestep"])
         target, eef, waypoint, distance, target_distance = self._diagnostics(env, raw_observation)
         base = {
+            "target_source": self.target_source,
             "target_object": self.target_object,
             "target_position_xyz": target.tolist(),
             "approach_waypoint_xyz": waypoint.tolist(),

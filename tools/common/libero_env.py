@@ -67,7 +67,7 @@ def configure_robosuite_logging(log_path: str | os.PathLike | None = None) -> st
     return _ROBO_LOG_REDIRECT
 
 
-def make_env(bddl_path: str, resolution: int) -> Any:
+def make_env(bddl_path: str, resolution: int, camera_depths: bool = False) -> Any:
     """Build the env the official evaluation builds, from an explicit BDDL path.
 
     ``env.seed(0)`` mirrors ``get_libero_env``. Re-seeding it with the run seed
@@ -77,7 +77,8 @@ def make_env(bddl_path: str, resolution: int) -> Any:
     from libero.libero.envs import OffScreenRenderEnv
 
     env = OffScreenRenderEnv(
-        bddl_file_name=str(bddl_path), camera_heights=resolution, camera_widths=resolution
+        bddl_file_name=str(bddl_path), camera_heights=resolution,
+        camera_widths=resolution, camera_depths=camera_depths,
     )
     env.seed(0)
     return env
