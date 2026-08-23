@@ -24,6 +24,7 @@ for path in (str(_HERE), str(_COMMON)):
         sys.path.insert(0, path)
 
 from experiment import initial_metadata, prepare_experiment, write_json  # noqa: E402
+from libero_env import configure_robosuite_logging  # noqa: E402
 from run_internal_grounding_probe import _load_config, run_single_frame_probe  # noqa: E402
 from task_resolution import resolve_task_condition  # noqa: E402
 from target_pose_selection import scan_all_target_pose_candidates, select_distinct_target_poses  # noqa: E402
@@ -124,8 +125,11 @@ def run_repeated_probe(
     output_dir: str | None = None,
 ) -> Dict[str, Any]:
     """Run configured sample pairs through the existing single-snapshot path."""
-    samples, all_candidates = _select_repeat_samples(config)
     parent_layout = prepare_experiment(config, source_config_path, experiment_id, output_dir)
+    # The pose scan constructs a simulator before any delegated single runner,
+    # so install the same robosuite fixed-log redirect used by that runner.
+    configure_robosuite_logging(parent_layout.logs_dir / "robosuite.log")
+    samples, all_candidates = _select_repeat_samples(config)
     resolution = resolve_task_condition(config["suite"], int(config["task_id"]), config["condition"])
     parent_metadata = initial_metadata(config, source_config_path, "delegated-per-sample", config.get("dtype", "bfloat16"), resolution.to_dict())
     parent_metadata.update({
