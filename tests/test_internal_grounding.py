@@ -30,6 +30,7 @@ from run_internal_grounding_repeat import (  # noqa: E402
 from target_pose_selection import (  # noqa: E402
     TargetPoseCandidate, TargetPoseSelectionError, select_distinct_target_poses,
 )
+from run_internal_grounding_swap import _gt_position_range  # noqa: E402
 
 
 class _Tokenizer:
@@ -135,6 +136,9 @@ def test_evaluation_metrics_are_post_prediction_and_patch_aligned():
     metrics = evaluate_grounding_prediction(result, mask, min_mask_pixels=10)
     assert metrics.valid and metrics.top1_patch_hit and metrics.top_k_patch_hit
     assert metrics.gt_overlapping_patch_rank == 1
+    assert metrics.gt_centroid_patch_index == 0
+    assert metrics.gt_overlapping_patch_indices == (0,)
+    assert metrics.predicted_to_gt_patch_distance == pytest.approx(0.0)
     # GT pixel centers are integer-indexed (mean 6.5), whereas the patch
     # representative is the continuous cell center (7.0).
     assert metrics.pixel_l2_error == pytest.approx(np.sqrt(0.5))
@@ -203,7 +207,9 @@ def test_tensor_artifact_conversion_handles_bfloat16_and_preserves_integer_dtype
 
 
 def test_repeat_metrics_preserve_each_sample_and_aggregate_per_layer():
-    prediction = {"stages": {"llm_late": {"predicted_uv_model_input": [91.0, 35.0]}}}
+    prediction = {"stages": {"llm_late": {
+        "predicted_patch_index": 0, "predicted_uv_model_input": [91.0, 35.0],
+    }}}
     evaluation_a = {"stages": {"llm_late": {
         "gt_centroid_uv": [90.0, 34.0], "pixel_l2_error": 1.0,
         "gt_overlapping_patch_rank": 1, "top1_patch_hit": True,
@@ -224,6 +230,7 @@ def test_repeat_metrics_preserve_each_sample_and_aggregate_per_layer():
     assert summary["top1_success_rate"] == pytest.approx(0.5)
     assert summary["top5_success_rate"] == pytest.approx(1.0)
     assert rows[0]["target_x"] == pytest.approx(0.1)
+    assert rows[0]["grounding_argmax_visual_token_index"] == 0
 
 
 def test_target_pose_selector_keeps_only_distinct_target_xyz_and_fails_without_variation():
@@ -236,3 +243,14 @@ def test_target_pose_selector_keeps_only_distinct_target_xyz_and_fails_without_v
     assert [candidate.init_state_id for candidate in selected] == [0, 2]
     with pytest.raises(TargetPoseSelectionError, match="variation is absent"):
         select_distinct_target_poses(candidates[:2], tolerance_m=1e-6, max_samples=2)
+
+
+def test_swap_gt_position_range_requires_multiple_distinct_valid_centroids():
+    rows = [
+        {"sample_id": "swap_0", "valid": True, "gt_centroid_u": 10.0, "gt_centroid_v": 20.0},
+        {"sample_id": "swap_0", "valid": True, "gt_centroid_u": 10.0, "gt_centroid_v": 20.0},
+        {"sample_id": "swap_1", "valid": True, "gt_centroid_u": 30.0, "gt_centroid_v": 40.0},
+    ]
+    assert _gt_position_range(rows) == {"u": [10.0, 30.0], "v": [20.0, 40.0]}
+    with pytest.raises(RuntimeError, match="no GT centroid variation"):
+        _gt_position_range([rows[0], {**rows[0], "sample_id": "swap_same"}])

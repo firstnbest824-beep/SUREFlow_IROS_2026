@@ -27,6 +27,9 @@ class GroundingEvaluation:
     top1_patch_hit: Optional[bool]
     top_k_patch_hit: Optional[bool]
     gt_overlapping_patch_rank: Optional[int]
+    gt_centroid_patch_index: Optional[int]
+    gt_overlapping_patch_indices: Optional[Tuple[int, ...]]
+    predicted_to_gt_patch_distance: Optional[float]
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -39,6 +42,12 @@ class GroundingEvaluation:
             "top1_patch_hit": self.top1_patch_hit,
             "top_k_patch_hit": self.top_k_patch_hit,
             "gt_overlapping_patch_rank": self.gt_overlapping_patch_rank,
+            "gt_centroid_patch_index": self.gt_centroid_patch_index,
+            "gt_overlapping_patch_indices": (
+                None if self.gt_overlapping_patch_indices is None
+                else list(self.gt_overlapping_patch_indices)
+            ),
+            "predicted_to_gt_patch_distance": self.predicted_to_gt_patch_distance,
             "ground_truth_note": "EVAL ONLY: simulator segmentation is not provided to prediction code",
         }
 
@@ -68,19 +77,31 @@ def evaluate_grounding_prediction(
     mask = np.asarray(gt_mask, dtype=bool)
     count = int(mask.sum())
     if count < int(min_mask_pixels):
-        return GroundingEvaluation(False, "GT target mask absent or below min_mask_pixels", count, None, None, None, None, None, None)
+        return GroundingEvaluation(
+            False, "GT target mask absent or below min_mask_pixels", count,
+            None, None, None, None, None, None, None, None, None,
+        )
     ys, xs = np.where(mask)
     centroid = (float(xs.mean()), float(ys.mean()))
     bbox = (float(xs.min()), float(ys.min()), float(xs.max()), float(ys.max()))
     hits = patch_mask_overlap(mask, prediction.num_visual_tokens)
+    overlap_indices = np.flatnonzero(hits)
     ranked = np.argsort(-prediction.scores, kind="stable")
     overlap_ranks = np.where(hits[ranked])[0]
     best_rank = None if overlap_ranks.size == 0 else int(overlap_ranks[0] + 1)
     predicted_uv = np.asarray(prediction.predicted_uv_model_input, dtype=np.float64)
+    rows, cols = prediction.patch_grid_shape
+    centroid_col = min(cols - 1, int(np.floor(centroid[0] * cols / mask.shape[1])))
+    centroid_row = min(rows - 1, int(np.floor(centroid[1] * rows / mask.shape[0])))
+    centroid_patch = centroid_row * cols + centroid_col
+    predicted_row, predicted_col = divmod(prediction.predicted_patch_index, cols)
+    overlap_rc = np.asarray([divmod(int(index), cols) for index in overlap_indices], dtype=np.float64)
+    patch_distance = float(np.linalg.norm(overlap_rc - [predicted_row, predicted_col], axis=1).min())
     return GroundingEvaluation(
         True, None, count, centroid, bbox, float(np.linalg.norm(predicted_uv - np.asarray(centroid))),
         bool(hits[prediction.predicted_patch_index]),
         bool(hits[list(prediction.top_k_patch_indices)].any()), best_rank,
+        int(centroid_patch), tuple(int(index) for index in overlap_indices), patch_distance,
     )
 
 

@@ -15,7 +15,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 import numpy as np
 import torch
@@ -42,7 +42,7 @@ from openvla_model import (  # noqa: E402
     tensor_to_numpy_for_artifact,
 )
 from seeding import episode_seed, seed_everything  # noqa: E402
-from task_resolution import resolve_task_condition  # noqa: E402
+from task_resolution import ResolvedTaskCondition, resolve_task_condition  # noqa: E402
 from internal_grounding import (  # noqa: E402
     compute_cosine_grounding_map, locate_target_token_span, resolve_multimodal_layout,
 )
@@ -88,14 +88,19 @@ def _require_prefill(hooks: ProbeHookManager, stage: str) -> np.ndarray:
     return np.asarray(tensor, dtype=np.float32)
 
 
-def run_single_frame_probe(config: Dict[str, Any], source_config_path: str, experiment_id: str | None = None, output_dir: str | None = None) -> Dict[str, Any]:
+def run_single_frame_probe(
+    config: Dict[str, Any], source_config_path: str, experiment_id: str | None = None,
+    output_dir: str | None = None, resolution_override: Optional[ResolvedTaskCondition] = None,
+) -> Dict[str, Any]:
     """Run one frozen OpenVLA prefill/generation call; never step its action."""
     checkpoint = _assert_checkpoint(config)
     os.environ["CUDA_VISIBLE_DEVICES"] = str(int(config.get("gpu", 0)))
     seed_everything(int(config["seed"]))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     dtype = DTYPE_MAP[config.get("dtype", "bfloat16")]
-    resolution = resolve_task_condition(config["suite"], int(config["task_id"]), config["condition"])
+    resolution = resolution_override or resolve_task_condition(
+        config["suite"], int(config["task_id"]), config["condition"],
+    )
     layout = prepare_experiment(config, source_config_path, experiment_id, output_dir)
     configure_robosuite_logging(layout.logs_dir / "robosuite.log")
     metadata = initial_metadata(config, source_config_path, str(device), str(config.get("dtype", "bfloat16")), resolution.to_dict())

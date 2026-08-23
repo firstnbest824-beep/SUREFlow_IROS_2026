@@ -57,7 +57,7 @@ def _select_repeat_samples(config: Dict[str, Any]) -> tuple[List[Dict[str, Any]]
 
 def metric_rows_from_artifacts(
     sample_id: str, seed: int, init_state_id: int, target_xyz: List[float],
-    prediction: Dict[str, Any], evaluation: Dict[str, Any],
+    prediction: Dict[str, Any], evaluation: Dict[str, Any], target_phrase: str | None = None,
 ) -> List[Dict[str, Any]]:
     """Join already-completed prediction and EVAL ONLY records into CSV rows."""
     rows: List[Dict[str, Any]] = []
@@ -72,12 +72,19 @@ def metric_rows_from_artifacts(
             "sample_id": sample_id,
             "seed": int(seed),
             "init_state_id": int(init_state_id),
-            "target_x": float(target_xyz[0]), "target_y": float(target_xyz[1]), "target_z": float(target_xyz[2]),
+            "target_phrase": target_phrase,
+            "target_x": None if target_xyz[0] is None else float(target_xyz[0]),
+            "target_y": None if target_xyz[1] is None else float(target_xyz[1]),
+            "target_z": None if target_xyz[2] is None else float(target_xyz[2]),
             "layer": stage,
             "gt_centroid_u": None if metrics["gt_centroid_uv"] is None else metrics["gt_centroid_uv"][0],
             "gt_centroid_v": None if metrics["gt_centroid_uv"] is None else metrics["gt_centroid_uv"][1],
+            "gt_centroid_patch_index": metrics.get("gt_centroid_patch_index"),
+            "gt_overlapping_patch_indices": json.dumps(metrics.get("gt_overlapping_patch_indices")),
+            "grounding_argmax_visual_token_index": predicted["predicted_patch_index"],
             "predicted_u": predicted["predicted_uv_model_input"][0],
             "predicted_v": predicted["predicted_uv_model_input"][1],
+            "predicted_to_gt_patch_distance": metrics.get("predicted_to_gt_patch_distance"),
             "pixel_l2_error": metrics["pixel_l2_error"],
             "gt_overlapping_patch_rank": metrics["gt_overlapping_patch_rank"],
             "top1_patch_hit": metrics["top1_patch_hit"],

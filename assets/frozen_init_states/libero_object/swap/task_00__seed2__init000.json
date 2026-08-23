@@ -1,0 +1,10 @@
+{
+  "suite": "libero_object",
+  "condition": "swap",
+  "task_id": 0,
+  "task_name": "pick_up_the_alphabet_soup_and_place_it_in_the_basket",
+  "seed": 2,
+  "init_state_id": 0,
+  "sha256": "1e3c6759138e517fe091a6ec25338e35f9723f40737b59c59354f005a2731fb8",
+  "state_dim": 110
+}
