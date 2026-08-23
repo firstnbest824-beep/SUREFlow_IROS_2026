@@ -43,8 +43,22 @@ see `tools/common/README.md` for that contract.
   reproduction.
 
       python tools/action_generalization/eval.py \
-          --config tools/action_generalization/configs/baseline.yaml \
-          --output_dir <run>/eval/libero_spatial/vanilla
+          --config tools/action_generalization/configs/baseline.yaml
+
+  The default result root is fixed at
+  `/home/user/4TB/hwkim/action_generalization/`. The default experiment id is
+  `YYYYMMDD_baseline_<suite>_<condition>_seed<N>`, and each run contains
+  `config.yaml`, `metadata.json`, `logs/`, `checkpoints/`, `eval/`, and
+  `summary.json`. An explicit `--output_dir` outside that root is allowed only
+  as an intentional override and emits a warning. An explicit `--gpu` override
+  is captured in the run's effective `config.yaml` and `metadata.json`.
+
+  The Phase 4 smoke below verifies that a non-vanilla condition selects and
+  constructs the shipped LIBERO-PRO BDDL without loading a model:
+
+      python tools/action_generalization/eval.py \
+          --config tools/action_generalization/configs/libero_object_y0.1_smoke.yaml \
+          --smoke_bddl_resolution
 
 ## Shared modules
 
@@ -59,6 +73,20 @@ see `tools/common/README.md` for that contract.
   already-collected data — see the comment at the top of that file.
 - `evaluation/`, `utils/` — placeholders for future evaluation-metric and
   utility code. Empty (just `__init__.py`) in this phase.
+
+## Reproducibility and test command
+
+- `tools/common/seeding.py` seeds Python `random`, NumPy, PyTorch, and all
+  available CUDA devices before a run; the per-reset fixture seed is separately
+  derived by `episode_seed`.
+- Future training must retain only `best` and `last` checkpoints. The Phase 4
+  baseline does not train and creates no checkpoint files.
+- Run the full regression suite from the existing environment with:
+
+      /home/hwkim/micromamba/envs/vla-spatial-diagnostics/bin/python -m pytest tests/
+
+  `tests/conftest.py` supplies writable Numba and Matplotlib cache locations;
+  no test changes diagnostic assertions or redirects application behavior.
 
 ## Important
 

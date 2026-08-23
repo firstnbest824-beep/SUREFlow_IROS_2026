@@ -1,0 +1,27 @@
+# Phase 4 wiring-only smoke configuration. Run with --smoke_bddl_resolution;
+# it must not be used for a performance or training experiment.
+method: none
+
+suite: libero_object
+task_id: 0
+init_state_id: 0
+seed: 0
+condition: y0.1
+
+checkpoint:
+  model_id: openvla/openvla-7b-finetuned-libero-object
+  revision: 287d6cfdf12d07b1449505f66d9bf3550257e9b3
+  unnorm_key: libero_object
+
+resolution: 256
+resize_size: 224
+center_crop: true
+num_steps_wait: 10
+max_steps: 220
+attn_implementation: eager
+dtype: bfloat16
+gpu: 0
+
+checkpoint_policy:
+  retain: [best, last]
+  save_every_step: false
