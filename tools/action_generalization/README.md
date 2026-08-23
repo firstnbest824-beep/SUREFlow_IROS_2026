@@ -19,9 +19,10 @@ see `tools/common/README.md` for that contract.
 
 ## Scope
 
-- Candidate methods (none chosen yet, none implemented in this phase):
-  action representation, action head design, flow matching, chunking, and
-  eventually Mamba/SSM sequence models.
+- Implemented intervention: a task-scoped, parameter-free oracle global
+  approach. It moves only to a configured target object's live simulator
+  waypoint, then permanently hands off to vanilla OpenVLA for all grasp and
+  local manipulation. It has no training path or trainable parameters.
 - Primary model under test: `openvla/openvla-7b-finetuned-libero-spatial`
   (same checkpoint the diagnostics line uses — see
   `tools/common/checkpoints.py`).
@@ -45,6 +46,20 @@ see `tools/common/README.md` for that contract.
       python tools/action_generalization/eval.py \
           --config tools/action_generalization/configs/baseline.yaml
 
+  The first intervention uses the same rollout entry point:
+
+      python tools/action_generalization/eval.py \
+          --config tools/action_generalization/configs/global_approach_v1.yaml
+
+  `global_approach_v1.yaml` is deliberately limited to `libero_object` task 0
+  (`alphabet_soup_1`) under `y0.1`.  Its target coordinate comes from the live
+  perturbed simulator after reset and initial-state restore, never from a
+  hard-coded training coordinate. The controller commands a closed-loop OSC
+  delta translation to `target + [0, 0, 0.12]`, holds orientation (zero delta)
+  and opens the Panda gripper (`-1`). At 5 cm from that waypoint it latches
+  one-way to OpenVLA; it never returns to geometric control, so grasp, fine
+  alignment, lifting, and placement remain unchanged vanilla behavior.
+
   The default result root is fixed at
   `/home/user/4TB/hwkim/action_generalization/`. The default experiment id is
   `YYYYMMDD_baseline_<suite>_<condition>_seed<N>`, and each run contains
@@ -65,7 +80,10 @@ see `tools/common/README.md` for that contract.
 - `methods/base.py` — `ActionGeneralizationMethod`, the abstract interface a
   method implementation subclasses (`predict_action(observation, task_label,
   ...) -> action or None`, where `None` means "defer to the base policy").
-  `NoOverrideMethod` is the only concrete subclass in this phase.
+  `NoOverrideMethod` is the baseline implementation. `global_approach.py`
+  contains only controller state, runtime-object lookup, waypoint geometry,
+  bounded translation and latch logic; it does not create shared diagnostic
+  dependencies or modify OpenVLA.
 - `configs/baseline.yaml` — the vanilla, no-method baseline config: checkpoint
   id/revision (via `tools/common/checkpoints.py`), task suite/id, init state
   id, seed, and max steps. Matches an existing diagnostics-line reference
@@ -90,9 +108,10 @@ see `tools/common/README.md` for that contract.
 
 ## Important
 
-- No Phase 5 method (action-head redesign, flow matching, chunking,
-  Mamba/SSM) is implemented anywhere in this directory yet. `methods/base.py`
-  is an interface only.
+- No learned Phase 5 method (action-head redesign, flow matching, chunking,
+  Mamba/SSM, diffusion, RL) is implemented. The global approach is a
+  parameter-free geometric intervention and `train.py` remains intentionally
+  unable to train any method.
 - Do not modify `tools/openvla/`, `SUREFlow/`, `configs/`, `dataloader/`,
   `run.py`, or `tools/dry_run_*.py` from this line.
 - Do not create a new conda env; use the existing

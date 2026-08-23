@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Run a vanilla OpenVLA baseline or verify LIBERO-PRO BDDL wiring.
-
-This is deliberately an evaluation-only Phase 4 entry point. The only
-available method is ``none`` / ``NoOverrideMethod``; it delegates every action
-to the pinned base OpenVLA policy. No action-generalization intervention or
-training logic belongs here.
-"""
+"""Run the vanilla baseline or the parameter-free global-approach intervention."""
 
 from __future__ import annotations
 
@@ -31,6 +25,7 @@ if _COMMON_DIR not in sys.path:
     sys.path.insert(0, _COMMON_DIR)
 
 from methods.base import ActionGeneralizationMethod, NoOverrideMethod  # noqa: E402
+from methods.global_approach import GlobalApproachMethod  # noqa: E402
 from checkpoints import get_checkpoint  # noqa: E402
 from experiment import ExperimentLayout, initial_metadata, prepare_experiment, write_json  # noqa: E402
 from image_transform import get_libero_image  # noqa: E402
@@ -49,7 +44,11 @@ from seeding import episode_seed, seed_everything  # noqa: E402
 from task_resolution import ResolvedTaskCondition, resolve_task_condition  # noqa: E402
 
 
-METHOD_REGISTRY: Dict[str, Type[ActionGeneralizationMethod]] = {"none": NoOverrideMethod}
+METHOD_REGISTRY: Dict[str, Type[ActionGeneralizationMethod]] = {
+    "none": NoOverrideMethod,
+    "baseline": NoOverrideMethod,
+    "global_approach": GlobalApproachMethod,
+}
 DTYPE_MAP = {"bfloat16": torch.bfloat16, "float16": torch.float16, "float32": torch.float32}
 
 
@@ -65,7 +64,7 @@ def resolve_method(method_name: str) -> Type[ActionGeneralizationMethod]:
     if method_name not in METHOD_REGISTRY:
         raise NotImplementedError(
             f"method {method_name!r} is not implemented for evaluation. "
-            f"Registered eval methods: {sorted(METHOD_REGISTRY)}. Only 'none' exists until Phase 5."
+            f"Registered eval methods: {sorted(METHOD_REGISTRY)}."
         )
     return METHOD_REGISTRY[method_name]
 
@@ -106,9 +105,8 @@ def _checkpoint_from_config(config: Dict[str, Any]) -> Dict[str, str]:
 def _prepare_run(
     config: Dict[str, Any], source_config_path: str, experiment_id: Optional[str], output_dir: Optional[str],
 ) -> tuple[ExperimentLayout, ResolvedTaskCondition, Dict[str, Any], torch.device, torch.dtype]:
-    if config.get("method", "none") != "none":
-        raise NotImplementedError("only the Phase 4 vanilla baseline (method: none) is available")
     config = dict(config)
+    resolve_method(str(config.get("method", "none")))
     config["checkpoint"] = _checkpoint_from_config(config)
     gpu = int(config.get("gpu", 0))
     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu)
@@ -170,7 +168,7 @@ def run_rollout(
     config: Dict[str, Any], source_config_path: str, experiment_id: Optional[str] = None,
     output_dir: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """Run the no-method OpenVLA baseline and write the required artifacts."""
+    """Run baseline or global approach through the shared rollout orchestration."""
     layout, resolution, config, device, dtype = _prepare_run(config, source_config_path, experiment_id, output_dir)
     metadata = json.loads(layout.metadata_path.read_text(encoding="utf-8"))
     checkpoint = config["checkpoint"]
@@ -229,6 +227,7 @@ def run_rollout(
         obs = env.set_init_state(init_state)
         for _ in range(num_steps_wait):
             obs, _, _, _ = env.step(get_libero_dummy_action())
+        method.begin_episode(env=env, raw_observation=obs, task_label=resolution.instruction)
 
         for timestep in range(max_steps):
             img = get_libero_image(obs, resize_size)
@@ -246,18 +245,30 @@ def run_rollout(
                     "proprio": proprio.tolist(),
                 }
             step_start = time.time()
-            if method.predict_action(observation, resolution.instruction) is not None:
-                raise RuntimeError("Phase 4 baseline must not override the base OpenVLA action")
-            action_model = np.asarray(get_vla_action(
-                vla=vla, processor=processor, base_vla_name=checkpoint["model_id"], obs=observation,
-                task_label=resolution.instruction, unnorm_key=checkpoint["unnorm_key"],
-                center_crop=center_crop, dtype=dtype,
-            ), dtype=np.float64)
+            override = method.predict_action(
+                observation, resolution.instruction, env=env, raw_observation=obs, timestep=timestep,
+            )
+            method_diagnostics = dict(getattr(method, "last_diagnostics", {}))
+            action_model: Optional[np.ndarray] = None
+            if override is None:
+                action_model = np.asarray(get_vla_action(
+                    vla=vla, processor=processor, base_vla_name=checkpoint["model_id"], obs=observation,
+                    task_label=resolution.instruction, unnorm_key=checkpoint["unnorm_key"],
+                    center_crop=center_crop, dtype=dtype,
+                ), dtype=np.float64)
+                if not np.isfinite(action_model).all():
+                    raise RuntimeError(f"non-finite OpenVLA action at step {timestep}: {action_model}")
+                raw_actions.append(action_model.copy())
+                action_applied = invert_gripper_action(normalize_gripper_action(action_model.copy(), binarize=True))
+                action_source = "base_policy"
+            else:
+                action_applied = np.asarray(override, dtype=np.float64)
+                if action_applied.shape != (ACTION_DIM,) or not np.isfinite(action_applied).all():
+                    raise RuntimeError(f"invalid geometry action at step {timestep}: {action_applied}")
+                if np.any(action_applied < -1.0) or np.any(action_applied > 1.0):
+                    raise RuntimeError(f"geometry action is outside LIBERO normalized range at step {timestep}")
+                action_source = "global_approach"
             latency_ms = (time.time() - step_start) * 1000.0
-            if not np.isfinite(action_model).all():
-                raise RuntimeError(f"non-finite action at step {timestep}: {action_model}")
-            raw_actions.append(action_model.copy())
-            action_applied = invert_gripper_action(normalize_gripper_action(action_model.copy(), binarize=True))
             final_actions.append(action_applied.copy())
             obs, _, done, info = env.step(action_applied.tolist())
             if isinstance(info, dict) and "success" in info:
@@ -266,8 +277,16 @@ def run_rollout(
                 checker = getattr(env, "check_success", None)
                 success_flag = bool(checker()) if callable(checker) else None
             per_step_records.append({
-                "timestep": timestep, "action_source": "base_policy", "action_model": raw_actions[-1].tolist(),
-                "action_applied": final_actions[-1].tolist(), "latency_ms": latency_ms, "success": success_flag,
+                "timestep": timestep,
+                "controller_mode": method_diagnostics.get("controller_mode", "openvla"),
+                "action_source": action_source,
+                "raw_openvla_action": None if action_model is None else action_model.tolist(),
+                "final_executed_action": action_applied.tolist(),
+                "action_model": None if action_model is None else action_model.tolist(),
+                "action_applied": action_applied.tolist(),
+                "latency_ms": latency_ms,
+                "success": success_flag,
+                **method_diagnostics,
             })
             if timestep == 0 or timestep % 20 == 0:
                 print(f"  step {timestep:3d}/{max_steps}: latency={latency_ms:.1f}ms success={success_flag}")
@@ -284,6 +303,7 @@ def run_rollout(
         metadata["success"] = bool(success_flag)
         metadata["termination_reason"] = termination_reason
         metadata["action_statistics"] = {"raw": _action_statistics(raw_actions), "applied": _action_statistics(final_actions)}
+        metadata["method_summary"] = method.episode_summary()
         write_json(layout.metadata_path, metadata)
 
     if raw_actions:
@@ -295,15 +315,18 @@ def run_rollout(
             handle.write(json.dumps(record) + "\n")
     with open(layout.eval_dir / "actions.csv", "w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
-        writer.writerow(["step"] + [f"raw_a{i}" for i in range(ACTION_DIM)] + [f"final_a{i}" for i in range(ACTION_DIM)] + ["success"])
+        writer.writerow(["step", "controller_mode"] + [f"raw_a{i}" for i in range(ACTION_DIM)] + [f"final_a{i}" for i in range(ACTION_DIM)] + ["success"])
         for index, record in enumerate(per_step_records):
-            writer.writerow([index] + record["action_model"] + record["action_applied"] + [record["success"]])
+            raw = record["raw_openvla_action"] or [""] * ACTION_DIM
+            writer.writerow([index, record["controller_mode"]] + raw + record["final_executed_action"] + [record["success"]])
     summary = {
         "experiment_dir": str(layout.directory), "success": metadata["success"],
         "num_timesteps": metadata["num_timesteps"], "termination_reason": termination_reason,
         "action_statistics": metadata["action_statistics"], "requested_condition": resolution.requested_condition,
         "requested_bddl_path": resolution.requested_bddl_path, "resolved_bddl_path": resolution.resolved_bddl_path,
         "actual_env_bddl_path": metadata["actual_env_bddl_path"],
+        "method": config.get("method", "none"),
+        "method_summary": metadata["method_summary"],
     }
     write_json(layout.summary_path, summary)
     print(f"[*] Rollout complete: {metadata['num_timesteps']} steps, success={metadata['success']}")
@@ -311,8 +334,8 @@ def run_rollout(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the Phase 4 OpenVLA vanilla baseline")
-    parser.add_argument("--config", required=True, help="Baseline YAML config")
+    parser = argparse.ArgumentParser(description="Run baseline or global-approach OpenVLA evaluation")
+    parser.add_argument("--config", required=True, help="Evaluation YAML config")
     parser.add_argument("--experiment_id", help="Optional experiment directory name")
     parser.add_argument("--output_dir", help="Explicit override; paths outside the required root emit a warning")
     parser.add_argument("--gpu", type=int, help="Explicit GPU override recorded in the effective config snapshot")

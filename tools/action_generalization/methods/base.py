@@ -1,10 +1,9 @@
 """Abstract interface a future action-generalization method implements.
 
-This is a skeleton only: no method (action-head redesign, flow matching,
-chunking, Mamba/SSM, ...) is implemented here or anywhere in this phase. The
-point of this file is to give ``train.py`` / ``eval.py`` one code path that
-both the Phase 4 vanilla baseline and every future method run through, so the
-baseline is never special-cased.
+This interface deliberately stays small so a non-learning intervention can
+share the Phase 4 rollout path with the vanilla baseline.  Implementations
+must not import from ``tools/openvla``; they receive an environment and the
+current raw observation from the orchestration layer when that is necessary.
 
 A method implementation lives under ``tools/action_generalization/methods/``
 and subclasses ``ActionGeneralizationMethod``. ``predict_action`` is the only
@@ -45,6 +44,14 @@ class ActionGeneralizationMethod(ABC):
         """
         return None
 
+    def begin_episode(self, **kwargs: Any) -> None:
+        """Receive the live environment after reset / initial-state restore."""
+        return None
+
+    def episode_summary(self) -> Dict[str, Any]:
+        """Return JSON-safe method-specific episode facts for metadata."""
+        return {}
+
     @abstractmethod
     def predict_action(
         self,
@@ -60,7 +67,10 @@ class ActionGeneralizationMethod(ABC):
         (proprioceptive vector). Returning ``None`` means "this method has no
         override for this step, run the base OpenVLA policy instead" -- the
         mechanism the Phase 4 vanilla baseline uses so it goes through this
-        same interface without a separate no-method code path.
+        same interface without a separate no-method code path.  An override is
+        an *already normalized, directly executable* LIBERO action.  Thus the
+        eval loop only applies OpenVLA's gripper conversion when this method
+        returns ``None``.
         """
         raise NotImplementedError
 
