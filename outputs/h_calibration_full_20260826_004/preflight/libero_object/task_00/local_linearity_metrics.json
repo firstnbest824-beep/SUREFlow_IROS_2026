@@ -1,0 +1,284 @@
+{
+  "cross_h_J_cal_raw_difference": [
+    {
+      "central_column_difference": {
+        "x": null,
+        "y": null
+      },
+      "h_meter": 0.01,
+      "next_h_meter": 0.02
+    },
+    {
+      "central_column_difference": {
+        "x": null,
+        "y": null
+      },
+      "h_meter": 0.02,
+      "next_h_meter": 0.04
+    },
+    {
+      "central_column_difference": {
+        "x": null,
+        "y": null
+      },
+      "h_meter": 0.04,
+      "next_h_meter": 0.08
+    },
+    {
+      "central_column_difference": {
+        "x": null,
+        "y": null
+      },
+      "h_meter": 0.08,
+      "next_h_meter": 0.16
+    },
+    {
+      "central_column_difference": {
+        "x": null,
+        "y": null
+      },
+      "h_meter": 0.16,
+      "next_h_meter": 0.32
+    }
+  ],
+  "directional_slope_consistency": [
+    {
+      "available": true,
+      "axis": "x",
+      "h_meter": 0.01,
+      "plus_minus_slope_difference": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "available": false,
+      "axis": "y",
+      "h_meter": 0.01,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "x",
+      "h_meter": 0.02,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "y",
+      "h_meter": 0.02,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "x",
+      "h_meter": 0.04,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "y",
+      "h_meter": 0.04,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "x",
+      "h_meter": 0.08,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "y",
+      "h_meter": 0.08,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "x",
+      "h_meter": 0.16,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "y",
+      "h_meter": 0.16,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "x",
+      "h_meter": 0.32,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": false,
+      "axis": "y",
+      "h_meter": 0.32,
+      "plus_minus_slope_difference": null
+    }
+  ],
+  "scaling_consistency": [
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+x",
+      "h_meter": 0.01,
+      "residual_vector": null,
+      "two_h_meter": 0.02
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-x",
+      "h_meter": 0.01,
+      "residual_vector": null,
+      "two_h_meter": 0.02
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+y",
+      "h_meter": 0.01,
+      "residual_vector": null,
+      "two_h_meter": 0.02
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-y",
+      "h_meter": 0.01,
+      "residual_vector": null,
+      "two_h_meter": 0.02
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+x",
+      "h_meter": 0.02,
+      "residual_vector": null,
+      "two_h_meter": 0.04
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-x",
+      "h_meter": 0.02,
+      "residual_vector": null,
+      "two_h_meter": 0.04
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+y",
+      "h_meter": 0.02,
+      "residual_vector": null,
+      "two_h_meter": 0.04
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-y",
+      "h_meter": 0.02,
+      "residual_vector": null,
+      "two_h_meter": 0.04
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+x",
+      "h_meter": 0.04,
+      "residual_vector": null,
+      "two_h_meter": 0.08
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-x",
+      "h_meter": 0.04,
+      "residual_vector": null,
+      "two_h_meter": 0.08
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+y",
+      "h_meter": 0.04,
+      "residual_vector": null,
+      "two_h_meter": 0.08
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-y",
+      "h_meter": 0.04,
+      "residual_vector": null,
+      "two_h_meter": 0.08
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+x",
+      "h_meter": 0.08,
+      "residual_vector": null,
+      "two_h_meter": 0.16
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-x",
+      "h_meter": 0.08,
+      "residual_vector": null,
+      "two_h_meter": 0.16
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+y",
+      "h_meter": 0.08,
+      "residual_vector": null,
+      "two_h_meter": 0.16
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-y",
+      "h_meter": 0.08,
+      "residual_vector": null,
+      "two_h_meter": 0.16
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+x",
+      "h_meter": 0.16,
+      "residual_vector": null,
+      "two_h_meter": 0.32
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-x",
+      "h_meter": 0.16,
+      "residual_vector": null,
+      "two_h_meter": 0.32
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "+y",
+      "h_meter": 0.16,
+      "residual_vector": null,
+      "two_h_meter": 0.32
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-y",
+      "h_meter": 0.16,
+      "residual_vector": null,
+      "two_h_meter": 0.32
+    }
+  ]
+}

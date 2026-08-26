@@ -1,0 +1,33 @@
+{
+  "collector_log": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_object/task_02/collector.log",
+  "command": [
+    "/home/hwkim/micromamba/envs/vla-spatial-diagnostics/bin/python",
+    "/home/hwkim/research/VLA-Spatial-Diagnostics/tools/openvla/run_h_calibration.py",
+    "--suite",
+    "libero_object",
+    "--task-id",
+    "2",
+    "--init-state-id",
+    "0",
+    "--seed",
+    "0",
+    "--gpu",
+    "2",
+    "--h-meters",
+    "0.01,0.02,0.04,0.08,0.16,0.32",
+    "--directions",
+    "+x,-x,+y,-y",
+    "--output-dir",
+    "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_object/task_02"
+  ],
+  "directory": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_object/task_02",
+  "finished_at": "2026-08-25T18:34:18.059556+00:00",
+  "gpu": 2,
+  "preflight": false,
+  "returncode": 0,
+  "started_at": "2026-08-25T18:33:20.735246+00:00",
+  "state": "complete",
+  "suite": "libero_object",
+  "task_id": 2,
+  "task_name": "pick_up_the_salad_dressing_and_place_it_in_the_basket"
+}

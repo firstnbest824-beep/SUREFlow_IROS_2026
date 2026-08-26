@@ -1,0 +1,26 @@
+Expected `transformers==4.40.1` and `tokenizers==0.19.1` but got `transformers==4.41.2` and `tokenizers==0.19.1`; there might be inference-time regressions due to dependency changes. If in doubt, pleaseuse the above versions.
+[info] Applying task order index 0 (permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) for benchmark 'libero_spatial' (10 tasks).
+[*] Loading processor from openvla/openvla-7b-finetuned-libero-spatial @ 962318cec55ac10993ff0f5f43eda9a270b4c873
+[*] Loading model from openvla/openvla-7b-finetuned-libero-spatial @ 962318cec55ac10993ff0f5f43eda9a270b4c873 (dtype=torch.bfloat16, attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:00,  5.64it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:00<00:00,  6.81it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:00<00:00,  7.03it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00,  7.39it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:00<00:00,  7.09it/s]
+[robosuite WARNING] No private macro file found! (__init__.py:7)
+[robosuite WARNING] It is recommended to use a private macro file (__init__.py:8)
+[robosuite WARNING] To setup, run: python /home/hwkim/micromamba/envs/vla-spatial-diagnostics/lib/python3.8/site-packages/robosuite/scripts/setup_macros.py (__init__.py:9)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+Gym has been unmaintained since 2022 and does not support NumPy 2.0 amongst other critical functionality.
+Please upgrade to Gymnasium, the maintained drop-in replacement of Gym, or contact the authors of your software and request that they upgrade.
+See the migration guide at https://gymnasium.farama.org/introduction/migration_guide/ for additional information.
+/home/hwkim/research/VLA-Spatial-Diagnostics/tools/common/init_state.py:115: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  states = torch.load(str(path), map_location="cpu")
+WARNING: No local dataset_statistics.json found. This is expected for base checkpoints, not fine-tuned ones.
+{
+  "summary": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_spatial/task_04/calibration_summary.json",
+  "conditions": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_spatial/task_04/calibration_conditions.csv",
+  "j_cal": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_spatial/task_04/j_cal_by_h.json",
+  "metrics": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_spatial/task_04/local_linearity_metrics.json",
+  "raw_records": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_spatial/task_04/calibration_raw_records.json",
+  "report": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_spatial/task_04/report.md"
+}

@@ -1,0 +1,4420 @@
+{
+  "metadata": {
+    "checkpoint": {
+      "model_id": "openvla/openvla-7b-finetuned-libero-object",
+      "revision": "287d6cfdf12d07b1449505f66d9bf3550257e9b3",
+      "unnorm_key": "libero_object"
+    },
+    "config": {
+      "attn_implementation": "eager",
+      "center_crop": false,
+      "directions": [
+        "+x",
+        "-x"
+      ],
+      "dtype": "torch.bfloat16",
+      "gpu": 2,
+      "h_meters": [
+        0.01
+      ],
+      "init_state_id": 0,
+      "output_dir": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/preflight/libero_object/task_00",
+      "resize_size": 224,
+      "resolution": 256,
+      "seed": 0,
+      "suite": "libero_object",
+      "target_object": null,
+      "task_description": "pick up the alphabet soup and place it in the basket",
+      "task_id": 0,
+      "vanilla_repeats": 5
+    },
+    "episode_reset_seed": 2257087011,
+    "git_commit": "d520ba9fd6240210045879dafafdfb435a8dd2a5",
+    "init_state": {
+      "condition": "vanilla",
+      "init_state_id": 0,
+      "notes": [
+        "official evaluation init state, used verbatim"
+      ],
+      "num_available": 50,
+      "path": "/home/hwkim/research/VLA-Spatial-Diagnostics/LIBERO-PRO/libero/libero/init_files/libero_object/pick_up_the_alphabet_soup_and_place_it_in_the_basket.pruned_init",
+      "seed": 0,
+      "sha256": "6cd4976519943bdc84677396a6e2942e9816ae87e56fc72943914e147f9b6e1e",
+      "source": "official_pruned_init",
+      "state_dim": 110,
+      "suite": "libero_object",
+      "task_id": 0,
+      "task_name": "pick_up_the_alphabet_soup_and_place_it_in_the_basket"
+    },
+    "init_state_id": 0,
+    "scope": "first OpenVLA inference plus exactly one env.step per valid independent condition",
+    "seed": 0,
+    "suite": "libero_object",
+    "target_object": "alphabet_soup_1",
+    "task": "pick_up_the_alphabet_soup_and_place_it_in_the_basket",
+    "task_description": "pick up the alphabet soup and place it in the basket",
+    "task_id": 0,
+    "timestamp": "2026-08-25T18:21:56.039858+00:00"
+  },
+  "records": [
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [
+          1
+        ],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "alphabet_soup_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_object": "alphabet_soup_1",
+      "transition": {
+        "action_applied": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          -1.0
+        ],
+        "action_model": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326
+        ],
+        "eef_t_xyz": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506
+        ],
+        "robot_state_t": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506,
+          3.1483815819790157,
+          -0.035393800484827556,
+          -0.15499402923727096,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326,
+          3.1475464849642867,
+          -0.032262197315853114,
+          -0.1473519443491056,
+          0.021043041486279366,
+          -0.021044430850687666
+        ]
+      },
+      "vanilla_repetition": 0,
+      "vanilla_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [
+          1
+        ],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "alphabet_soup_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_object": "alphabet_soup_1",
+      "transition": {
+        "action_applied": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          -1.0
+        ],
+        "action_model": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326
+        ],
+        "eef_t_xyz": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506
+        ],
+        "robot_state_t": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506,
+          3.1483815819790157,
+          -0.035393800484827556,
+          -0.15499402923727096,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326,
+          3.1475464849642867,
+          -0.032262197315853114,
+          -0.1473519443491056,
+          0.021043041486279366,
+          -0.021044430850687666
+        ]
+      },
+      "vanilla_repetition": 1,
+      "vanilla_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [
+          1
+        ],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "alphabet_soup_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_object": "alphabet_soup_1",
+      "transition": {
+        "action_applied": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          -1.0
+        ],
+        "action_model": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326
+        ],
+        "eef_t_xyz": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506
+        ],
+        "robot_state_t": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506,
+          3.1483815819790157,
+          -0.035393800484827556,
+          -0.15499402923727096,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326,
+          3.1475464849642867,
+          -0.032262197315853114,
+          -0.1473519443491056,
+          0.021043041486279366,
+          -0.021044430850687666
+        ]
+      },
+      "vanilla_repetition": 2,
+      "vanilla_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [
+          1
+        ],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "alphabet_soup_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_object": "alphabet_soup_1",
+      "transition": {
+        "action_applied": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          -1.0
+        ],
+        "action_model": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326
+        ],
+        "eef_t_xyz": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506
+        ],
+        "robot_state_t": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506,
+          3.1483815819790157,
+          -0.035393800484827556,
+          -0.15499402923727096,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326,
+          3.1475464849642867,
+          -0.032262197315853114,
+          -0.1473519443491056,
+          0.021043041486279366,
+          -0.021044430850687666
+        ]
+      },
+      "vanilla_repetition": 3,
+      "vanilla_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [
+          1
+        ],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "alphabet_soup_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_object": "alphabet_soup_1",
+      "transition": {
+        "action_applied": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          -1.0
+        ],
+        "action_model": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326
+        ],
+        "eef_t_xyz": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506
+        ],
+        "robot_state_t": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506,
+          3.1483815819790157,
+          -0.035393800484827556,
+          -0.15499402923727096,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326,
+          3.1475464849642867,
+          -0.032262197315853114,
+          -0.1473519443491056,
+          0.021043041486279366,
+          -0.021044430850687666
+        ]
+      },
+      "vanilla_repetition": 4,
+      "vanilla_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.009999999999999995,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.11,
+        -0.24000000000000002,
+        0.015
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_plusx",
+        "requested_displacement_xy": [
+          0.01,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.11,
+        -0.24000000000000002,
+        0.015
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [
+          1
+        ],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "alphabet_soup_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.11,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_object": "alphabet_soup_1",
+      "transition": {
+        "action_applied": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          -1.0
+        ],
+        "action_model": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326
+        ],
+        "eef_t_xyz": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506
+        ],
+        "robot_state_t": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506,
+          3.1483815819790157,
+          -0.035393800484827556,
+          -0.15499402923727096,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326,
+          3.1475464849642867,
+          -0.032262197315853114,
+          -0.1473519443491056,
+          0.021043041486279366,
+          -0.021044430850687666
+        ]
+      },
+      "vanilla_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.010000000000000009,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.13,
+        -0.24000000000000002,
+        0.015
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_minusx",
+        "requested_displacement_xy": [
+          -0.01,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.13,
+        -0.24000000000000002,
+        0.015
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [
+          1
+        ],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.02228999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 73
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.022600000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 74
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.02320000000000001,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 75
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 76
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 77
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 78
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 79
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 80
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 81
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 82
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 83
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.023200000000000002,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.02319999999999999,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.023199999999999995,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023590000000000007,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000005,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.023200000000000012,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0232,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.023199999999999985,
+            "other_body_id": 1,
+            "other_geom_id": 6,
+            "target_geom_id": 93
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "alphabet_soup_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.13,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        -0.12,
+        -0.24000000000000002,
+        0.015,
+        0.0,
+        0.0,
+        0.7071067811865475,
+        0.7071067811865476
+      ],
+      "target_object": "alphabet_soup_1",
+      "transition": {
+        "action_applied": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          -1.0
+        ],
+        "action_model": [
+          0.14315652122684552,
+          -0.23186976068160114,
+          0.0,
+          -3.151186541014428e-05,
+          0.048373947964579445,
+          -0.0006722719207698513,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326
+        ],
+        "eef_t_xyz": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506
+        ],
+        "robot_state_t": [
+          -0.1564437536703257,
+          -0.008796156048331612,
+          0.2421925486863506,
+          3.1483815819790157,
+          -0.035393800484827556,
+          -0.15499402923727096,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.1549053815822409,
+          -0.009149533136668728,
+          0.24408066731683326,
+          3.1475464849642867,
+          -0.032262197315853114,
+          -0.1473519443491056,
+          0.021043041486279366,
+          -0.021044430850687666
+        ]
+      },
+      "vanilla_target_pose": [
+        -0.12,
+        -0.24000000000000002,
+        0.015
+      ]
+    }
+  ]
+}

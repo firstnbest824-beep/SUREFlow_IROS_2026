@@ -1,0 +1,33 @@
+{
+  "collector_log": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_object/task_03/collector.log",
+  "command": [
+    "/home/hwkim/micromamba/envs/vla-spatial-diagnostics/bin/python",
+    "/home/hwkim/research/VLA-Spatial-Diagnostics/tools/openvla/run_h_calibration.py",
+    "--suite",
+    "libero_object",
+    "--task-id",
+    "3",
+    "--init-state-id",
+    "0",
+    "--seed",
+    "0",
+    "--gpu",
+    "2",
+    "--h-meters",
+    "0.01,0.02,0.04,0.08,0.16,0.32",
+    "--directions",
+    "+x,-x,+y,-y",
+    "--output-dir",
+    "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_object/task_03"
+  ],
+  "directory": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_object/task_03",
+  "finished_at": "2026-08-25T18:35:13.399398+00:00",
+  "gpu": 2,
+  "preflight": false,
+  "returncode": 0,
+  "started_at": "2026-08-25T18:34:18.061733+00:00",
+  "state": "complete",
+  "suite": "libero_object",
+  "task_id": 3,
+  "task_name": "pick_up_the_bbq_sauce_and_place_it_in_the_basket"
+}

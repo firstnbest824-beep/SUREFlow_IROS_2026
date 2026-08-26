@@ -1,0 +1,155 @@
+{
+  "0.01": {
+    "J_cal_3x2": null,
+    "central_columns": {
+      "x": null,
+      "y": null
+    },
+    "directions": {
+      "+x": {
+        "available": false
+      },
+      "+y": {
+        "available": false
+      },
+      "-x": {
+        "R": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "available": true,
+        "eef_t_plus_1_xyz": [
+          -0.20921167836990198,
+          -0.011699303979867052,
+          1.1758867442312855
+        ],
+        "one_sided_J_cal": [
+          -0.0,
+          -0.0,
+          -0.0
+        ]
+      },
+      "-y": {
+        "available": false
+      }
+    },
+    "h_cm": 1.0,
+    "h_meter": 0.01
+  },
+  "0.02": {
+    "J_cal_3x2": null,
+    "central_columns": {
+      "x": null,
+      "y": null
+    },
+    "directions": {
+      "+x": {
+        "available": false
+      },
+      "+y": {
+        "available": false
+      },
+      "-x": {
+        "available": false
+      },
+      "-y": {
+        "available": false
+      }
+    },
+    "h_cm": 2.0,
+    "h_meter": 0.02
+  },
+  "0.04": {
+    "J_cal_3x2": null,
+    "central_columns": {
+      "x": null,
+      "y": null
+    },
+    "directions": {
+      "+x": {
+        "available": false
+      },
+      "+y": {
+        "available": false
+      },
+      "-x": {
+        "available": false
+      },
+      "-y": {
+        "available": false
+      }
+    },
+    "h_cm": 4.0,
+    "h_meter": 0.04
+  },
+  "0.08": {
+    "J_cal_3x2": null,
+    "central_columns": {
+      "x": null,
+      "y": null
+    },
+    "directions": {
+      "+x": {
+        "available": false
+      },
+      "+y": {
+        "available": false
+      },
+      "-x": {
+        "available": false
+      },
+      "-y": {
+        "available": false
+      }
+    },
+    "h_cm": 8.0,
+    "h_meter": 0.08
+  },
+  "0.16": {
+    "J_cal_3x2": null,
+    "central_columns": {
+      "x": null,
+      "y": null
+    },
+    "directions": {
+      "+x": {
+        "available": false
+      },
+      "+y": {
+        "available": false
+      },
+      "-x": {
+        "available": false
+      },
+      "-y": {
+        "available": false
+      }
+    },
+    "h_cm": 16.0,
+    "h_meter": 0.16
+  },
+  "0.32": {
+    "J_cal_3x2": null,
+    "central_columns": {
+      "x": null,
+      "y": null
+    },
+    "directions": {
+      "+x": {
+        "available": false
+      },
+      "+y": {
+        "available": false
+      },
+      "-x": {
+        "available": false
+      },
+      "-y": {
+        "available": false
+      }
+    },
+    "h_cm": 32.0,
+    "h_meter": 0.32
+  }
+}

@@ -1,0 +1,428 @@
+{
+  "cross_h_J_cal_raw_difference": [
+    {
+      "central_column_difference": {
+        "x": [
+          -0.030932656713025808,
+          0.04332103146268392,
+          -0.013671241657070565
+        ],
+        "y": [
+          -0.019030096679661934,
+          0.021622263095493678,
+          0.0022581143427014005
+        ]
+      },
+      "h_meter": 0.01,
+      "next_h_meter": 0.02
+    },
+    {
+      "central_column_difference": {
+        "x": [
+          -0.015022122864680187,
+          0.01632359431811758,
+          0.009274954008101077
+        ],
+        "y": [
+          -0.004838935673365588,
+          0.008058677799397363,
+          -0.0020470406194350588
+        ]
+      },
+      "h_meter": 0.02,
+      "next_h_meter": 0.04
+    },
+    {
+      "central_column_difference": {
+        "x": [
+          -0.012831064636226186,
+          0.022162601593821867,
+          0.0019677644050197785
+        ],
+        "y": [
+          -0.01663449471296756,
+          0.01572855877349904,
+          -0.002577403015888158
+        ]
+      },
+      "h_meter": 0.04,
+      "next_h_meter": 0.08
+    },
+    {
+      "central_column_difference": {
+        "x": [
+          0.0007597850921596018,
+          -0.0070761414005487576,
+          0.0019311254241108355
+        ],
+        "y": null
+      },
+      "h_meter": 0.08,
+      "next_h_meter": 0.16
+    },
+    {
+      "central_column_difference": {
+        "x": [
+          -0.002002680982609315,
+          -0.0071677729219532926,
+          0.0029428946364377234
+        ],
+        "y": null
+      },
+      "h_meter": 0.16,
+      "next_h_meter": 0.32
+    }
+  ],
+  "directional_slope_consistency": [
+    {
+      "available": true,
+      "axis": "x",
+      "h_meter": 0.01,
+      "plus_minus_slope_difference": [
+        -0.12296924067134174,
+        0.10394637606457191,
+        -0.03242035265302867
+      ]
+    },
+    {
+      "available": true,
+      "axis": "y",
+      "h_meter": 0.01,
+      "plus_minus_slope_difference": [
+        -0.1697502387424249,
+        0.16774356498493415,
+        -0.036533442759822954
+      ]
+    },
+    {
+      "available": true,
+      "axis": "x",
+      "h_meter": 0.02,
+      "plus_minus_slope_difference": [
+        -0.06185747997621005,
+        0.06782667517170674,
+        -0.045982253827092645
+      ]
+    },
+    {
+      "available": true,
+      "axis": "y",
+      "h_meter": 0.02,
+      "plus_minus_slope_difference": [
+        -0.08483335798056546,
+        0.0882263273576885,
+        -0.018236631934342995
+      ]
+    },
+    {
+      "available": true,
+      "axis": "x",
+      "h_meter": 0.04,
+      "plus_minus_slope_difference": [
+        -0.031071431690692097,
+        0.012880206133460569,
+        0.0043318784143375755
+      ]
+    },
+    {
+      "available": true,
+      "axis": "y",
+      "h_meter": 0.04,
+      "plus_minus_slope_difference": [
+        -0.033022692266704984,
+        0.04296280104736671,
+        -0.015440422103174534
+      ]
+    },
+    {
+      "available": true,
+      "axis": "x",
+      "h_meter": 0.08,
+      "plus_minus_slope_difference": [
+        -0.017042235644946363,
+        -0.004576605577460265,
+        -0.012897534815692335
+      ]
+    },
+    {
+      "available": true,
+      "axis": "y",
+      "h_meter": 0.08,
+      "plus_minus_slope_difference": [
+        -0.03625324794409787,
+        -0.0408221689187174,
+        0.006657104236884592
+      ]
+    },
+    {
+      "available": true,
+      "axis": "x",
+      "h_meter": 0.16,
+      "plus_minus_slope_difference": [
+        -0.017613542785647508,
+        0.004512944520839845,
+        0.00975239614524337
+      ]
+    },
+    {
+      "available": false,
+      "axis": "y",
+      "h_meter": 0.16,
+      "plus_minus_slope_difference": null
+    },
+    {
+      "available": true,
+      "axis": "x",
+      "h_meter": 0.32,
+      "plus_minus_slope_difference": [
+        -0.012670347842563736,
+        0.006764516590252899,
+        -0.001859621589054422
+      ]
+    },
+    {
+      "available": true,
+      "axis": "y",
+      "h_meter": 0.32,
+      "plus_minus_slope_difference": [
+        -0.009698551315705066,
+        0.0006036397922095944,
+        -0.0005635515295573934
+      ]
+    }
+  ],
+  "scaling_consistency": [
+    {
+      "E_scale": 0.0006500958065870335,
+      "available": true,
+      "direction": "+x",
+      "h_meter": 0.01,
+      "residual_vector": [
+        -7.535527309199264e-06,
+        0.0005052236203250265,
+        -0.00040904384488205103
+      ],
+      "two_h_meter": 0.02
+    },
+    {
+      "E_scale": 0.0017430925351021973,
+      "available": true,
+      "direction": "-x",
+      "h_meter": 0.01,
+      "residual_vector": [
+        0.001229770741211833,
+        -0.0012276176381823302,
+        0.00013780582140077158
+      ],
+      "two_h_meter": 0.02
+    },
+    {
+      "E_scale": 0.0006349561812441939,
+      "available": true,
+      "direction": "+y",
+      "h_meter": 0.01,
+      "residual_vector": [
+        0.0004685668740253557,
+        -0.00036272711436258296,
+        0.0002281303951088276
+      ],
+      "two_h_meter": 0.02
+    },
+    {
+      "E_scale": 0.0017430925351021973,
+      "available": true,
+      "direction": "-y",
+      "h_meter": 0.01,
+      "residual_vector": [
+        0.001229770741211833,
+        -0.0012276176381823302,
+        0.00013780582140077158
+      ],
+      "two_h_meter": 0.02
+    },
+    {
+      "E_scale": 0.0014477657570317992,
+      "available": true,
+      "direction": "+x",
+      "h_meter": 0.02,
+      "residual_vector": [
+        1.4836051123151561e-05,
+        -0.00044598560804022004,
+        0.0013772808051526475
+      ],
+      "two_h_meter": 0.04
+    },
+    {
+      "E_scale": 0.002225483271144614,
+      "available": true,
+      "direction": "-x",
+      "h_meter": 0.02,
+      "residual_vector": [
+        0.0012166058802975666,
+        -0.0017518731534896265,
+        0.0006352844845045613
+      ],
+      "two_h_meter": 0.04
+    },
+    {
+      "E_scale": 0.0010249597257491066,
+      "available": true,
+      "direction": "+y",
+      "h_meter": 0.02,
+      "residual_vector": [
+        0.000842655887342586,
+        -0.0005829234142305413,
+        -2.5957428154033124e-05
+      ],
+      "two_h_meter": 0.04
+    },
+    {
+      "E_scale": 0.0017430925351021973,
+      "available": true,
+      "direction": "-y",
+      "h_meter": 0.02,
+      "residual_vector": [
+        0.001229770741211833,
+        -0.0012276176381823302,
+        0.00013780582140077158
+      ],
+      "two_h_meter": 0.04
+    },
+    {
+      "E_scale": 0.001286211776637433,
+      "available": true,
+      "direction": "+x",
+      "h_meter": 0.04,
+      "residual_vector": [
+        -0.0004653173290682655,
+        0.001074735659068916,
+        -0.0005317553767996142
+      ],
+      "two_h_meter": 0.08
+    },
+    {
+      "E_scale": 0.003056893440602989,
+      "available": true,
+      "direction": "-x",
+      "h_meter": 0.04,
+      "residual_vector": [
+        0.0015876530127279243,
+        -0.002471280595942583,
+        -0.0008465976816027787
+      ],
+      "two_h_meter": 0.08
+    },
+    {
+      "E_scale": 0.0026404474478355284,
+      "available": true,
+      "direction": "+y",
+      "h_meter": 0.04,
+      "residual_vector": [
+        -0.0014599818041331203,
+        -0.002093114096763441,
+        0.0006777088123313124
+      ],
+      "two_h_meter": 0.08
+    },
+    {
+      "E_scale": 0.004886837154011735,
+      "available": true,
+      "direction": "-y",
+      "h_meter": 0.04,
+      "residual_vector": [
+        0.0012015373499416893,
+        -0.004609683500523288,
+        0.0010900932948734177
+      ],
+      "two_h_meter": 0.08
+    },
+    {
+      "E_scale": 0.002160631388462817,
+      "available": true,
+      "direction": "+x",
+      "h_meter": 0.08,
+      "residual_vector": [
+        7.586104348944467e-05,
+        -0.0004050186162237925,
+        0.00212097454473259
+      ],
+      "two_h_meter": 0.16
+    },
+    {
+      "E_scale": 0.002396706391402303,
+      "available": true,
+      "direction": "-x",
+      "h_meter": 0.08,
+      "residual_vector": [
+        -0.0001672701860016279,
+        0.00185934663195181,
+        0.0015030144090171227
+      ],
+      "two_h_meter": 0.16
+    },
+    {
+      "E_scale": 0.0028210145897839193,
+      "available": true,
+      "direction": "+y",
+      "h_meter": 0.08,
+      "residual_vector": [
+        0.0015331637501046769,
+        0.0023680105272558573,
+        -7.640284296783761e-06
+      ],
+      "two_h_meter": 0.16
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-y",
+      "h_meter": 0.08,
+      "residual_vector": null,
+      "two_h_meter": 0.16
+    },
+    {
+      "E_scale": 0.0021447857979055174,
+      "available": true,
+      "direction": "+x",
+      "h_meter": 0.16,
+      "residual_vector": [
+        0.0001500532764584228,
+        -0.001933435803918965,
+        -0.0009161965538275751
+      ],
+      "two_h_meter": 0.32
+    },
+    {
+      "E_scale": 0.004114776965726999,
+      "available": true,
+      "direction": "-x",
+      "h_meter": 0.16,
+      "residual_vector": [
+        0.0014317691053283843,
+        0.0026539388661311423,
+        -0.002799649121147718
+      ],
+      "two_h_meter": 0.32
+    },
+    {
+      "E_scale": 0.001765301210480238,
+      "available": true,
+      "direction": "+y",
+      "h_meter": 0.16,
+      "residual_vector": [
+        0.0016438312886355166,
+        -0.00023615919287676805,
+        0.0005986116385818807
+      ],
+      "two_h_meter": 0.32
+    },
+    {
+      "E_scale": null,
+      "available": false,
+      "direction": "-y",
+      "h_meter": 0.16,
+      "residual_vector": null,
+      "two_h_meter": 0.32
+    }
+  ]
+}

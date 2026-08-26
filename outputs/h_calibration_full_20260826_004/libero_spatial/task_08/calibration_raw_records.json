@@ -1,0 +1,5260 @@
+{
+  "metadata": {
+    "checkpoint": {
+      "model_id": "openvla/openvla-7b-finetuned-libero-spatial",
+      "revision": "962318cec55ac10993ff0f5f43eda9a270b4c873",
+      "unnorm_key": "libero_spatial"
+    },
+    "config": {
+      "attn_implementation": "eager",
+      "center_crop": false,
+      "directions": [
+        "+x",
+        "-x",
+        "+y",
+        "-y"
+      ],
+      "dtype": "torch.bfloat16",
+      "gpu": 2,
+      "h_meters": [
+        0.01,
+        0.02,
+        0.04,
+        0.08,
+        0.16,
+        0.32
+      ],
+      "init_state_id": 0,
+      "output_dir": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_spatial/task_08",
+      "resize_size": 224,
+      "resolution": 256,
+      "seed": 0,
+      "suite": "libero_spatial",
+      "target_object": null,
+      "task_description": "pick up the black bowl next to the plate and place it on the plate",
+      "task_id": 8,
+      "vanilla_repeats": 5
+    },
+    "episode_reset_seed": 1372804420,
+    "git_commit": "d520ba9fd6240210045879dafafdfb435a8dd2a5",
+    "init_state": {
+      "condition": "vanilla",
+      "init_state_id": 0,
+      "notes": [
+        "official evaluation init state, used verbatim"
+      ],
+      "num_available": 50,
+      "path": "/home/hwkim/research/VLA-Spatial-Diagnostics/LIBERO-PRO/libero/libero/init_files/libero_spatial/pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate.pruned_init",
+      "seed": 0,
+      "sha256": "aef30979e2ee8c9893c9161c881264362f750a34df952f381e3969a567688451",
+      "source": "official_pruned_init",
+      "state_dim": 92,
+      "suite": "libero_spatial",
+      "task_id": 8,
+      "task_name": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate"
+    },
+    "init_state_id": 0,
+    "scope": "first OpenVLA inference plus exactly one env.step per valid independent condition",
+    "seed": 0,
+    "suite": "libero_spatial",
+    "target_object": "akita_black_bowl_1",
+    "task": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate",
+    "task_description": "pick up the black bowl next to the plate and place it on the plate",
+    "task_id": 8,
+    "timestamp": "2026-08-25T18:30:28.335112+00:00"
+  },
+  "records": [
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001,
+          3.1424445804749754,
+          -0.02563277054702832,
+          -0.06327639149324386,
+          0.021086854276440282,
+          -0.02100527894688157
+        ]
+      },
+      "vanilla_repetition": 0,
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001,
+          3.1424445804749754,
+          -0.02563277054702832,
+          -0.06327639149324386,
+          0.021086854276440282,
+          -0.02100527894688157
+        ]
+      },
+      "vanilla_repetition": 1,
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001,
+          3.1424445804749754,
+          -0.02563277054702832,
+          -0.06327639149324386,
+          0.021086854276440282,
+          -0.02100527894688157
+        ]
+      },
+      "vanilla_repetition": 2,
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001,
+          3.1424445804749754,
+          -0.02563277054702832,
+          -0.06327639149324386,
+          0.021086854276440282,
+          -0.02100527894688157
+        ]
+      },
+      "vanilla_repetition": 3,
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001,
+          3.1424445804749754,
+          -0.02563277054702832,
+          -0.06327639149324386,
+          0.021086854276440282,
+          -0.02100527894688157
+        ]
+      },
+      "vanilla_repetition": 4,
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.009999999999999998,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.017128605032953367,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_plusx",
+        "requested_displacement_xy": [
+          0.01,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.017128605032953367,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.017128605032953367,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.1975840435308569,
+          0.0339810906672009,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.011773107244687914,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.1975840435308569,
+          0.0339810906672009,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.011773107244687914,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2074671297357917,
+          -0.015392633206578651,
+          1.1805852346938255
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2074671297357917,
+          -0.015392633206578651,
+          1.1805852346938255,
+          3.142501234640772,
+          -0.024594853949353995,
+          -0.0634900428043647,
+          0.02108989923848488,
+          -0.02100296604191198
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.01,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.0028713949670466313,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_minusx",
+        "requested_displacement_xy": [
+          -0.01,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.0028713949670466313,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.0028713949670466313,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.08530461998546834,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.08530461998546834,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20747004845493383,
+          -0.015581538581486443,
+          1.1808516288755713
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20747004845493383,
+          -0.015581538581486443,
+          1.1808516288755713,
+          3.1424461043760283,
+          -0.025632057566491593,
+          -0.06322855170862236,
+          0.021086854533167807,
+          -0.021005278548908282
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.010000000000000009,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.3082832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.01
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.3082832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.3082832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.08530461998546834,
+          4.831982009551039e-05,
+          -0.08870588056012696,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.08530461998546834,
+          4.831982009551039e-05,
+          -0.08870588056012696,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20669657923873994,
+          -0.015593501544959506,
+          1.1814716066167719
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20669657923873994,
+          -0.015593501544959506,
+          1.1814716066167719,
+          3.1425766569161775,
+          -0.02564835290982331,
+          -0.05718106617488336,
+          0.021086955140459378,
+          -0.021005209033166043
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.010000000000000009,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.28828321599721657,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.01
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:plate_1"
+      ],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.28828321599721657,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.001332308547449073,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0035468011183833904,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0006940183790874624,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0019379256105234001,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0021399557662330525,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0013839121158835388,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0015427757514799218,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.00010799964243174594,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.0015022323868541351,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.0009787563240342073,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 105
+          },
+          {
+            "distance": -1.0321257120698632e-05,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 106
+          },
+          {
+            "distance": -0.00010855953662627299,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 106
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.28828321599721657,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.02,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.02712860503295337,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 2.0,
+        "h_meter": 0.02,
+        "kind": "perturbation",
+        "name": "h02cm_plusx",
+        "requested_displacement_xy": [
+          0.02,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:plate_1"
+      ],
+      "requested_target_pose": [
+        0.02712860503295337,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.0008877499664443185,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0003438843769551406,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.00010618963055766212,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.00028604829940837365,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.02712860503295337,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.02,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.012871394967046632,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 2.0,
+        "h_meter": 0.02,
+        "kind": "perturbation",
+        "name": "h02cm_minusx",
+        "requested_displacement_xy": [
+          -0.02,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.012871394967046632,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.012871394967046632,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001,
+          3.1424445804749754,
+          -0.02563277054702832,
+          -0.06327639149324386,
+          0.021086854276440282,
+          -0.02100527894688157
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.020000000000000018,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.3182832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 2.0,
+        "h_meter": 0.02,
+        "kind": "perturbation",
+        "name": "h02cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.02
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.3182832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.3182832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.08530461998546834,
+          4.831982009551039e-05,
+          -0.08870588056012696,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.08530461998546834,
+          4.831982009551039e-05,
+          -0.08870588056012696,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20669657923873994,
+          -0.015593501544959506,
+          1.1814716066167719
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20669657923873994,
+          -0.015593501544959506,
+          1.1814716066167719,
+          3.1425766569161775,
+          -0.02564835290982331,
+          -0.05718106617488336,
+          0.021086955140459378,
+          -0.021005209033166043
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.020000000000000018,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.27828321599721656,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 2.0,
+        "h_meter": 0.02,
+        "kind": "perturbation",
+        "name": "h02cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.02
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:plate_1"
+      ],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.27828321599721656,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.0006671872508566265,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0074110269809140004,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0008208212581690898,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.001022851413878742,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.00017330468034612673,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0032038002787365028,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.0038761875313507695,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.0016766406650288673,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.0035473248341049714,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.0005441348252365132,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.003651611245994778,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.0016474751558659606,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -1.381260689464633e-05,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 104
+          },
+          {
+            "distance": -0.0005879964988653655,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 104
+          },
+          {
+            "distance": -9.288519176699477e-06,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 105
+          },
+          {
+            "distance": -0.0001962710661163026,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 105
+          },
+          {
+            "distance": -0.00011986889526196741,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 105
+          },
+          {
+            "distance": -0.00035307694295457577,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 107
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.27828321599721656,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.039999999999999994,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.047128605032953366,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 4.0,
+        "h_meter": 0.04,
+        "kind": "perturbation",
+        "name": "h04cm_plusx",
+        "requested_displacement_xy": [
+          0.04,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:plate_1"
+      ],
+      "requested_target_pose": [
+        0.047128605032953366,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.0005904563463203555,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0010253776002306964,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0005876127751396247,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.000735211732379488,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0005014470058006304,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 104
+          },
+          {
+            "distance": -0.0004515240751139783,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 104
+          },
+          {
+            "distance": -0.00040996902059767416,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 104
+          },
+          {
+            "distance": -0.0005438152752514973,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 105
+          },
+          {
+            "distance": -0.00039666560761305534,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 105
+          },
+          {
+            "distance": -0.0003638934410130751,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 105
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.047128605032953366,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.04000000000000001,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.032871394967046635,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 4.0,
+        "h_meter": 0.04,
+        "kind": "perturbation",
+        "name": "h04cm_minusx",
+        "requested_displacement_xy": [
+          -0.04,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.032871394967046635,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.032871394967046635,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.16743698423984,
+          0.0706407544659633,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2074675756326778,
+          -0.015581561891998432,
+          1.1807745112780001,
+          3.1424445804749754,
+          -0.02563277054702832,
+          -0.06327639149324386,
+          0.021086854276440282,
+          -0.02100527894688157
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.03999999999999998,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.33828321599721656,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 4.0,
+        "h_meter": 0.04,
+        "kind": "perturbation",
+        "name": "h04cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.04
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.33828321599721656,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.33828321599721656,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.08302521822499298,
+          0.048644956186705945,
+          4.831982009551039e-05,
+          -0.016504202227966447,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.08302521822499298,
+          0.048644956186705945,
+          4.831982009551039e-05,
+          -0.016504202227966447,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20733007788416427,
+          -0.016013878834235037,
+          1.1807781175568763
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20733007788416427,
+          -0.016013878834235037,
+          1.1807781175568763,
+          3.1422346639709855,
+          -0.026099108351166966,
+          -0.062300674844807946,
+          0.021079609276883626,
+          -0.021011348996196468
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.03999999999999998,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.2582832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 4.0,
+        "h_meter": 0.04,
+        "kind": "perturbation",
+        "name": "h04cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.04
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:plate_1"
+      ],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.2582832159972166,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.0009294653802721416,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.00027787574555945187,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0009294653802721416,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.00027787574555945187,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.009827845107038666,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.009849466945094847,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.004816083237586352,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.0043508354462117845,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.009766868614270436,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.008293223031776332,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.008815850457517406,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.0041444061521345174,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0005654586241730848,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -0.0005654586241730848,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -1.998283195892442e-05,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -0.0005376618786805726,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 108
+          },
+          {
+            "distance": -0.00027914884183390874,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.00013280616425256,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.00015263636693527494,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -6.569204264619474e-05,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0007867874943845902,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0007546557119290067,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 120
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.2582832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.08,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.08712860503295337,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 8.0,
+        "h_meter": 0.08,
+        "kind": "perturbation",
+        "name": "h08cm_plusx",
+        "requested_displacement_xy": [
+          0.08,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:plate_1"
+      ],
+      "requested_target_pose": [
+        0.08712860503295337,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.0014659458085378907,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -1.69295555321048e-05,
+            "other_body_id": 27,
+            "other_geom_id": 199,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0004168811360974259,
+            "other_body_id": 27,
+            "other_geom_id": 199,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.00042878533724634136,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -0.00048043144356948314,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -0.0010137275913323113,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 104
+          },
+          {
+            "distance": -2.8336995594119246e-05,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 104
+          },
+          {
+            "distance": -0.00012678529657425726,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 104
+          },
+          {
+            "distance": -0.0009346104130412412,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 104
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.08712860503295337,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.08,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.07287139496704663,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 8.0,
+        "h_meter": 0.08,
+        "kind": "perturbation",
+        "name": "h08cm_minusx",
+        "requested_displacement_xy": [
+          -0.08,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:akita_black_bowl_2"
+      ],
+      "requested_target_pose": [
+        -0.07287139496704663,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.000523009015516553,
+            "other_body_id": 24,
+            "other_geom_id": 149,
+            "target_geom_id": 100
+          },
+          {
+            "distance": -0.0001531448448517316,
+            "other_body_id": 24,
+            "other_geom_id": 149,
+            "target_geom_id": 118
+          },
+          {
+            "distance": -0.00016389402141922266,
+            "other_body_id": 24,
+            "other_geom_id": 149,
+            "target_geom_id": 118
+          },
+          {
+            "distance": -0.00011226144559232525,
+            "other_body_id": 24,
+            "other_geom_id": 150,
+            "target_geom_id": 118
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.07287139496704663,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.08000000000000002,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.3782832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 8.0,
+        "h_meter": 0.08,
+        "kind": "perturbation",
+        "name": "h08cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.08
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.3782832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.3782832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          -0.23653361025978537,
+          -0.0026785731315612793,
+          4.831982009551039e-05,
+          0.034638653257313884,
+          0.00012604848426930881,
+          1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          -0.23653361025978537,
+          -0.0026785731315612793,
+          4.831982009551039e-05,
+          0.034638653257313884,
+          0.00012604848426930881,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20777021807783302,
+          -0.01763702181131255,
+          1.1801446669423719
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20777021807783302,
+          -0.01763702181131255,
+          1.1801446669423719,
+          3.141282481745438,
+          -0.027755810699241965,
+          -0.06572505992471116,
+          0.020239377720575068,
+          -0.020193231298746377
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.08000000000000002,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.21828321599721656,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 8.0,
+        "h_meter": 0.08,
+        "kind": "perturbation",
+        "name": "h08cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.08
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:plate_1"
+      ],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.21828321599721656,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.0036864312288166882,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0036864312288166882,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0001213314951528075,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.002385951681653628,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0001213314951528075,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.002385951681653628,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0019560340460356078,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.001384051957862886,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0012632643804532907,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 87
+          },
+          {
+            "distance": -0.0038483723156515787,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0007379513444714762,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0038483723156515787,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0007379513444714762,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0022152933416907986,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 88
+          },
+          {
+            "distance": -0.0012162626355820855,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.0012884043189960372,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -3.481827063916412e-05,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.001967978972678479,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -3.481827063916412e-05,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.001967978972678479,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.00028516482069410997,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 89
+          },
+          {
+            "distance": -0.001143650289212354,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.0014277204611010499,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.0003289752850488877,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.0003289752850488877,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.0008751706003714086,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.0027841503134438074,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0024218419477757365,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -1.1153005440191991e-05,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0013640187740341823,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.004314070820369717,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0010931570721226477,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.005438400384234409,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.005879260268173663,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.002096726905229578,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.008003050950364453,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.004934648138149016,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.004197681908523054,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.00023759286871733836,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0034001752380187302,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.002859319190035621,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.002562827181393322,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.003867346054744698,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0007652295033546207,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.002859319190035621,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.002562827181393322,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.003867346054744698,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0007652295033546207,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.00028033582622874644,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -0.00028033582622874644,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -0.00011097731564070528,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 111
+          },
+          {
+            "distance": -0.003555131346730473,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.003750100418240864,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.003555131346730473,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.003750100418240864,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0010576131092627041,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.003966870243730116,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -3.882990485546897e-05,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.00204873248496261,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.002244533678817638,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.00204873248496261,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.002244533678817638,
+            "other_body_id": 27,
+            "other_geom_id": 194,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0029407775444902917,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0017935378469944383,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.002549380856836878,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0021849233238098236,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0029407775444902917,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0017935378469944383,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.002549380856836878,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0021849233238098236,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.008824222904182282,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.008597062179411873,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.008276416226538703,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.003295625595649989,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0004513853376644219,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.00036292834788756185,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.003310635601576729,
+            "other_body_id": 27,
+            "other_geom_id": 198,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0002873289985243228,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.003700848123902906,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.0035848883766143656,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.003700848123902906,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.0035848883766143656,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.008583070570277527,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.004348081344414854,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.0011176007680329776,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.002981456541234536,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.0010576131092627041,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0012323604989547025,
+            "other_body_id": 27,
+            "other_geom_id": 197,
+            "target_geom_id": 123
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.21828321599721656,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.16,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.16712860503295338,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 16.0,
+        "h_meter": 0.16,
+        "kind": "perturbation",
+        "name": "h16cm_plusx",
+        "requested_displacement_xy": [
+          0.16,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.16712860503295338,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.16712860503295338,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          0.5111134601574316,
+          -0.0026785731315612793,
+          4.831982009551039e-05,
+          -0.07817646913668688,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          0.5111134601574316,
+          -0.0026785731315612793,
+          4.831982009551039e-05,
+          -0.07817646913668688,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20676721880312587,
+          -0.013839812186364327,
+          1.1809449348227612
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20676721880312587,
+          -0.013839812186364327,
+          1.1809449348227612,
+          3.143494828568944,
+          -0.023839179412734324,
+          -0.05835677347501526,
+          0.02112127345314459,
+          -0.020980000566108943
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.16,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.15287139496704663,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 16.0,
+        "h_meter": 0.16,
+        "kind": "perturbation",
+        "name": "h16cm_minusx",
+        "requested_displacement_xy": [
+          -0.16,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:akita_black_bowl_2"
+      ],
+      "requested_target_pose": [
+        -0.15287139496704663,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.0018856545333054257,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.0018856545333054257,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 84
+          },
+          {
+            "distance": -0.002364548949231128,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.00035411531453473437,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.0004812691365186228,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.0008093013736630832,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.0006600639815460014,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.0006342848329596032,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.0002524863949566024,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -1.1268144128839742e-05,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.0006350869784929115,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -8.966680373666703e-06,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.0015503907172698178,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.001398898678515514,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 85
+          },
+          {
+            "distance": -0.0007274716865581907,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.000402544027284228,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0010767056098018855,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0005258370325200961,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0028555242190975495,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0009662268996545068,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0006141051156539745,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -7.527140891722941e-05,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0010803051751415956,
+            "other_body_id": 24,
+            "other_geom_id": 145,
+            "target_geom_id": 86
+          },
+          {
+            "distance": -0.0016821393129987092,
+            "other_body_id": 24,
+            "other_geom_id": 133,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0006512165762171781,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -5.944316179839511e-05,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0007715068026988392,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0002227966079687302,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.00015725603638247748,
+            "other_body_id": 24,
+            "other_geom_id": 151,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.001087556116374346,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0009147109093265951,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0005443821882039848,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0010232682674790935,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0009185265156997982,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0016821393129987092,
+            "other_body_id": 24,
+            "other_geom_id": 133,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0006512165762171781,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -5.944316179839511e-05,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0007715068026988392,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0002227966079687302,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.00015725603638247748,
+            "other_body_id": 24,
+            "other_geom_id": 151,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.001087556116374346,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0009147109093265951,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0005443821882039848,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0010232682674790935,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0009185265156997982,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0006932098590075157,
+            "other_body_id": 24,
+            "other_geom_id": 133,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.001695972975396998,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.0016054486437550464,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.0014099542608813473,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -9.770625282656299e-05,
+            "other_body_id": 24,
+            "other_geom_id": 151,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.0012289796936843296,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.0005385732420389417,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.00025765765812864664,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.00026224981241351736,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.0002489574525242975,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.00024254824796474122,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.00026252508438701707,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.000915440118713848,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.0008256154742136865,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.0006640066426405733,
+            "other_body_id": 24,
+            "other_geom_id": 133,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.0018226754340217276,
+            "other_body_id": 24,
+            "other_geom_id": 133,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.0023292212137955245,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.0028214788350617434,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.001524255363510405,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.0017808065973012315,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.0016684190482969515,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.002870367356779438,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.0005549276603569631,
+            "other_body_id": 24,
+            "other_geom_id": 162,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.001780840095754709,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 98
+          },
+          {
+            "distance": -0.0016747813266775058,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 98
+          },
+          {
+            "distance": -0.000830519379462838,
+            "other_body_id": 24,
+            "other_geom_id": 162,
+            "target_geom_id": 98
+          },
+          {
+            "distance": -0.0017807363373620823,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 99
+          },
+          {
+            "distance": -0.0016746013365107402,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 99
+          },
+          {
+            "distance": -0.0011113830150128168,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 102
+          },
+          {
+            "distance": -0.0005246365909598261,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 102
+          },
+          {
+            "distance": -0.0003228203951265671,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 102
+          },
+          {
+            "distance": -0.00042291594421017863,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 102
+          },
+          {
+            "distance": -0.0022552243721620535,
+            "other_body_id": 24,
+            "other_geom_id": 145,
+            "target_geom_id": 102
+          },
+          {
+            "distance": -6.230814923843842e-05,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -9.010698471127905e-05,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -6.223686128896313e-05,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 103
+          },
+          {
+            "distance": -0.0006044564527051724,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 112
+          },
+          {
+            "distance": -0.000850726556354583,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 112
+          },
+          {
+            "distance": -0.0008529429872573406,
+            "other_body_id": 24,
+            "other_geom_id": 151,
+            "target_geom_id": 112
+          },
+          {
+            "distance": -0.002199381712561975,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 112
+          },
+          {
+            "distance": -0.0015702365777377682,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 112
+          },
+          {
+            "distance": -0.0005807616197065319,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 113
+          },
+          {
+            "distance": -0.0011915330762159659,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 113
+          },
+          {
+            "distance": -0.00012182585458925341,
+            "other_body_id": 24,
+            "other_geom_id": 151,
+            "target_geom_id": 113
+          },
+          {
+            "distance": -0.002404896561043925,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 113
+          },
+          {
+            "distance": -0.001231995400644632,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 113
+          },
+          {
+            "distance": -0.0005807616197065319,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 114
+          },
+          {
+            "distance": -0.0011915330762159659,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 114
+          },
+          {
+            "distance": -0.00012182585458925341,
+            "other_body_id": 24,
+            "other_geom_id": 151,
+            "target_geom_id": 114
+          },
+          {
+            "distance": -0.002404896561043925,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 114
+          },
+          {
+            "distance": -0.001231995400644632,
+            "other_body_id": 24,
+            "other_geom_id": 152,
+            "target_geom_id": 114
+          },
+          {
+            "distance": -0.0017806392440073869,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -4.051863138706917e-05,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.001780717175534526,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.00178071312319267,
+            "other_body_id": 24,
+            "other_geom_id": 131,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0016747839993037892,
+            "other_body_id": 24,
+            "other_geom_id": 131,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0033495593447809705,
+            "other_body_id": 24,
+            "other_geom_id": 132,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.003349974247584683,
+            "other_body_id": 24,
+            "other_geom_id": 133,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0025699146262482715,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0025699146262482715,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0025699146262482715,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0025699146262482715,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0025800000000000007,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0025800000000000007,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0025800000000000007,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0025800000000000007,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0021749146262482737,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0021749146262482733,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0021749146262482733,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.0021749146262482737,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.001780735293376053,
+            "other_body_id": 24,
+            "other_geom_id": 132,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.002094347433064605,
+            "other_body_id": 24,
+            "other_geom_id": 133,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00027231097395978695,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -1.0755931946624406e-05,
+            "other_body_id": 24,
+            "other_geom_id": 134,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.00046573667457848196,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.0006620382236624629,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.0006802356220073033,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 122
+          },
+          {
+            "distance": -0.00036483858526783455,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.00027234755421514365,
+            "other_body_id": 24,
+            "other_geom_id": 128,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.000349273709589544,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0017806392440073869,
+            "other_body_id": 24,
+            "other_geom_id": 129,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0009534216273585595,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.003349905195915537,
+            "other_body_id": 24,
+            "other_geom_id": 130,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0013744310685302528,
+            "other_body_id": 24,
+            "other_geom_id": 131,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0010644389243680869,
+            "other_body_id": 24,
+            "other_geom_id": 131,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0025800000000000007,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0025800000000000007,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0025800000000000007,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0025800000000000007,
+            "other_body_id": 24,
+            "other_geom_id": 160,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0012050853737517265,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0012050853737517265,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0012050853737517265,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.0012050853737517265,
+            "other_body_id": 24,
+            "other_geom_id": 161,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 123
+          },
+          {
+            "distance": -0.00258,
+            "other_body_id": 24,
+            "other_geom_id": 163,
+            "target_geom_id": 123
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.15287139496704663,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.15999999999999998,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.45828321599721655,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 16.0,
+        "h_meter": 0.16,
+        "kind": "perturbation",
+        "name": "h16cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.16
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.45828321599721655,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.45828321599721655,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          -0.0013865477898541423,
+          0.0339810906672009,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.009184871964594915,
+          1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          -0.0013865477898541423,
+          0.0339810906672009,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.009184871964594915,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20747343683619363,
+          -0.016415286090815003,
+          1.1805830411746916
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20747343683619363,
+          -0.016415286090815003,
+          1.1805830411746916,
+          3.141965979954862,
+          -0.025836766424426918,
+          -0.06342895961078368,
+          0.020274296816983315,
+          -0.020158854821435
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.16,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.13828321599721657,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 16.0,
+        "h_meter": 0.16,
+        "kind": "perturbation",
+        "name": "h16cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.16
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [
+        "target_contact_with_movable:plate_1"
+      ],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.13828321599721657,
+        0.97
+      ],
+      "scene_valid": false,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [
+          {
+            "distance": -0.0032948227725269293,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.003724391311432703,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 90
+          },
+          {
+            "distance": -0.006380194448404055,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.010420804081202774,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.004795454242632977,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.002607331032771484,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 91
+          },
+          {
+            "distance": -0.0016821936717046273,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.003481628412139844,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.003266020588402029,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0023587158356239996,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 92
+          },
+          {
+            "distance": -0.0008748164614323375,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0013252614279023636,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0008748164614323375,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0013252614279023636,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0013822349692105649,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0016991458993953416,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0029347829413282076,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0024035700720086406,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 93
+          },
+          {
+            "distance": -0.0012325982777876255,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0032055243585335756,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0012325982777876255,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0032055243585335756,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.004223486848210433,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0023236342474462768,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 94
+          },
+          {
+            "distance": -0.0012325982777876255,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0032055243585335756,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0012325982777876255,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0032055243585335756,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.004223486848210433,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.0023236342474462768,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 95
+          },
+          {
+            "distance": -0.003029014781441915,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.00828953580123111,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.003029014781441915,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.00828953580123111,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.0027009411780131733,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 96
+          },
+          {
+            "distance": -0.003228133706307542,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.00018960481801981455,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.0030583796081483866,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.004149991745630362,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.003228133706307542,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.00018960481801981455,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.0030583796081483866,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.004149991745630362,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.005437693392534497,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 97
+          },
+          {
+            "distance": -0.00032546259287103595,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 98
+          },
+          {
+            "distance": -0.00032546259287103595,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 98
+          },
+          {
+            "distance": -0.00015229236453560016,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 107
+          },
+          {
+            "distance": -0.00024020268261233535,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 107
+          },
+          {
+            "distance": -4.194248608305215e-05,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 107
+          },
+          {
+            "distance": -0.0007422514208308608,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 108
+          },
+          {
+            "distance": -0.0002789087029085515,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 115
+          },
+          {
+            "distance": -0.0002789087029085515,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 115
+          },
+          {
+            "distance": -0.001417561119995626,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 119
+          },
+          {
+            "distance": -0.00199408665721495,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0019916051540507756,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0020377077764884514,
+            "other_body_id": 27,
+            "other_geom_id": 202,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.002465307720452497,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.001377166070339457,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 120
+          },
+          {
+            "distance": -0.0010462813449687016,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0010463020626935592,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0009162132553804458,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0009162448895559487,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0010033277414092832,
+            "other_body_id": 27,
+            "other_geom_id": 195,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0010462813449687016,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0010463020626935592,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0009162132553804458,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0009162448895559487,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0010033277414092832,
+            "other_body_id": 27,
+            "other_geom_id": 196,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0020722415231044875,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 121
+          },
+          {
+            "distance": -0.0009823155040588425,
+            "other_body_id": 27,
+            "other_geom_id": 203,
+            "target_geom_id": 121
+          }
+        ],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.13828321599721657,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.32,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.3271286050329534,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 32.0,
+        "h_meter": 0.32,
+        "kind": "perturbation",
+        "name": "h32cm_plusx",
+        "requested_displacement_xy": [
+          0.32,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.3271286050329534,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.3271286050329534,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          -0.23653361025978537,
+          -0.0026785731315612793,
+          4.831982009551039e-05,
+          0.057201677736114065,
+          0.00012604848426930881,
+          1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          -0.23653361025978537,
+          -0.0026785731315612793,
+          4.831982009551039e-05,
+          0.057201677736114065,
+          0.00012604848426930881,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20796899484509362,
+          -0.017633632108036385,
+          1.1799902224388852
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20796899484509362,
+          -0.017633632108036385,
+          1.1799902224388852,
+          3.141246657485998,
+          -0.027754865933607813,
+          -0.06728291310217255,
+          0.02023935671220595,
+          -0.020193265802280373
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.32,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.31287139496704663,
+        0.2982832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 32.0,
+        "h_meter": 0.32,
+        "kind": "perturbation",
+        "name": "h32cm_minusx",
+        "requested_displacement_xy": [
+          -0.32,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.31287139496704663,
+        0.2982832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.31287139496704663,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          -0.23653361025978537,
+          -0.0026785731315612793,
+          4.831982009551039e-05,
+          0.034638653257313884,
+          0.00012604848426930881,
+          1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          -0.23653361025978537,
+          -0.0026785731315612793,
+          4.831982009551039e-05,
+          0.034638653257313884,
+          0.00012604848426930881,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20777021807783302,
+          -0.01763702181131255,
+          1.1801446669423719
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20777021807783302,
+          -0.01763702181131255,
+          1.1801446669423719,
+          3.141282481745438,
+          -0.027755810699241965,
+          -0.06572505992471116,
+          0.020239377720575068,
+          -0.020193231298746377
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.32,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        0.6182832159972166,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 32.0,
+        "h_meter": 0.32,
+        "kind": "perturbation",
+        "name": "h32cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.32
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        0.6182832159972166,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        0.6182832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          -0.0013865477898541423,
+          0.0339810906672009,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.009184871964594915,
+          1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          -0.0013865477898541423,
+          0.0339810906672009,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.009184871964594915,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20747343683619363,
+          -0.016415286090815003,
+          1.1805830411746916
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20747343683619363,
+          -0.016415286090815003,
+          1.1805830411746916,
+          3.141965979954862,
+          -0.025836766424426918,
+          -0.06342895961078368,
+          0.020274296816983315,
+          -0.020158854821435
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.32,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.007128605032953369,
+        -0.02171678400278343,
+        0.97
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 32.0,
+        "h_meter": 0.32,
+        "kind": "perturbation",
+        "name": "h32cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.32
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.007128605032953369,
+        -0.02171678400278343,
+        0.97
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.007128605032953369,
+        -0.02171678400278343,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.030014444829202236,
+          -0.4475630252969031,
+          -0.20064075764487777,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.030014444829202236,
+          -0.4475630252969031,
+          -0.20064075764487777,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20744921829723767,
+          -0.01868940110022436,
+          1.1793444259862278
+        ],
+        "eef_t_xyz": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729
+        ],
+        "robot_state_t": [
+          -0.2072277178007278,
+          -0.018277695200415136,
+          1.1814243103671729,
+          3.1411711027982308,
+          -0.0313563544810085,
+          -0.060571508188953835,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20744921829723767,
+          -0.01868940110022436,
+          1.1793444259862278,
+          3.1408022862641247,
+          -0.028848904726064585,
+          -0.06400973557926816,
+          0.021040616786011445,
+          -0.021046828679042298
+        ]
+      },
+      "vanilla_target_pose": [
+        0.007128605032953369,
+        0.2982832159972166,
+        0.97
+      ]
+    }
+  ]
+}

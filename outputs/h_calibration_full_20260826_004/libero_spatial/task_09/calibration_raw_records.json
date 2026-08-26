@@ -1,0 +1,3408 @@
+{
+  "metadata": {
+    "checkpoint": {
+      "model_id": "openvla/openvla-7b-finetuned-libero-spatial",
+      "revision": "962318cec55ac10993ff0f5f43eda9a270b4c873",
+      "unnorm_key": "libero_spatial"
+    },
+    "config": {
+      "attn_implementation": "eager",
+      "center_crop": false,
+      "directions": [
+        "+x",
+        "-x",
+        "+y",
+        "-y"
+      ],
+      "dtype": "torch.bfloat16",
+      "gpu": 2,
+      "h_meters": [
+        0.01,
+        0.02,
+        0.04,
+        0.08,
+        0.16,
+        0.32
+      ],
+      "init_state_id": 0,
+      "output_dir": "/home/hwkim/research/VLA-Spatial-Diagnostics/outputs/h_calibration_full_20260826_004/libero_spatial/task_09",
+      "resize_size": 224,
+      "resolution": 256,
+      "seed": 0,
+      "suite": "libero_spatial",
+      "target_object": null,
+      "task_description": "pick up the black bowl on the wooden cabinet and place it on the plate",
+      "task_id": 9,
+      "vanilla_repeats": 5
+    },
+    "episode_reset_seed": 2795412346,
+    "git_commit": "d520ba9fd6240210045879dafafdfb435a8dd2a5",
+    "init_state": {
+      "condition": "vanilla",
+      "init_state_id": 0,
+      "notes": [
+        "official evaluation init state, used verbatim"
+      ],
+      "num_available": 50,
+      "path": "/home/hwkim/research/VLA-Spatial-Diagnostics/LIBERO-PRO/libero/libero/init_files/libero_spatial/pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate.pruned_init",
+      "seed": 0,
+      "sha256": "885cdd89e3d71824f79e4f0ae4711f9ca04367c0011147cb657ecc32be3f375b",
+      "source": "official_pruned_init",
+      "state_dim": 92,
+      "suite": "libero_spatial",
+      "task_id": 9,
+      "task_name": "pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate"
+    },
+    "init_state_id": 0,
+    "scope": "first OpenVLA inference plus exactly one env.step per valid independent condition",
+    "seed": 0,
+    "suite": "libero_spatial",
+    "target_object": "akita_black_bowl_1",
+    "task": "pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate",
+    "task_description": "pick up the black bowl on the wooden cabinet and place it on the plate",
+    "task_id": 9,
+    "timestamp": "2026-08-25T18:31:26.918458+00:00"
+  },
+  "records": [
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_repetition": 0,
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_repetition": 1,
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_repetition": 2,
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_repetition": 3,
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": null,
+        "h_cm": null,
+        "h_meter": null,
+        "kind": "vanilla",
+        "name": "vanilla",
+        "requested_displacement_xy": [
+          0.0,
+          0.0
+        ],
+        "sign": null
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_repetition": 4,
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.010000000000000002,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.048944822138478096,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_plusx",
+        "requested_displacement_xy": [
+          0.01,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.048944822138478096,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.048944822138478096,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          -0.025529412019486525,
+          -0.003756304435870217,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          -0.025529412019486525,
+          -0.003756304435870217,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2104376000459028,
+          -0.009219197527625882,
+          1.1824578323985657
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2104376000459028,
+          -0.009219197527625882,
+          1.1824578323985657,
+          3.1272224793146903,
+          -0.02918852254719759,
+          -0.07011857444928614,
+          0.02101484133481545,
+          -0.02107456089798649
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.010000000000000002,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.028944822138478092,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_minusx",
+        "requested_displacement_xy": [
+          -0.01,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.028944822138478092,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.028944822138478092,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.010000000000000009,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.2551063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.01
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.2551063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.2551063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.40620845679091466,
+          -0.37521008299846276,
+          0.45923319073284374,
+          4.831982009551039e-05,
+          -0.12179831646236719,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.40620845679091466,
+          -0.37521008299846276,
+          0.45923319073284374,
+          4.831982009551039e-05,
+          -0.12179831646236719,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20927632692374049,
+          -0.00820097950277029,
+          1.1828820941379314
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20927632692374049,
+          -0.00820097950277029,
+          1.1828820941379314,
+          3.1278537225273366,
+          -0.027810965493275178,
+          -0.06389717853389869,
+          0.02102871972441793,
+          -0.02105895811039983
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.010000000000000009,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.2751063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 1.0,
+        "h_meter": 0.01,
+        "kind": "perturbation",
+        "name": "h01cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.01
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.2751063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.2751063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.020000000000000004,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.0589448221384781,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 2.0,
+        "h_meter": 0.02,
+        "kind": "perturbation",
+        "name": "h02cm_plusx",
+        "requested_displacement_xy": [
+          0.02,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.0589448221384781,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.0589448221384781,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.02,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.018944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 2.0,
+        "h_meter": 0.02,
+        "kind": "perturbation",
+        "name": "h02cm_minusx",
+        "requested_displacement_xy": [
+          -0.02,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.018944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.018944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.33360961237725084,
+          -0.3872689067148694,
+          0.47389705625234857,
+          -0.0007794112843625689,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.33360961237725084,
+          -0.3872689067148694,
+          0.47389705625234857,
+          -0.0007794112843625689,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21056538705156874,
+          -0.008262504575784221,
+          1.182084061328723
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21056538705156874,
+          -0.008262504575784221,
+          1.182084061328723,
+          3.127619125077515,
+          -0.02787701956783962,
+          -0.0716962779613965,
+          0.021027709101943175,
+          -0.02106005879139537
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.01999999999999999,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.24510635587108212,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 2.0,
+        "h_meter": 0.02,
+        "kind": "perturbation",
+        "name": "h02cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.02
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.24510635587108212,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.24510635587108212,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.40620845679091466,
+          -0.37521008299846276,
+          0.45923319073284374,
+          4.831982009551039e-05,
+          -0.12179831646236719,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.40620845679091466,
+          -0.37521008299846276,
+          0.45923319073284374,
+          4.831982009551039e-05,
+          -0.12179831646236719,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20927632692374049,
+          -0.00820097950277029,
+          1.1828820941379314
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20927632692374049,
+          -0.00820097950277029,
+          1.1828820941379314,
+          3.1278537225273366,
+          -0.027810965493275178,
+          -0.06389717853389869,
+          0.02102871972441793,
+          -0.02105895811039983
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.020000000000000018,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.28510635587108213,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 2.0,
+        "h_meter": 0.02,
+        "kind": "perturbation",
+        "name": "h02cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.02
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.28510635587108213,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.28510635587108213,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.3666090871107345,
+          -0.5681512624609704,
+          0.5985399131681404,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.3666090871107345,
+          -0.5681512624609704,
+          0.5985399131681404,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21043236201902557,
+          -0.009176640141735937,
+          1.1827096158953427
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21043236201902557,
+          -0.009176640141735937,
+          1.1827096158953427,
+          3.1272124033033464,
+          -0.02883407851821,
+          -0.07071786766148443,
+          0.021015397885121828,
+          -0.02107399561635233
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.039999999999999994,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.07894482213847809,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 4.0,
+        "h_meter": 0.04,
+        "kind": "perturbation",
+        "name": "h04cm_plusx",
+        "requested_displacement_xy": [
+          0.04,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.07894482213847809,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.07894482213847809,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          -0.025529412019486525,
+          -0.003756304435870217,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          -0.025529412019486525,
+          -0.003756304435870217,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2104376000459028,
+          -0.009219197527625882,
+          1.1824578323985657
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2104376000459028,
+          -0.009219197527625882,
+          1.1824578323985657,
+          3.1272224793146903,
+          -0.02918852254719759,
+          -0.07011857444928614,
+          0.02101484133481545,
+          -0.02107456089798649
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.04,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.0010551778615219068,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 4.0,
+        "h_meter": 0.04,
+        "kind": "perturbation",
+        "name": "h04cm_minusx",
+        "requested_displacement_xy": [
+          -0.04,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.0010551778615219068,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.0010551778615219068,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.33360961237725084,
+          -0.3872689067148694,
+          0.47389705625234857,
+          -0.0007794112843625689,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.33360961237725084,
+          -0.3872689067148694,
+          0.47389705625234857,
+          -0.0007794112843625689,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21056538705156874,
+          -0.008262504575784221,
+          1.182084061328723
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21056538705156874,
+          -0.008262504575784221,
+          1.182084061328723,
+          3.127619125077515,
+          -0.02787701956783962,
+          -0.0716962779613965,
+          0.021027709101943175,
+          -0.02106005879139537
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.04000000000000001,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.2251063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 4.0,
+        "h_meter": 0.04,
+        "kind": "perturbation",
+        "name": "h04cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.04
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.2251063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.2251063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.40620845679091466,
+          -0.37521008299846276,
+          0.45923319073284374,
+          4.831982009551039e-05,
+          -0.12179831646236719,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.40620845679091466,
+          -0.37521008299846276,
+          0.45923319073284374,
+          4.831982009551039e-05,
+          -0.12179831646236719,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.20927632692374049,
+          -0.00820097950277029,
+          1.1828820941379314
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.20927632692374049,
+          -0.00820097950277029,
+          1.1828820941379314,
+          3.1278537225273366,
+          -0.027810965493275178,
+          -0.06389717853389869,
+          0.02102871972441793,
+          -0.02105895811039983
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.03999999999999998,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.3051063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 4.0,
+        "h_meter": 0.04,
+        "kind": "perturbation",
+        "name": "h04cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.04
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.3051063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.3051063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.08,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.1189448221384781,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 8.0,
+        "h_meter": 0.08,
+        "kind": "perturbation",
+        "name": "h08cm_plusx",
+        "requested_displacement_xy": [
+          0.08,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.1189448221384781,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.1189448221384781,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.08,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.04105517786152191,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 8.0,
+        "h_meter": 0.08,
+        "kind": "perturbation",
+        "name": "h08cm_minusx",
+        "requested_displacement_xy": [
+          -0.08,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.04105517786152191,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.04105517786152191,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.3468094022706444,
+          -0.25462184583439545,
+          0.6278676442071505,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          1.0
+        ],
+        "action_model": [
+          0.3468094022706444,
+          -0.25462184583439545,
+          0.6278676442071505,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21051895001776808,
+          -0.007582689532792036,
+          1.1828771890972518
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21051895001776808,
+          -0.007582689532792036,
+          1.1828771890972518,
+          3.127992931031276,
+          -0.027213373697979843,
+          -0.07096318013962669,
+          0.02020415085687459,
+          -0.020227791869212933
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.08000000000000002,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.1851063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 8.0,
+        "h_meter": 0.08,
+        "kind": "perturbation",
+        "name": "h08cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.08
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.1851063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.1851063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.40620845679091466,
+          -0.49579832016253,
+          0.46656512349259627,
+          4.831982009551039e-05,
+          -0.10224369524740703,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.40620845679091466,
+          -0.49579832016253,
+          0.46656512349259627,
+          4.831982009551039e-05,
+          -0.10224369524740703,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.2094147884723836,
+          -0.00881033897047263,
+          1.1827570721310645
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.2094147884723836,
+          -0.00881033897047263,
+          1.1827570721310645,
+          3.127561078615972,
+          -0.028463674166069736,
+          -0.06466957236155624,
+          0.021020726586951092,
+          -0.021067781094751218
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.08000000000000002,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.3451063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 8.0,
+        "h_meter": 0.08,
+        "kind": "perturbation",
+        "name": "h08cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.08
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.3451063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.3451063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          -0.003756304435870217,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          -0.003756304435870217,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066167494945565,
+          -0.00921837069888988,
+          1.182284673262542
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066167494945565,
+          -0.00921837069888988,
+          1.182284673262542,
+          3.127185113407055,
+          -0.029186330935839937,
+          -0.0718481187969758,
+          0.021014837016016426,
+          -0.02107456677059392
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.15999999999999998,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.19894482213847808,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 16.0,
+        "h_meter": 0.16,
+        "kind": "perturbation",
+        "name": "h16cm_plusx",
+        "requested_displacement_xy": [
+          0.16,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.19894482213847808,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.19894482213847808,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066126590373221,
+          -0.009207544412410494,
+          1.182284576382816,
+          3.1271791042598895,
+          -0.02886475719303687,
+          -0.07184866449682739,
+          0.02101494083417315,
+          -0.021074472191777206
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.16,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.12105517786152191,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 16.0,
+        "h_meter": 0.16,
+        "kind": "perturbation",
+        "name": "h16cm_minusx",
+        "requested_displacement_xy": [
+          -0.16,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.12105517786152191,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.12105517786152191,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.46560751131118516,
+          -0.43550420158049635,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          1.0
+        ],
+        "action_model": [
+          0.46560751131118516,
+          -0.43550420158049635,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.00012604848426930881,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.209973467063751,
+          -0.008501466686481279,
+          1.1821905939407402
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.209973467063751,
+          -0.008501466686481279,
+          1.1821905939407402,
+          3.1276190530686496,
+          -0.028125021800450796,
+          -0.06946487146579396,
+          0.02017720677798081,
+          -0.02025330712936517
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.16,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.10510635587108211,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 16.0,
+        "h_meter": 0.16,
+        "kind": "perturbation",
+        "name": "h16cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.16
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.10510635587108211,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.10510635587108211,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          -0.0029850299042814,
+          0.8065546412093965,
+          -0.0026785731315612793,
+          -0.007401260120027203,
+          -0.09773109035164702,
+          0.00012604848426930881,
+          1.0
+        ],
+        "action_model": [
+          -0.0029850299042814,
+          0.8065546412093965,
+          -0.0026785731315612793,
+          -0.007401260120027203,
+          -0.09773109035164702,
+          0.00012604848426930881,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21115494594294804,
+          -0.0022262590602216623,
+          1.1804767387583945
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21115494594294804,
+          -0.0022262590602216623,
+          1.1804767387583945,
+          3.130548394486702,
+          -0.021813194008931457,
+          -0.07208034148600075,
+          0.020353780117830043,
+          -0.020061163425664334
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.16000000000000003,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.42510635587108214,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 16.0,
+        "h_meter": 0.16,
+        "kind": "perturbation",
+        "name": "h16cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.16
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.42510635587108214,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.42510635587108214,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          -0.003756304435870217,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          -0.003756304435870217,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066167494945565,
+          -0.00921837069888988,
+          1.182284673262542
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066167494945565,
+          -0.00921837069888988,
+          1.182284673262542,
+          3.127185113407055,
+          -0.029186330935839937,
+          -0.0718481187969758,
+          0.021014837016016426,
+          -0.02107456677059392
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.32,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.3589448221384781,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 32.0,
+        "h_meter": 0.32,
+        "kind": "perturbation",
+        "name": "h32cm_plusx",
+        "requested_displacement_xy": [
+          0.32,
+          0.0
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.3589448221384781,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.3589448221384781,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          -0.003756304435870217,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          -0.003756304435870217,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066167494945565,
+          -0.00921837069888988,
+          1.182284673262542
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066167494945565,
+          -0.00921837069888988,
+          1.182284673262542,
+          3.127185113407055,
+          -0.029186330935839937,
+          -0.0718481187969758,
+          0.021014837016016426,
+          -0.02107456677059392
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        -0.32,
+        0.0,
+        0.0
+      ],
+      "actual_target_pose": [
+        -0.2810551778615219,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "x",
+        "h_cm": 32.0,
+        "h_meter": 0.32,
+        "kind": "perturbation",
+        "name": "h32cm_minusx",
+        "requested_displacement_xy": [
+          -0.32,
+          0.0
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        -0.2810551778615219,
+        -0.2651063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        -0.2810551778615219,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.419408246684308,
+          -0.49579832016253,
+          0.5032247872913584,
+          4.831982009551039e-05,
+          0.03614285488923388,
+          0.00012604848426930881,
+          -1.0
+        ],
+        "action_model": [
+          0.419408246684308,
+          -0.49579832016253,
+          0.5032247872913584,
+          4.831982009551039e-05,
+          0.03614285488923388,
+          0.00012604848426930881,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21049871755949628,
+          -0.00880631215358588,
+          1.1819352561750185
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21049871755949628,
+          -0.00880631215358588,
+          1.1819352561750185,
+          3.127392549080107,
+          -0.028446501867672582,
+          -0.072674717005748,
+          0.021020653474062657,
+          -0.021067879197159304
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        0.32,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        0.054893644128917896,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 32.0,
+        "h_meter": 0.32,
+        "kind": "perturbation",
+        "name": "h32cm_plusy",
+        "requested_displacement_xy": [
+          0.0,
+          0.32
+        ],
+        "sign": 1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        0.054893644128917896,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        0.054893644128917896,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.307210032590464,
+          0.8728781716496337,
+          -0.32528361456066957,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.033773107125478624,
+          1.0
+        ],
+        "action_model": [
+          0.307210032590464,
+          0.8728781716496337,
+          -0.32528361456066957,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          0.033773107125478624,
+          0.0
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21060561750609566,
+          -0.0017439507325981833,
+          1.1779432245419468
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21060561750609566,
+          -0.0017439507325981833,
+          1.1779432245419468,
+          3.1310970933356117,
+          -0.01883567250858806,
+          -0.07549204705343693,
+          0.02036734905239274,
+          -0.02004347564728207
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    },
+    {
+      "actual_displacement": [
+        0.0,
+        -0.31999999999999995,
+        0.0
+      ],
+      "actual_target_pose": [
+        0.038944822138478094,
+        -0.5851063558710821,
+        1.2315200000000002
+      ],
+      "condition": {
+        "axis": "y",
+        "h_cm": 32.0,
+        "h_meter": 0.32,
+        "kind": "perturbation",
+        "name": "h32cm_minusy",
+        "requested_displacement_xy": [
+          0.0,
+          -0.32
+        ],
+        "sign": -1
+      },
+      "invalid_reasons": [],
+      "requested_target_pose": [
+        0.038944822138478094,
+        -0.5851063558710821,
+        1.2315200000000002
+      ],
+      "scene_valid": true,
+      "scene_validity_checks": {
+        "baseline_fixture_contact_body_ids": [],
+        "finite_target_pose": true,
+        "fixture_contacts": "recorded but not automatically rejected; normal table support is valid",
+        "non_target_state_unchanged": true,
+        "target_contacts": [],
+        "target_free_joint_assignment_exact": true,
+        "workspace_bounds": "not_checked: LIBERO exposes no task-independent workspace/table bounds API"
+      },
+      "target_free_joint": "akita_black_bowl_1_joint0",
+      "target_free_joint_pose_after": [
+        0.038944822138478094,
+        -0.5851063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_free_joint_pose_before": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002,
+        0.7071067811865475,
+        0.0,
+        0.0,
+        0.7071067811865476
+      ],
+      "target_object": "akita_black_bowl_1",
+      "transition": {
+        "action_applied": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          -0.003756304435870217,
+          -1.0
+        ],
+        "action_model": [
+          0.31380992753716075,
+          -0.5741806743191737,
+          0.510556720051111,
+          4.831982009551039e-05,
+          4.201572315365443e-05,
+          -0.003756304435870217,
+          0.996078431372549
+        ],
+        "eef_t_plus_1_xyz": [
+          -0.21066167494945565,
+          -0.00921837069888988,
+          1.182284673262542
+        ],
+        "eef_t_xyz": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533
+        ],
+        "robot_state_t": [
+          -0.21222314138731427,
+          -0.007258360039587556,
+          1.1806633786403533,
+          3.126887893277801,
+          -0.02946257235447922,
+          -0.07835478748993276,
+          0.020833,
+          -0.020833
+        ],
+        "robot_state_t_plus_1": [
+          -0.21066167494945565,
+          -0.00921837069888988,
+          1.182284673262542,
+          3.127185113407055,
+          -0.029186330935839937,
+          -0.0718481187969758,
+          0.021014837016016426,
+          -0.02107456677059392
+        ]
+      },
+      "vanilla_target_pose": [
+        0.038944822138478094,
+        -0.2651063558710821,
+        1.2315200000000002
+      ]
+    }
+  ]
+}
