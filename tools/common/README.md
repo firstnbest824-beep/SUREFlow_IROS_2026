@@ -1,10 +1,10 @@
-# tools/common/ — shared infra for non-diagnostics lines
+# tools/common/ — shared OpenVLA / LIBERO infrastructure
 
 `tools/common/` holds the pieces of the OpenVLA/LIBERO pipeline that are
 genuinely reusable infrastructure (model loading, environment construction,
 image preprocessing, checkpoint bookkeeping) with no diagnostics-specific
-logic in them. It exists so that `tools/action_generalization/` (and any
-future non-diagnostics line) does not have to import `tools/openvla/`.
+logic in them. Current trajectory/J_cal tooling and future grounding tooling
+may use these modules without importing a diagnostics runner.
 
 ## The contract: physical copy, not re-export
 
@@ -46,7 +46,6 @@ that detects this automatically today. Mitigation:
 | `seeding.py` | `tools/openvla/official_task_pair_resolver.py` and validated rollout runners | `validate_seed`, `seed_everything`, `episode_seed` | 93-154; CUDA seeding mirrors the rollout runners |
 | `checkpoints.py` | new — no source file | `SUITE_CHECKPOINTS` registry | values transcribed from `official_task_pair_resolver.py` lines 57-68 |
 | `task_resolution.py` | new — independent LIBERO-PRO path resolution | vanilla and shipped position-offset BDDL resolution | no diagnostics import |
-| `experiment.py` | new — baseline artifact/provenance layout | fixed output root, metadata, `best`/`last` policy | no diagnostics import |
 
 `libero_env.configure_robosuite_logging()` also provides a narrow runtime
 fallback for Robosuite 1.4's hard-coded `/tmp/robosuite.log`: only if that
@@ -73,9 +72,7 @@ explicitly against `tools/CLAUDE.md` ("로직을 복제하지 말고 반드시 i
 
 ## Non-goals
 
-- `tools/common/` never imports from `tools/openvla/`, and nothing under
-  `tools/action_generalization/` may import from `tools/openvla/` either —
-  only from `tools/common/`.
+- `tools/common/` never imports from `tools/openvla/`.
 - This directory holds infrastructure only. No spatial-diagnostics logic
   (task-phase resolution, entity role resolution, perturbation/change
   detection, probing) belongs here; that stays in `tools/openvla/` as the

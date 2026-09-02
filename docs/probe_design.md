@@ -1,6 +1,10 @@
 # Probe design
 
-> **Status: draft, not executed.** Depends on the pilot v3 validation passing.
+> **Historical draft; not the current main method.** This document describes
+> linear/activation-probe and action-sensitivity ideas retained as research
+> context. Target-object grounding is now defined as Transformer relevance /
+> attention attribution over the joint image-and-instruction OpenVLA path;
+> hidden-state cosine readout and J_rep patch selection are not active methods.
 
 ## The distinction the whole design turns on
 

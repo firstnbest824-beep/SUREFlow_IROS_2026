@@ -4,6 +4,25 @@ This directory contains the active OpenVLA-based spatial-diagnostics experiments
 It is intentionally separate from the legacy SUREFlow code (`SUREFlow/`,
 `configs/`, `dataloader/`, `run.py`, and `tools/dry_run_*`).
 
+## Current research structure
+
+The active work has two explicitly separate stages.
+
+1. **Target-object grounding** will use Transformer relevance / attention
+   attribution over the joint image-and-instruction OpenVLA path.  The retained
+   generic building blocks are `probe_hooks.py` (forward tracing),
+   `token_layout.py` (instruction/visual-token indices and patch mapping), and
+   `grounding_evaluation.py` (segmentation **EVAL ONLY** metrics).  DINO,
+   CLIP/SigLIP similarity, hidden-state cosine readout, and J_rep patch
+   sensitivity are not main methods and are not active runners in this tree.
+2. **Explicit spatial movement** uses vanilla-versus-perturbed trajectory
+   collection, h/displacement diagnostics, grasp-phase annotations, and
+   task-local J_cal analysis.  These artifacts must remain task-local and are
+   not evidence for a cross-task average Jacobian.
+
+The two stages meet only after a grounded target coordinate is available; a
+grounding analysis must not silently become an action-connected J_rep method.
+
 ## Scope
 
 - Primary model: `openvla/openvla-7b-finetuned-libero-spatial`
