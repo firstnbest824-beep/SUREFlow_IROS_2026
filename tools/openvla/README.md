@@ -29,9 +29,15 @@ grounding analysis must not silently become an action-connected J_rep method.
 - Secondary model: OpenVLA-OFT (future)
 - Cross-architecture validation: π0.5-LIBERO (future)
 - Research questions:
-  1. Where does spatial information weaken between the vision encoder and action generation under LIBERO-PRO position perturbations?
-  2. Does the final action fail to use spatial information even when it remains in internal representations?
-  3. Can targeted repairs improve LIBERO-PRO generalization while preserving vanilla LIBERO performance?
+  1. **Grounding:** can Transformer relevance / attention attribution over the
+     joint image-and-instruction OpenVLA path recover the instruction's target
+     patch set and 2-D location?
+  2. **Movement:** for a measured object displacement, how do paired vanilla ↔
+     perturbation trajectories, grasp-pre alignment, and valid h ranges define
+     a task-local relationship `ΔEEF ≈ J_cal Δp_object`?
+  3. **Connection:** can the grounded target coordinate be converted into an
+     explicit spatial movement through the validated, task-local movement model
+     without treating grounding as a J_rep/action-sensitivity readout?
 
 ## Scripts
 

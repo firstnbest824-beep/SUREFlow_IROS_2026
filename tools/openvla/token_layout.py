@@ -113,10 +113,30 @@ def _find_unique_char_span(prompt: str, phrase: str) -> Tuple[int, int]:
     return starts[0], starts[0] + len(phrase)
 
 
+def _tokenize_ids(tokenizer: Any, text: str, **kwargs: Any) -> List[int]:
+    return _as_input_ids(_encoding_value(tokenizer(text, **kwargs), "input_ids"))
+
+
+def _subsequence_positions(haystack: Sequence[int], needle: Sequence[int]) -> List[Tuple[int, ...]]:
+    if not needle:
+        return []
+    width = len(needle)
+    return [
+        tuple(range(index, index + width))
+        for index in range(len(haystack) - width + 1)
+        if list(haystack[index:index + width]) == list(needle)
+    ]
+
+
 def locate_target_token_span(
     tokenizer: Any, prompt: str, target_phrase: str, input_ids: Any, layout: MultimodalTokenLayout,
 ) -> TargetTokenSpan:
-    """Resolve one instruction phrase by offsets, failing rather than guessing."""
+    """Resolve one phrase by offsets or a unique token-ID fallback.
+
+    Some OpenVLA tokenizers do not implement offsets.  The fallback compares
+    plain and leading-space tokenizations against the exact prepared input IDs,
+    then accepts only one matching span.  Ambiguity remains an error.
+    """
     ids = _as_input_ids(input_ids)
     start, end = _find_unique_char_span(prompt, target_phrase)
     try:
@@ -133,14 +153,29 @@ def locate_target_token_span(
         )
         if not positions:
             raise TokenLayoutError("offset mapping produced no tokens for target phrase")
-    except (NotImplementedError, TypeError, ValueError, KeyError, AttributeError, TokenLayoutError) as exc:
-        raise TokenLayoutError("tokenizer offset mapping is required for unambiguous target-token tracking") from exc
+        method = "offset_mapping"
+    except (NotImplementedError, TypeError, ValueError, KeyError, AttributeError, TokenLayoutError):
+        candidates = {
+            tuple(_tokenize_ids(tokenizer, target_phrase, add_special_tokens=False)),
+            tuple(_tokenize_ids(tokenizer, " " + target_phrase, add_special_tokens=False)),
+        }
+        matches = {
+            match
+            for candidate in candidates
+            for match in _subsequence_positions(ids, candidate)
+        }
+        if len(matches) != 1:
+            raise TokenLayoutError(
+                "token-ID fallback requires exactly one target span; found {}".format(len(matches))
+            )
+        positions = next(iter(matches))
+        method = "token_id_subsequence"
     token_ids = tuple(ids[index] for index in positions)
     decoded = tuple(str(token) for token in tokenizer.convert_ids_to_tokens(list(token_ids))) if hasattr(tokenizer, "convert_ids_to_tokens") else tuple(str(token) for token in token_ids)
     return TargetTokenSpan(
         target_phrase, (start, end), positions,
         tuple(layout.llm_position_for_input_token(index) for index in positions),
-        token_ids, decoded, "offset_mapping",
+        token_ids, decoded, method,
     )
 
 

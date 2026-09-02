@@ -20,11 +20,18 @@ from token_layout import patch_index_to_uv
 class PatchGroundingEvaluation:
     valid: bool
     invalid_reason: Optional[str]
+    gt_mask_pixels: int
+    gt_centroid_uv: Optional[Tuple[float, float]]
+    gt_bbox_xyxy: Optional[Tuple[float, float, float, float]]
+    predicted_uv: Optional[Tuple[float, float]]
+    pixel_l2_error: Optional[float]
     predicted_patch_index: Optional[int]
     gt_centroid_patch_index: Optional[int]
     top1_patch_hit: Optional[bool]
     top_k_patch_hit: Optional[bool]
     gt_overlapping_patch_rank: Optional[int]
+    gt_overlapping_patch_indices: Optional[Tuple[int, ...]]
+    predicted_to_gt_patch_distance: Optional[float]
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -46,24 +53,51 @@ def patch_mask_overlap(mask: np.ndarray, num_visual_tokens: int) -> np.ndarray:
     return hits
 
 
-def evaluate_patch_scores(scores: Sequence[float], gt_mask: np.ndarray, top_k: int = 5) -> PatchGroundingEvaluation:
-    """Evaluate already-computed patch scores against segmentation GT."""
+def evaluate_patch_scores(
+    scores: Sequence[float], gt_mask: np.ndarray, top_k: int = 5,
+    min_mask_pixels: int = 1,
+) -> PatchGroundingEvaluation:
+    """Evaluate already-computed patch scores against EVAL ONLY segmentation.
+
+    The returned quantities are independent of how a caller produced scores:
+    pixel-centroid localization error, rank/hit metrics, and grid-cell distance
+    to the nearest GT-overlapping patch.  A tiny mask is marked unavailable.
+    """
     values = np.asarray(scores, dtype=np.float64)
     if values.ndim != 1 or not np.isfinite(values).all():
         raise ValueError("scores must be one finite value per visual token")
-    hits = patch_mask_overlap(gt_mask, len(values))
-    if not hits.any():
-        return PatchGroundingEvaluation(False, "GT target mask is absent", None, None, None, None, None)
+    if int(min_mask_pixels) < 1:
+        raise ValueError("min_mask_pixels must be at least one")
+    mask = np.asarray(gt_mask, dtype=bool)
+    if mask.ndim != 2:
+        raise ValueError("gt_mask must be 2-D")
+    mask_pixels = int(mask.sum())
+    if mask_pixels < int(min_mask_pixels):
+        return PatchGroundingEvaluation(
+            False, "GT target mask absent or below min_mask_pixels", mask_pixels,
+            None, None, None, None, None, None, None, None, None, None, None,
+        )
+    hits = patch_mask_overlap(mask, len(values))
     ranked = np.argsort(-values, kind="stable")
     predicted = int(ranked[0])
+    overlap_indices = np.flatnonzero(hits)
     overlap_ranks = np.flatnonzero(hits[ranked])
-    height, width = np.asarray(gt_mask).shape
-    ys, xs = np.where(np.asarray(gt_mask, dtype=bool))
+    height, width = mask.shape
+    ys, xs = np.where(mask)
+    centroid_uv = (float(xs.mean()), float(ys.mean()))
+    bbox = (float(xs.min()), float(ys.min()), float(xs.max()), float(ys.max()))
     side = int(round(np.sqrt(len(values))))
     centroid = min(side - 1, int(np.floor(float(ys.mean()) * side / height))) * side + min(side - 1, int(np.floor(float(xs.mean()) * side / width)))
+    predicted_uv = patch_index_to_uv(predicted, len(values), (height, width))
+    predicted_row, predicted_col = divmod(predicted, side)
+    overlap_rc = np.asarray([divmod(int(index), side) for index in overlap_indices], dtype=np.float64)
+    patch_distance = float(np.linalg.norm(overlap_rc - [predicted_row, predicted_col], axis=1).min())
     return PatchGroundingEvaluation(
-        True, None, predicted, int(centroid), bool(hits[predicted]),
+        True, None, mask_pixels, centroid_uv, bbox, predicted_uv,
+        float(np.linalg.norm(np.asarray(predicted_uv) - np.asarray(centroid_uv))),
+        predicted, int(centroid), bool(hits[predicted]),
         bool(hits[ranked[:max(1, int(top_k))]].any()), int(overlap_ranks[0] + 1),
+        tuple(int(index) for index in overlap_indices), patch_distance,
     )
 
 
